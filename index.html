@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kitchen Command — Pantry Inventory</title>
+<style>
+:root {
+  --bg:#0e1117; --panel:#151a23; --panel2:#1c2330; --soft:#242d3c; --text:#f5f2ea; --muted:#aeb7c4;
+  --line:rgba(255,255,255,.11); --accent:#f59e0b; --accent2:#22c55e; --bad:#ef4444; --warn:#facc15; --blue:#38bdf8;
+  --purple:#a78bfa; --shadow:0 24px 70px rgba(0,0,0,.35); --radius:18px;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:radial-gradient(circle at top left,#20293a 0,#0e1117 38%,#080a0f 100%);color:var(--text);min-height:100vh}
+button,input,select,textarea{font:inherit}
+.app{max-width:1480px;margin:0 auto;padding:22px}
+.header{display:flex;gap:16px;align-items:center;justify-content:space-between;margin-bottom:18px}
+.brand{display:flex;gap:14px;align-items:center}
+.logo{width:54px;height:54px;border-radius:16px;background:linear-gradient(135deg,#f59e0b,#7c2d12);display:grid;place-items:center;box-shadow:var(--shadow);font-size:26px}
+h1{margin:0;font-size:clamp(26px,3vw,42px);letter-spacing:-.04em}
+.sub{color:var(--muted);font-size:14px;margin-top:3px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.headerShell{display:grid;grid-template-columns:minmax(320px,1fr) minmax(520px,.92fr);gap:16px;align-items:stretch;margin-bottom:18px}
+.header{margin-bottom:0}
+.navCards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;align-items:stretch}
+.navCard{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.025));color:var(--text);border-radius:20px;padding:14px 15px;cursor:pointer;text-align:left;box-shadow:0 12px 28px rgba(0,0,0,.16);min-height:92px;display:flex;flex-direction:column;justify-content:space-between;transition:.16s transform,.16s border-color,.16s background}
+.navCard:hover{transform:translateY(-1px);border-color:rgba(245,158,11,.45);background:linear-gradient(180deg,rgba(245,158,11,.13),rgba(255,255,255,.03))}
+.navCard.active{border-color:#f59e0b;box-shadow:0 0 0 3px rgba(245,158,11,.12),0 16px 38px rgba(0,0,0,.2);background:linear-gradient(180deg,rgba(245,158,11,.22),rgba(255,255,255,.035))}
+.navCardTop{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.navIcon{font-size:22px;width:38px;height:38px;border-radius:14px;display:grid;place-items:center;background:rgba(255,255,255,.08);border:1px solid var(--line)}
+.navTitle{font-size:17px;font-weight:950;letter-spacing:-.03em;margin-top:10px}
+.navCount{font-size:24px;font-weight:950;letter-spacing:-.04em}
+.navHint{font-size:12px;color:#d8dee9;margin-top:2px;line-height:1.25}
+.pageView{display:none}
+.pageView.active{display:block}
+.pageGrid{display:grid;grid-template-columns:1fr;gap:14px;align-items:start}
+.fullPanel{min-height:520px}
+.fullPanel .pickupList{max-height:none}
+.fullPanel .recipeBox{max-width:880px}
+
+.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:10px 13px;border-radius:13px;cursor:pointer;transition:.16s transform,.16s background,.16s border-color;white-space:nowrap}
+.btn:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.25);background:#263144}
+.btn.primary{background:linear-gradient(135deg,#f59e0b,#b45309);border-color:#f59e0b;color:#1b1103;font-weight:900}
+.btn.danger{background:#3a1114;border-color:#7f1d1d;color:#fecaca}
+.btn.good{background:#12321f;border-color:#166534;color:#bbf7d0}
+.btn.warn{background:#3b2f08;border-color:#a16207;color:#fef08a}
+.grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin:16px 0}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.02));border:1px solid var(--line);border-radius:var(--radius);padding:15px;box-shadow:0 10px 25px rgba(0,0,0,.12)}
+.metric{min-height:96px;display:flex;flex-direction:column;justify-content:space-between}
+.metric .label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;font-weight:800}
+.metric .value{font-size:32px;font-weight:950;letter-spacing:-.04em}
+.metric .hint{font-size:12px;color:var(--muted)}
+.toolbar{display:grid;grid-template-columns:1.35fr repeat(5,minmax(140px,.55fr));gap:10px;margin:16px 0;align-items:center}
+.field{background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:14px;padding:12px 13px;outline:none;width:100%}
+.field:focus{border-color:#f59e0b;box-shadow:0 0 0 3px rgba(245,158,11,.12)}
+.main{display:grid;grid-template-columns:minmax(0,1.25fr) 390px;gap:14px;align-items:start}
+.panel{background:rgba(21,26,35,.86);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);overflow:hidden}
+.panelHead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.035)}
+.panelTitle{font-weight:950;letter-spacing:-.02em}
+.tableWrap{overflow:auto;max-height:calc(100vh - 300px)}
+table{width:100%;border-collapse:separate;border-spacing:0}
+th,td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;font-size:13px}
+th{position:sticky;top:0;background:#171d28;z-index:2;color:#dbe4ef;font-size:11px;text-transform:uppercase;letter-spacing:.08em;cursor:pointer;user-select:none}
+tr:hover td{background:rgba(255,255,255,.035)}
+.nameCell{font-weight:900;font-size:14px;min-width:210px}
+.muted{color:var(--muted)}
+.badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 8px;font-size:11px;font-weight:900;border:1px solid var(--line);white-space:nowrap}
+.badge.stock{background:#102918;color:#bbf7d0;border-color:#166534}
+.badge.low{background:#3a2e08;color:#fef08a;border-color:#a16207}
+.badge.out{background:#3b1115;color:#fecaca;border-color:#991b1b}
+.badge.unknown{background:#252b35;color:#cbd5e1;border-color:#475569}
+.badge.pickup{background:#451a03;color:#fed7aa;border-color:#ea580c}
+.badge.luxury{background:#281744;color:#ddd6fe;border-color:#7c3aed}
+
+.blankFlag{display:inline-flex;align-items:center;justify-content:center;width:7px;height:7px;border-radius:999px;background:rgba(250,204,21,.55);box-shadow:0 0 0 1px rgba(250,204,21,.18);vertical-align:middle;margin-left:4px;opacity:.72}
+.valueSubtle{color:#d8dee9}
+.rowActions{display:flex;gap:7px;justify-content:flex-end}
+.iconBtn{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;border:1px solid var(--line);background:#202838;color:var(--text);cursor:pointer}
+.side{display:flex;flex-direction:column;gap:14px}
+.pickupList{display:flex;flex-direction:column;gap:9px;padding:14px;max-height:405px;overflow:auto}
+.pickupItem{display:grid;grid-template-columns:1fr auto;gap:8px;padding:11px;border-radius:14px;background:#191f2b;border:1px solid var(--line)}
+.pickupItem strong{font-size:13px}
+.pickupMeta{font-size:12px;color:var(--muted);margin-top:3px}
+.recipeBox{padding:14px;display:flex;flex-direction:column;gap:10px}
+.recipeResult{padding:12px;border-radius:14px;background:#111722;border:1px solid var(--line);font-size:13px;line-height:1.55}
+.footerNote{margin-top:14px;color:var(--muted);font-size:12px}
+.modalBackdrop{position:fixed;inset:0;background:rgba(0,0,0,.66);display:none;align-items:center;justify-content:center;padding:18px;z-index:20}
+.modalBackdrop.show{display:flex}
+.modal{width:min(760px,100%);max-height:92vh;overflow:auto;background:#151a23;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow)}
+.modalHead{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.modalBody{padding:18px}
+.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.formGroup label{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:900;margin-bottom:6px}
+.formGroup.full{grid-column:1/-1}
+.statusBtns{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.confirmBar{display:none;gap:8px;align-items:center;justify-content:flex-end;background:#2a1115;border:1px solid #7f1d1d;border-radius:14px;padding:10px;margin-top:12px}
+.confirmBar.show{display:flex}
+.empty{padding:34px;text-align:center;color:var(--muted)}
+.togglePill{display:inline-flex;align-items:center;gap:8px;padding:7px 9px;border:1px solid var(--line);border-radius:999px;background:#161d28;font-size:12px;font-weight:800}
+@media(max-width:1100px){.headerShell{grid-template-columns:1fr}.navCards{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:repeat(3,1fr)}.main{grid-template-columns:1fr}.toolbar{grid-template-columns:1fr 1fr}.side{grid-template-columns:1fr}}
+@media(max-width:720px){.app{padding:14px}.headerShell{gap:12px}.header{align-items:flex-start;flex-direction:column}.actions{justify-content:flex-start}.navCards{grid-template-columns:1fr}.navCard{min-height:76px}.grid{grid-template-columns:repeat(2,1fr)}.toolbar{grid-template-columns:1fr}.formGrid{grid-template-columns:1fr}.tableWrap{max-height:none}th:nth-child(3),td:nth-child(3),th:nth-child(4),td:nth-child(4),th:nth-child(6),td:nth-child(6){display:none}}
+
+/* visibility hardening */
+tbody tr{background:rgba(255,255,255,.045)}
+tbody tr:hover{background:rgba(245,158,11,.16)}
+td,th{color:#fff}
+.muted,.hint,.pickupMeta{color:#d8dee9}
+select,input,textarea{color:#fff;background:#101722;border:1px solid rgba(255,255,255,.22)}
+option{background:#101722;color:#fff}
+.empty{color:#fff;background:rgba(255,255,255,.06);border-radius:14px}
+
+/* Kitchen Lab v2 */
+.navTabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.navTab{border:1px solid var(--line);background:rgba(255,255,255,.055);color:#fff;border-radius:999px;padding:10px 14px;font-weight:900;cursor:pointer}
+.navTab.active{background:linear-gradient(135deg,rgba(245,158,11,.28),rgba(167,139,250,.2));border-color:rgba(245,158,11,.55);box-shadow:0 10px 24px rgba(0,0,0,.25)}
+.labGrid{display:grid;grid-template-columns:minmax(320px,.9fr) minmax(420px,1.1fr);gap:14px;align-items:start}
+.labGrid.three{grid-template-columns:repeat(3,1fr)}
+.labPanel{display:none}.labPanel.active{display:block}
+.formStack{display:grid;gap:10px}.formStack label{font-size:.76rem;text-transform:uppercase;color:var(--muted);font-weight:900;letter-spacing:.08em}
+.recipeCards,.testCards,.timerGrid,.compareGrid{display:grid;gap:10px}.recipeCard,.testCard,.timerCard,.compareCard{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.055);padding:14px;box-shadow:0 12px 30px rgba(0,0,0,.18)}
+.recipeCard.selected,.compareCard.selected{border-color:rgba(245,158,11,.7);background:rgba(245,158,11,.13)}
+.cardTitleLine{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:8px}.cardTitleLine strong{font-size:1rem}.miniMeta{font-size:.82rem;color:var(--muted);line-height:1.35}.scoreBar{height:9px;background:rgba(255,255,255,.12);border-radius:999px;overflow:hidden;margin:10px 0}.scoreFill{height:100%;background:linear-gradient(90deg,#ef4444,#facc15,#22c55e);border-radius:999px}.chipRow{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.tinyChip{font-size:.72rem;border:1px solid var(--line);border-radius:999px;padding:4px 8px;color:#fff;background:rgba(255,255,255,.06)}
+.compareTable{width:100%;border-collapse:separate;border-spacing:0;margin-top:12px}.compareTable th,.compareTable td{border-bottom:1px solid var(--line);padding:10px;vertical-align:top}.compareTable th{position:static;background:rgba(255,255,255,.07)}
+.timerBig{font-size:2.2rem;font-weight:1000;letter-spacing:.04em;margin:8px 0}.timerActions{display:flex;gap:8px;flex-wrap:wrap}.timerRunning{border-color:rgba(34,197,94,.65);box-shadow:0 0 0 1px rgba(34,197,94,.18)}
+.sideNote{border:1px dashed rgba(255,255,255,.2);border-radius:16px;padding:12px;color:var(--muted);background:rgba(0,0,0,.16)}
+.inlineActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.wide{grid-column:1/-1}
+@media(max-width:1000px){.labGrid,.labGrid.three{grid-template-columns:1fr}.timerGrid{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <section class="headerShell">
+    <header class="header">
+      <div class="brand"><div class="logo">🍳</div><div><h1>Kitchen Command</h1><div class="sub">Pantry inventory, pickup logic, and recipe readiness.</div></div></div>
+      <div class="actions"><button class="btn" onclick="resetDemo()">Reset Seed Data</button><button class="btn primary" onclick="openEditor()">+ Add Item</button></div>
+    </header>
+    <nav class="navCards" aria-label="Kitchen sections">
+      <button class="navCard active" id="nav-pantry" onclick="switchPage('pantry')"><div class="navCardTop"><span class="navIcon">🥫</span><span class="navCount" id="navPantryCount">0</span></div><div><div class="navTitle">Pantry</div><div class="navHint">Inventory, quantities, storage, and stock status.</div></div></button>
+      <button class="navCard" id="nav-recipes" onclick="switchPage('recipes')"><div class="navCardTop"><span class="navIcon">📖</span><span class="navCount" id="navRecipeCount">Ready</span></div><div><div class="navTitle">Recipes</div><div class="navHint">Check ingredients against what you have.</div></div></button>
+      <button class="navCard" id="nav-grocery" onclick="switchPage('grocery')"><div class="navCardTop"><span class="navIcon">🛒</span><span class="navCount" id="navGroceryCount">0</span></div><div><div class="navTitle">Grocery List</div><div class="navHint">Low and out-of-stock pickup list.</div></div></button>
+    </nav>
+  </section>
+
+  <section class="grid" id="metrics"></section>
+
+  <section class="pageView active" id="page-pantry">
+    <section class="toolbar">
+      <input id="search" class="field" placeholder="Search ingredient, aisle, storage, category..." oninput="render()" />
+      <select id="categoryFilter" class="field" onchange="render()"></select>
+      <select id="storageFilter" class="field" onchange="render()"></select>
+      <select id="statusFilter" class="field" onchange="render()"></select>
+      <select id="pickupFilter" class="field" onchange="render()">
+        <option value="all">All Pickup Logic</option><option value="pickup">Pickup Needed</option><option value="noPickup">No Pickup Needed</option>
+      </select>
+      <select id="sortBy" class="field" onchange="render()">
+        <option value="name">Sort: Item Name</option><option value="category">Sort: Category</option><option value="storage">Sort: Storage</option><option value="status">Sort: Stock Status</option><option value="price">Sort: Price</option><option value="updated">Sort: Last Updated</option>
+      </select>
+    </section>
+
+    <main class="pageGrid">
+      <section class="panel">
+        <div class="panelHead"><div><div class="panelTitle">Inventory Board</div><div class="muted" id="resultCount"></div></div><span class="togglePill">Click item to edit quantity/status</span></div>
+        <div class="tableWrap"><table><thead><tr><th onclick="setSort('name')">Item</th><th onclick="setSort('status')">Stock</th><th onclick="setSort('category')">Category</th><th onclick="setSort('storage')">Storage</th><th onclick="setSort('storeLocation')">Store Location</th><th onclick="setSort('price')">Price</th><th>Pickup</th><th></th></tr></thead><tbody id="tbody"></tbody></table></div>
+      </section>
+    </main>
+  </section>
+
+  <section class="pageView" id="page-recipes">
+    <section class="panel fullPanel">
+      <div class="panelHead"><div><div class="panelTitle">Recipes + Test Kitchen</div><div class="muted">Recipe library, pantry checks, test scenarios, comparison, previous entries, and multi-timers.</div></div><button class="btn primary" onclick="focusRecipeForm()">+ Add Recipe</button></div>
+      <div class="navTabs" aria-label="Recipe tools">
+        <button class="navTab active" id="labtab-library" onclick="switchLab('library')">Recipe Library</button>
+        <button class="navTab" id="labtab-test" onclick="switchLab('test')">Test Kitchen</button>
+        <button class="navTab" id="labtab-compare" onclick="switchLab('compare')">Compare 3–4</button>
+        <button class="navTab" id="labtab-timers" onclick="switchLab('timers')">Timers / Stopwatches</button>
+      </div>
+
+      <div class="labPanel active" id="lab-library">
+        <div class="labGrid">
+          <div class="recipeCards" id="recipeCards"></div>
+          <div class="recipeCard" id="recipeFormCard">
+            <div class="cardTitleLine"><strong id="recipeFormTitle">Add / Edit Recipe</strong><span class="tinyChip">Pantry-linked</span></div>
+            <div class="formStack">
+              <input type="hidden" id="recipeId" />
+              <label>Recipe Name</label><input id="recipeName" class="field" placeholder="Example: Biscuits and Gravy" />
+              <label>Category</label><input id="recipeCategory" class="field" placeholder="Dinner, Baking, BBQ, Sauce..." />
+              <label>Prep / Cook Time</label><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><input id="recipePrep" class="field" placeholder="Prep min" type="number" min="0"/><input id="recipeCook" class="field" placeholder="Cook min" type="number" min="0"/></div>
+              <label>Difficulty / Rating</label><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><select id="recipeDifficulty" class="field"><option>Easy</option><option>Medium</option><option>Hard</option><option>Annoying</option></select><input id="recipeRating" class="field" placeholder="Rating 1-10" type="number" min="0" max="10" step="0.1"/></div>
+              <label>Ingredients — one per line</label><textarea id="recipeIngredients" class="field" rows="8" placeholder="Flour All Purpose
+Butter Unsalted
+Milk Whole"></textarea>
+              <label>Notes</label><textarea id="recipeNotes" class="field" rows="4" placeholder="Baseline recipe, source, texture notes, serving ideas..."></textarea>
+              <div class="inlineActions"><button class="btn primary" onclick="saveRecipe()">Save Recipe</button><button class="btn" onclick="clearRecipeForm()">Clear</button><button class="btn danger" onclick="deleteRecipeFromForm()">Delete</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="labPanel" id="lab-test">
+        <div class="labGrid">
+          <div class="recipeCard">
+            <div class="cardTitleLine"><strong>Create Test Scenario</strong><span class="tinyChip">Small changes</span></div>
+            <div class="formStack">
+              <label>Recipe</label><select id="testRecipe" class="field"></select>
+              <label>Test Goal</label><input id="testGoal" class="field" placeholder="Example: make it creamier without getting greasy" />
+              <label>Changes Made</label><textarea id="testChanges" class="field" rows="4" placeholder="Add 25% more cream
+Reduce cheddar
+Bake 5 minutes less"></textarea>
+              <label>Expected Result</label><textarea id="testExpected" class="field" rows="3"></textarea>
+              <label>Actual Result / Review</label><textarea id="testActual" class="field" rows="4"></textarea>
+              <label>Rating / Recommendation</label><div style="display:grid;grid-template-columns:120px 1fr;gap:8px"><input id="testRating" class="field" type="number" min="0" max="10" step="0.1" placeholder="1-10"/><input id="testRecommendation" class="field" placeholder="Repeat, adjust, abandon, best version..." /></div>
+              <div class="inlineActions"><button class="btn primary" onclick="saveTestEntry()">Save Test Entry</button><button class="btn" onclick="clearTestForm()">Clear</button></div>
+            </div>
+          </div>
+          <div>
+            <div class="sideNote">Every saved test becomes a previous entry you can preview, restore into the form, duplicate, compare later, or delete with confirmation.</div>
+            <div class="testCards" id="testCards" style="margin-top:10px"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="labPanel" id="lab-compare">
+        <div class="labGrid">
+          <div><div class="sideNote">Select up to four recipes. The app compares pantry match, missing items, time, difficulty, rating, and gives a practical recommendation.</div><div class="compareGrid" id="compareOptions" style="margin-top:10px"></div></div>
+          <div class="recipeCard"><div class="cardTitleLine"><strong>Comparison Result</strong><button class="btn primary" onclick="renderCompareResult()">Compare Selected</button></div><div id="compareResult" class="recipeResult">Select recipes to compare.</div></div>
+        </div>
+      </div>
+
+      <div class="labPanel" id="lab-timers">
+        <div class="labGrid">
+          <div class="recipeCard">
+            <div class="cardTitleLine"><strong>New Timer / Stopwatch</strong><span class="tinyChip">Runs together</span></div>
+            <div class="formStack">
+              <label>Name</label><input id="timerName" class="field" placeholder="Sauce, oven, rest, smoker, stopwatch..." />
+              <label>Mode</label><select id="timerMode" class="field"><option value="countdown">Countdown Timer</option><option value="stopwatch">Stopwatch</option></select>
+              <label>Duration for countdown</label><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px"><input id="timerHours" class="field" placeholder="Hours" type="number" min="0"/><input id="timerMinutes" class="field" placeholder="Minutes" type="number" min="0"/><input id="timerSeconds" class="field" placeholder="Seconds" type="number" min="0"/></div>
+              <button class="btn primary" onclick="addTimer()">Add Timer</button>
+            </div>
+          </div>
+          <div class="timerGrid" id="timerGrid"></div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+    <section class="pageView" id="page-grocery">
+    <section class="panel fullPanel"><div class="panelHead"><div><div class="panelTitle">Grocery List</div><div class="muted">Low/out items, excluding Luxury.</div></div><button class="btn" onclick="markPickupInStock()">Mark Pickup Done</button></div><div class="pickupList" id="pickupList"></div></section>
+  </section>
+
+  <div class="footerNote">Saved locally in this browser. Later we can connect this to Supabase for global household sync.</div>
+</div>
+
+<div class="modalBackdrop" id="modalBackdrop">
+  <div class="modal">
+    <div class="modalHead"><div class="panelTitle" id="modalTitle">Edit Item</div><button class="iconBtn" onclick="closeEditor()">✕</button></div>
+    <div class="modalBody">
+      <input type="hidden" id="editId" />
+      <div class="formGrid">
+        <div class="formGroup full"><label>Item Name</label><input id="itemName" class="field" /></div>
+        <div class="formGroup"><label>Store Location</label><input id="storeLocation" class="field" placeholder="Aisle 6, Dairy, Produce..." /></div>
+        <div class="formGroup"><label>Storage</label><input id="storage" class="field" placeholder="Pantry, Fridge, Freezer..." /></div>
+        <div class="formGroup"><label>Category</label><select id="category" class="field"><option>STAPLES</option><option>RECIPES</option><option>PERSONAL</option><option>LUXURY</option><option>UNCATEGORIZED</option></select></div>
+        <div class="formGroup"><label>Price</label><input id="price" class="field" placeholder="$4.98 / Unknown" /></div>
+        <div class="formGroup"><label>Quantity</label><input id="quantity" class="field" placeholder="1, 1/2, 2.5..." /></div>
+        <div class="formGroup"><label>Unit</label><input id="unit" class="field" placeholder="bag, bottle, can, lb, oz..." /></div>
+        <div class="formGroup full"><label>Stock Status</label><div class="statusBtns"><button class="btn good" onclick="setModalStatus('In Stock')">In Stock</button><button class="btn warn" onclick="setModalStatus('Running Low')">Running Low</button><button class="btn danger" onclick="setModalStatus('Out of Stock')">Out of Stock</button></div><input id="status" class="field" style="margin-top:8px" /></div>
+        <div class="formGroup full"><label>Notes</label><textarea id="notes" class="field" rows="4"></textarea></div>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:space-between;align-items:center;margin-top:16px;flex-wrap:wrap"><button class="btn danger" onclick="showDeleteConfirm()">Delete</button><div style="display:flex;gap:8px"><button class="btn" onclick="closeEditor()">Cancel</button><button class="btn primary" onclick="saveItem()">Save Item</button></div></div>
+      <div class="confirmBar" id="confirmBar"><strong>Confirm delete?</strong><button class="btn" onclick="hideDeleteConfirm()">Cancel</button><button class="btn danger" onclick="deleteItem()">Confirm Delete</button></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SEED = [{"id": "pantry-001", "name": "Brisket Chopped and Cooked", "storeLocation": "Produce", "storage": "Produce", "category": "STAPLES", "status": "Unknown", "price": "", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-002", "name": "Butter Salted", "storeLocation": "Dairy", "storage": "Fridge", "category": "RECIPES", "status": "In Stock", "price": "$4.84", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-003", "name": "Cinnamon Rolls", "storeLocation": "Produce", "storage": "Pantry", "category": "PERSONAL", "status": "Unknown", "price": "$5.48", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-004", "name": "Flour Tortilla", "storeLocation": "Meat Market", "storage": "Pantry", "category": "RECIPES", "status": "Unknown", "price": "$2.48", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-005", "name": "Frozen Junk Food", "storeLocation": "Frozen", "storage": "Freezer", "category": "STAPLES", "status": "Unknown", "price": "$15.00", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-006", "name": "Molasses Blackstrap", "storeLocation": "Aisle 6", "storage": "Pantry", "category": "STAPLES", "status": "Unknown", "price": "$4.37", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-007", "name": "Pearl Husky Treat", "storeLocation": "Aisle 27", "storage": "Pantry", "category": "PERSONAL", "status": "Unknown", "price": "$10.88", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-008", "name": "Pearl Sweet Potato Treat", "storeLocation": "Aisle 27", "storage": "Pantry", "category": "PERSONAL", "status": "Unknown", "price": "$6.76", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-009", "name": "Printer Ink", "storeLocation": "Best Buy", "storage": "Personal", "category": "PERSONAL", "status": "Unknown", "price": "Unknown", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-010", "name": "Ravioli (HEB Premade)", "storeLocation": "Entrance", "storage": "Fridge", "category": "RECIPES", "status": "Unknown", "price": "Unknown", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-011", "name": "Salsa", "storeLocation": "Aisle 9", "storage": "Pantry", "category": "PERSONAL", "status": "Unknown", "price": "$3.48", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-012", "name": "Texas Toast Cheese", "storeLocation": "Frozen", "storage": "Freezer", "category": "STAPLES", "status": "Unknown", "price": "$1.97", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-013", "name": "Active Dry Yeast (Bake)", "storeLocation": "Aisle 6", "storage": "Baking", "category": "STAPLES", "status": "In Stock", "price": "$1.76", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-014", "name": "All purpose creole", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$2.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-015", "name": "All Spice", "storeLocation": "Aisle 6", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$3.72", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-016", "name": "Apple Cider VInegar", "storeLocation": "Aisle 4", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$4.18", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-017", "name": "Avacado Oil", "storeLocation": "Aisle 6", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$8.68", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-018", "name": "Baking Powder", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$3.48", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-019", "name": "Baking salt", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$3.58", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-020", "name": "Baking Soda", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$1.47", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-021", "name": "Balsamic Vinegar", "storeLocation": "Aisle 4", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$5.00", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-022", "name": "BBQ Sauce", "storeLocation": "Aisle 3", "storage": "Fridge", "category": "STAPLES", "status": "In Stock", "price": "$3.84", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-023", "name": "Black Pepper Ground", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$3.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-024", "name": "Black Peppercorn Whole", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$4.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-025", "name": "Body Soap", "storeLocation": "Entrance", "storage": "Bathroom", "category": "STAPLES", "status": "In Stock", "price": "Unknown", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-026", "name": "Box Corn Jiffy", "storeLocation": "Aisle 6", "storage": "Pantry", "category": "RECIPES", "status": "In Stock", "price": "$0.50", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-027", "name": "Caramel Flavor", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$2.88", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-028", "name": "Cardamom", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$10.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-029", "name": "Cayenne Pepper Ground", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$2.28", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-030", "name": "Celery Salt", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$5.18", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-031", "name": "Charcoal", "storeLocation": "Aisle 14", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$10.00", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-032", "name": "Chicken Fajita Seasoning", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$3.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-033", "name": "Chicken Stock", "storeLocation": "Aisle 5", "storage": "Pantry", "category": "RECIPES", "status": "In Stock", "price": "$3.13", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-034", "name": "Chocolate Chips (Bitter sweet)", "storeLocation": "Aisle 6", "storage": "Baking", "category": "RECIPES", "status": "In Stock", "price": "$5.38", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-035", "name": "Chocolate Chips (Milk)", "storeLocation": "Aisle 6", "storage": "Baking", "category": "RECIPES", "status": "In Stock", "price": "$5.38", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-036", "name": "Cinnamon Ground", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$2.48", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-037", "name": "Cinnamon Stick", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$2.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-038", "name": "Cinnamon Sugar", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$2.77", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-039", "name": "Cinnamon Toast Crunch Spread", "storeLocation": "Online?", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "Unknown", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-040", "name": "Cocoa Powder Dutch Process", "storeLocation": "Aisle 6", "storage": "Baking", "category": "RECIPES", "status": "In Stock", "price": "$5.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-041", "name": "Cooking Spray", "storeLocation": "Aisle 6", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$3.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-042", "name": "Corn Cream Canned", "storeLocation": "Aisle 5", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$0.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-043", "name": "Corn Whole Canned", "storeLocation": "Aisle 5", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$0.88", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-044", "name": "Cornstarch", "storeLocation": "Aisle 6", "storage": "Baking", "category": "STAPLES", "status": "In Stock", "price": "$1.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-045", "name": "Cummin Ground", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "Needs Price Update", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-046", "name": "Dawn Power Wash Refill", "storeLocation": "Aisle 25", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$4.94", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-047", "name": "Demerara or Turbinado Sugar", "storeLocation": "Aisle 6", "storage": "Baking", "category": "STAPLES", "status": "In Stock", "price": "$3.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-048", "name": "Diapers", "storeLocation": "Entrance", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$6.28", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-049", "name": "Dijon Mustard", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$3.88", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-050", "name": "Dried Oregano", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "UNCATEGORIZED", "status": "In Stock", "price": "", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-051", "name": "Dried Parsley", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "UNCATEGORIZED", "status": "In Stock", "price": "", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-052", "name": "Duck Fat", "storeLocation": "Aisle 6", "storage": "Fridge", "category": "RECIPES", "status": "In Stock", "price": "$9.89", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-053", "name": "Eggs", "storeLocation": "Dairy", "storage": "Fridge", "category": "STAPLES", "status": "In Stock", "price": "$5.76", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-054", "name": "Espresso Powder", "storeLocation": "Aisle 6", "storage": "Pantry", "category": "RECIPES", "status": "In Stock", "price": "$4.77", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-055", "name": "Fire starter cubes", "storeLocation": "Aisle 14", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "Unknown", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-056", "name": "Flaky Salt", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$3.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-057", "name": "Flour (Bread)", "storeLocation": "Aisle 6", "storage": "Baking", "category": "STAPLES", "status": "In Stock", "price": "$5.48", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-058", "name": "Flour All Purpose", "storeLocation": "Aisle 6", "storage": "Baking", "category": "STAPLES", "status": "In Stock", "price": "$3.47", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-059", "name": "Formula Powder AR", "storeLocation": "Entrance", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$38.88", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-060", "name": "Formula Pre-mixed", "storeLocation": "Entrance", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$9.92", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-061", "name": "Frozen French Fries", "storeLocation": "Frozen", "storage": "Freezer", "category": "STAPLES", "status": "In Stock", "price": "Unknown", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-062", "name": "Galic Roasted", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "Needs Price Update", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-063", "name": "Garlic (Whole & Cloves)", "storeLocation": "Produce", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$1.00", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-064", "name": "Garlic Powder", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "Needs Price Update", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-065", "name": "Garlic salt", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "Needs Price Update", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-066", "name": "Gelatine (Knox)", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "RECIPES", "status": "In Stock", "price": "$2.88", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-067", "name": "Ginger Ground", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "Needs Price Update", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-068", "name": "Ginger Ground Organic", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "Needs Price Update", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-069", "name": "Grape Seed Oil", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$7.87", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-070", "name": "Grave Brown Instant", "storeLocation": "Unassigned", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$0.75", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-071", "name": "Gravy White Instant", "storeLocation": "Aisle 8", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$1.00", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-072", "name": "Ground Cloves", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$2.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-073", "name": "Ground Coffee", "storeLocation": "Aisle 21", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$9.43", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-074", "name": "Ground Mustard", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$2.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-075", "name": "Himalayan Pink Salt", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$3.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-076", "name": "Holy Voodoo", "storeLocation": "Walmart", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "Unknown", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-077", "name": "Honey", "storeLocation": "Meat Market", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$3.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-078", "name": "Honey Hog BBQ", "storeLocation": "Produce", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$9.48", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-079", "name": "Instant Yeast", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "RECIPES", "status": "In Stock", "price": "Unknown", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-080", "name": "Ionized Salt", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "Needs Price Update", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-081", "name": "Italian Bread Crumbs", "storeLocation": "Aisle 6", "storage": "Pantry", "category": "RECIPES", "status": "In Stock", "price": "$2.36", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-082", "name": "Italian Sausage", "storeLocation": "Meat Market", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-083", "name": "Italian Seasoning", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$3.88", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-084", "name": "Kansas City Championship", "storeLocation": "Walmart", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "Unknown", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-085", "name": "Ketchup", "storeLocation": "Unassigned", "storage": "Fridge", "category": "STAPLES", "status": "In Stock", "price": "$4.67", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-086", "name": "Kosher Salt (Diamond)", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$4.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-087", "name": "Lard", "storeLocation": "Produce", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$2.68", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-088", "name": "Lime", "storeLocation": "Produce", "storage": "Fridge", "category": "STAPLES", "status": "In Stock", "price": "$1.00", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-089", "name": "Maple Syrup", "storeLocation": "Aisle 7", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$4.00", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-090", "name": "Marinara Sauce", "storeLocation": "Aisle 4", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$2.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-091", "name": "Mayonaise", "storeLocation": "Aisle 6", "storage": "Fridge", "category": "STAPLES", "status": "In Stock", "price": "Unknown", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-092", "name": "Mayonaise Japanese", "storeLocation": "Unassigned", "storage": "Unassigned", "category": "STAPLES", "status": "In Stock", "price": "Unknown", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-093", "name": "Molasses", "storeLocation": "Aisle 6", "storage": "Baking", "category": "STAPLES", "status": "In Stock", "price": "$4.37", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-094", "name": "MSG", "storeLocation": "Online?", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "Unknown", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-095", "name": "Nasal Spray", "storeLocation": "Aisle 37", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$18.35", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-096", "name": "Nutmeg Ground", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$4.62", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-097", "name": "Olive Oil Extra Virgin", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$11.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-098", "name": "Onion Powder", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "Needs Price Update", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-099", "name": "Oregano Freeze Dried", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$4.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-100", "name": "Oregano Ground", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$2.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-101", "name": "Oregano Leaves", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "Needs Price Update", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-102", "name": "Organic Fennel Seed", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$4.48", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-103", "name": "Panko Bread Crumbs", "storeLocation": "Aisle 6", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "Unknown", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-104", "name": "Paper Plates", "storeLocation": "Aisle 24", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$4.91", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-105", "name": "Paprika", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$2.28", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-106", "name": "Paprika Smoked", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$2.18", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-107", "name": "Parsley Freeze Dried", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$4.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-108", "name": "Pasta (Macaroni)", "storeLocation": "Aisle 4", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$2.78", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-109", "name": "Peanut butter", "storeLocation": "Aisle 3", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$3.79", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-110", "name": "Pecans (Roasted)", "storeLocation": "Produce", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$6.91", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-111", "name": "Pecorino Romano", "storeLocation": "Meat Market", "storage": "Fridge", "category": "STAPLES", "status": "In Stock", "price": "$6.39", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-112", "name": "Pork Sausage", "storeLocation": "Meat Market", "storage": "Fridge", "category": "RECIPES", "status": "In Stock", "price": "$4.20", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-113", "name": "Potato Yukon Gold (Normal)", "storeLocation": "Produce", "storage": "Pantry", "category": "RECIPES", "status": "In Stock", "price": "$3.97", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-114", "name": "Pumpkin Puree", "storeLocation": "Aisle 6", "storage": "Baking", "category": "STAPLES", "status": "In Stock", "price": "$2.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-115", "name": "Ramen Noodles", "storeLocation": "Aisle 5", "storage": "Unassigned", "category": "STAPLES", "status": "In Stock", "price": "$1.50", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-116", "name": "Red Pepper Crushed", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$2.48", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-117", "name": "Rice Basmati", "storeLocation": "Aisle 4", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$3.97", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-118", "name": "Rolled Oats (Old Fashion)", "storeLocation": "Aisle 7", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$3.28", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-119", "name": "Russet Potato", "storeLocation": "Produce", "storage": "Pantry", "category": "RECIPES", "status": "In Stock", "price": "$3.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-120", "name": "Sea Salt Course", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$2.62", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-121", "name": "Sea Salt Extra Course", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$2.62", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-122", "name": "Semi or Bitter Sweet Dark Chocolate", "storeLocation": "Aisle 6", "storage": "Baking", "category": "RECIPES", "status": "In Stock", "price": "$6.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-123", "name": "Sesame seeds", "storeLocation": "Aisle 6", "storage": "Pantry", "category": "RECIPES", "status": "In Stock", "price": "$7.81", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-124", "name": "Shortening (Bake)", "storeLocation": "Aisle 6", "storage": "Baking", "category": "RECIPES", "status": "In Stock", "price": "$3.24", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-125", "name": "Soy Sauce", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$4.78", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-126", "name": "Soy Sauce Sweet", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$3.74", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-127", "name": "Sprinkles Rainbow Confetti", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$4.18", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-128", "name": "Sprinkles Rainbow Jimmies", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$4.68", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-129", "name": "Star Anise", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$7.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-130", "name": "Steak King Competition Blend", "storeLocation": "Online?", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "Unknown", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-131", "name": "Sugar Confectioners", "storeLocation": "Aisle 6", "storage": "Baking", "category": "STAPLES", "status": "In Stock", "price": "$2.42", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-132", "name": "Sugar Dark Brown", "storeLocation": "Aisle 6", "storage": "Baking", "category": "STAPLES", "status": "In Stock", "price": "$2.82", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-133", "name": "Sugar Ganulated", "storeLocation": "Aisle 6", "storage": "Baking", "category": "STAPLES", "status": "In Stock", "price": "$2.48", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-134", "name": "Sugar Light Brown", "storeLocation": "Aisle 6", "storage": "Baking", "category": "STAPLES", "status": "In Stock", "price": "$2.82", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-135", "name": "Taco Seasoning", "storeLocation": "Unassigned", "storage": "Pantry", "category": "RECIPES", "status": "In Stock", "price": "Unknown", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-136", "name": "Thyme Ground", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$2.18", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-137", "name": "Thyme Leaves", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$1.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-138", "name": "Tomato Paste", "storeLocation": "Aisle 5", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$3.00", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-139", "name": "Tooth Paste", "storeLocation": "Entrance", "storage": "Bathroom", "category": "PERSONAL", "status": "In Stock", "price": "$7.00", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-140", "name": "Twix Spice", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "Unknown", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-141", "name": "Vanilla Beans", "storeLocation": "Aisle 6", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$14.68", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-142", "name": "Vanilla Extract", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$4.87", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-143", "name": "Vinegar Sherry", "storeLocation": "Aisle 4", "storage": "Pantry", "category": "STAPLES", "status": "In Stock", "price": "$6.18", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-144", "name": "White Pepper", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "Needs Price Update", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-145", "name": "Whole Pink Peppercorns", "storeLocation": "Aisle 6", "storage": "Spices & Oils", "category": "STAPLES", "status": "In Stock", "price": "$5.88", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-146", "name": "Alcohol Beer", "storeLocation": "Meat Market", "storage": "Fridge", "category": "PERSONAL", "status": "Out of Stock", "price": "$10.48", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-147", "name": "Bacon", "storeLocation": "Produce", "storage": "Fridge", "category": "STAPLES", "status": "Out of Stock", "price": "$10.33", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-148", "name": "Basil Leaves", "storeLocation": "Produce", "storage": "Fridge", "category": "RECIPES", "status": "Out of Stock", "price": "$1.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-149", "name": "Black Beans Canned", "storeLocation": "Aisle 5", "storage": "Pantry", "category": "RECIPES", "status": "Out of Stock", "price": "$1.20", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-150", "name": "Bob Evans Mashed Potatoes", "storeLocation": "Premade Meals", "storage": "Fridge", "category": "RECIPES", "status": "Out of Stock", "price": "$4.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-151", "name": "Bread (Brioch Breakfast)", "storeLocation": "Unassigned", "storage": "Pantry", "category": "STAPLES", "status": "Out of Stock", "price": "", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-152", "name": "Bread Dave's Killer", "storeLocation": "Aisle 3", "storage": "Pantry", "category": "PERSONAL", "status": "Out of Stock", "price": "$5.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-153", "name": "Buttermilk", "storeLocation": "Dairy", "storage": "Fridge", "category": "STAPLES", "status": "Out of Stock", "price": "$1.62", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-154", "name": "Cheese (American)", "storeLocation": "Dairy", "storage": "Fridge", "category": "STAPLES", "status": "Out of Stock", "price": "$7.84", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-155", "name": "Cheese Cream", "storeLocation": "Produce", "storage": "Fridge", "category": "RECIPES", "status": "Out of Stock", "price": "$2.30", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-156", "name": "Cheese Montere Jack", "storeLocation": "Produce", "storage": "Fridge", "category": "RECIPES", "status": "Out of Stock", "price": "$3.13", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-157", "name": "Cheese Sharp", "storeLocation": "Meat Market", "storage": "Fridge", "category": "STAPLES", "status": "Out of Stock", "price": "$4.00", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-158", "name": "Cheese Velvetta", "storeLocation": "Meat Market", "storage": "Fridge", "category": "STAPLES", "status": "Out of Stock", "price": "$3.99", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-159", "name": "Chicken (Whole)", "storeLocation": "Produce", "storage": "Fridge", "category": "STAPLES", "status": "Out of Stock", "price": "$9.74", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-160", "name": "Chicken Breast", "storeLocation": "Meat Market", "storage": "Fridge", "category": "RECIPES", "status": "Out of Stock", "price": "$14.22", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-161", "name": "Chips", "storeLocation": "Aisle 9", "storage": "Pantry", "category": "PERSONAL", "status": "Out of Stock", "price": "$3.18", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-162", "name": "Chives", "storeLocation": "Produce", "storage": "Fridge", "category": "RECIPES", "status": "Out of Stock", "price": "$1.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-163", "name": "Conditioner", "storeLocation": "Entrance", "storage": "Personal", "category": "PERSONAL", "status": "Out of Stock", "price": "$7.00", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-164", "name": "Cookies Biscoff Lotus Brand", "storeLocation": "Aisle 8", "storage": "Baking", "category": "RECIPES", "status": "Out of Stock", "price": "$2.97", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-165", "name": "Corn Cob", "storeLocation": "Frozen", "storage": "Fridge", "category": "STAPLES", "status": "Out of Stock", "price": "$3.47", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-166", "name": "Diced Jalapenos", "storeLocation": "Aisle 3", "storage": "Pantry", "category": "RECIPES", "status": "Out of Stock", "price": "$0.92", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-167", "name": "Frozen Bananas", "storeLocation": "Frozen", "storage": "Freezer", "category": "STAPLES", "status": "Out of Stock", "price": "$3.48", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-168", "name": "Frozen Berries", "storeLocation": "Frozen", "storage": "Freezer", "category": "STAPLES", "status": "Out of Stock", "price": "$3.52", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-169", "name": "Frozen Pizza", "storeLocation": "Frozen", "storage": "Freezer", "category": "STAPLES", "status": "Out of Stock", "price": "$4.82", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-170", "name": "Ginger (Fresh)", "storeLocation": "Produce", "storage": "Fridge", "category": "RECIPES", "status": "Out of Stock", "price": "$3.00", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-171", "name": "Hawaiian Rolls", "storeLocation": "Aisle 3", "storage": "Pantry", "category": "RECIPES", "status": "Out of Stock", "price": "$4.48", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-172", "name": "Herb Bay Leaf", "storeLocation": "Produce", "storage": "Fridge", "category": "UNCATEGORIZED", "status": "Out of Stock", "price": "", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-173", "name": "Herb Dill", "storeLocation": "Produce", "storage": "Fridge", "category": "STAPLES", "status": "Out of Stock", "price": "", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-174", "name": "Herb Mint", "storeLocation": "Produce", "storage": "Fridge", "category": "STAPLES", "status": "Out of Stock", "price": "", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-175", "name": "Herb Parsely", "storeLocation": "Produce", "storage": "Fridge", "category": "STAPLES", "status": "Out of Stock", "price": "", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-176", "name": "Labne", "storeLocation": "Unassigned", "storage": "Fridge", "category": "RECIPES", "status": "Out of Stock", "price": "", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-177", "name": "Lemon", "storeLocation": "Produce", "storage": "Fridge", "category": "RECIPES", "status": "Out of Stock", "price": "$1.00", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-178", "name": "Milk Whole", "storeLocation": "Dairy", "storage": "Fridge", "category": "STAPLES", "status": "Out of Stock", "price": "$3.19", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-179", "name": "Mozzarella Cheese", "storeLocation": "Meat Market", "storage": "Fridge", "category": "RECIPES", "status": "Out of Stock", "price": "$2.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-180", "name": "Mustard", "storeLocation": "Aisle 3", "storage": "Pantry", "category": "STAPLES", "status": "Out of Stock", "price": "$1.62", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-181", "name": "NY Strip Steak", "storeLocation": "Meat Market", "storage": "Fridge", "category": "RECIPES", "status": "Out of Stock", "price": "$15.00", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-182", "name": "Parchment Paper", "storeLocation": "Aisle 24", "storage": "Pantry", "category": "STAPLES", "status": "Out of Stock", "price": "$5.88", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-183", "name": "Parmesan Cheese", "storeLocation": "Meat Market", "storage": "Fridge", "category": "RECIPES", "status": "Out of Stock", "price": "$4.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-184", "name": "Peaches (fresh or canned)", "storeLocation": "Aisle 8", "storage": "Fridge", "category": "RECIPES", "status": "Out of Stock", "price": "$4.77", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-185", "name": "Peaches Whole", "storeLocation": "Produce", "storage": "Pantry", "category": "RECIPES", "status": "Out of Stock", "price": "Unknown", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-186", "name": "Pellets for grill", "storeLocation": "Aisle 14", "storage": "Pantry", "category": "STAPLES", "status": "Out of Stock", "price": "$14.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-187", "name": "Pesto", "storeLocation": "Produce", "storage": "Fridge", "category": "RECIPES", "status": "Out of Stock", "price": "$4.00", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-188", "name": "Pineapple Juice", "storeLocation": "Aisle 20", "storage": "Fridge", "category": "RECIPES", "status": "Out of Stock", "price": "$4.32", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-189", "name": "Potato Yukon Gold (Small)", "storeLocation": "Produce", "storage": "Pantry", "category": "RECIPES", "status": "Out of Stock", "price": "$3.97", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-190", "name": "Red Onion", "storeLocation": "Produce", "storage": "Pantry", "category": "RECIPES", "status": "Out of Stock", "price": "$1.38", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-191", "name": "San Marzano Tomatos", "storeLocation": "Aisle 5", "storage": "Pantry", "category": "RECIPES", "status": "Out of Stock", "price": "$4.54", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-192", "name": "Sardines", "storeLocation": "Aisle 5", "storage": "Pantry", "category": "STAPLES", "status": "Out of Stock", "price": "$1.30", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-193", "name": "Shallots", "storeLocation": "Produce", "storage": "Fridge", "category": "STAPLES", "status": "Out of Stock", "price": "$1.00", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-194", "name": "Sour Cream", "storeLocation": "Dairy", "storage": "Fridge", "category": "RECIPES", "status": "Out of Stock", "price": "$2.40", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-195", "name": "Spaghetti", "storeLocation": "Aisle 4", "storage": "Pantry", "category": "STAPLES", "status": "Out of Stock", "price": "$2.86", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-196", "name": "Tomatos Ro-tell", "storeLocation": "Aisle 3", "storage": "Fridge", "category": "RECIPES", "status": "Out of Stock", "price": "$1.39", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-197", "name": "Utensil Plastic", "storeLocation": "Unassigned", "storage": "Unassigned", "category": "STAPLES", "status": "Out of Stock", "price": "Unknown", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-198", "name": "White Onion", "storeLocation": "Produce", "storage": "Pantry", "category": "RECIPES", "status": "Out of Stock", "price": "$1.32", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-199", "name": "White-Chocolate Bar", "storeLocation": "Aisle 6", "storage": "Pantry", "category": "RECIPES", "status": "Out of Stock", "price": "$3.48", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-200", "name": "White-Chocolate Chips", "storeLocation": "Aisle 6", "storage": "Pantry", "category": "RECIPES", "status": "Out of Stock", "price": "$5.38", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-201", "name": "Worcestershire Sauce", "storeLocation": "Aisle 3", "storage": "Spices & Oils", "category": "STAPLES", "status": "Out of Stock", "price": "$3.33", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-202", "name": "Butter Unsalted", "storeLocation": "Produce", "storage": "Fridge", "category": "STAPLES", "status": "Running Low", "price": "$5.24", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-203", "name": "Chorizo", "storeLocation": "Dairy", "storage": "Fridge", "category": "STAPLES", "status": "Running Low", "price": "$3.96", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-204", "name": "Crystal Light", "storeLocation": "Dairy", "storage": "Pantry", "category": "STAPLES", "status": "Running Low", "price": "Unknown", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-205", "name": "Green Onion Minced", "storeLocation": "Produce", "storage": "Fridge", "category": "RECIPES", "status": "Running Low", "price": "$1.18", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-206", "name": "Ground Beef", "storeLocation": "Meat Market", "storage": "Fridge", "category": "STAPLES", "status": "Running Low", "price": "$10.81", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-207", "name": "Heavy Cream", "storeLocation": "Dairy", "storage": "Fridge", "category": "RECIPES", "status": "Running Low", "price": "$4.28", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-208", "name": "Herb Cilantro", "storeLocation": "Produce", "storage": "Fridge", "category": "STAPLES", "status": "Running Low", "price": "", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-209", "name": "Jelly Strawberry", "storeLocation": "Unassigned", "storage": "Fridge", "category": "STAPLES", "status": "Running Low", "price": "$3.97", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-210", "name": "Macadamia Nuts", "storeLocation": "Aisle 2", "storage": "Produce", "category": "RECIPES", "status": "Running Low", "price": "$4.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-211", "name": "Parsley", "storeLocation": "Produce", "storage": "Fridge", "category": "RECIPES", "status": "Running Low", "price": "$1.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-212", "name": "Rosemary", "storeLocation": "Produce", "storage": "Fridge", "category": "RECIPES", "status": "Running Low", "price": "$1.98", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-213", "name": "Sausage Link", "storeLocation": "Dairy", "storage": "Freezer", "category": "STAPLES", "status": "Running Low", "price": "$4.49", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-214", "name": "Sweet Onion", "storeLocation": "Produce", "storage": "Fridge", "category": "STAPLES", "status": "Running Low", "price": "$3.88", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-215", "name": "Sweet Potato", "storeLocation": "Produce", "storage": "Pantry", "category": "RECIPES", "status": "Running Low", "price": "$3.00", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}, {"id": "pantry-216", "name": "Calabrian Chile", "storeLocation": "Unassigned", "storage": "Unassigned", "category": "UNCATEGORIZED", "status": "Unknown", "price": "", "quantity": "", "unit": "", "notes": "", "lastUpdated": ""}];
+const STORE_KEY = 'kitchen_command_pantry_v1';
+let items = loadItems();
+let sortField = 'name';
+let sortDir = 1;
+
+function loadItems(){
+  try{ const saved = localStorage.getItem(STORE_KEY); return saved ? JSON.parse(saved) : structuredClone(SEED); }catch(e){ return structuredClone(SEED); }
+}
+function persist(){ localStorage.setItem(STORE_KEY, JSON.stringify(items)); }
+function normalize(v){ return String(v ?? '').trim(); }
+function isLuxury(item){ return normalize(item.category).toUpperCase() === 'LUXURY'; }
+function pickupNeeded(item){ return !isLuxury(item) && ['Out of Stock','Running Low'].includes(item.status); }
+function needsCleanup(item){
+  return !item.status || item.status === 'Unknown' || !item.category || item.category === 'UNCATEGORIZED' || !item.storage || item.storage === 'Unassigned' || !item.price || ['Unknown','Needs Price Update'].includes(item.price);
+}
+function moneyNumber(v){ const n = parseFloat(String(v||'').replace(/[^0-9.]/g,'')); return isNaN(n) ? 999999 : n; }
+function badge(text, extra=''){ return `<span class="badge ${extra}">${escapeHtml(text)}</span>`; }
+function stockBadge(s){ const m={'In Stock':'stock','Running Low':'low','Out of Stock':'out','Unknown':'unknown'}; return badge(s || 'Unknown', m[s] || 'unknown'); }
+function escapeHtml(str){ return String(str??'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m])); }
+
+function isBlankishValue(v){
+  const x = normalize(v).toLowerCase();
+  return !x || ['unknown','unassigned','uncategorized','needs price update','---','update','uknown'].includes(x);
+}
+function subtleValue(v, fallback='Not set'){
+  const raw = normalize(v);
+  if(isBlankishValue(raw)) return `<span class="valueSubtle">${escapeHtml(raw || fallback)}</span><span class="blankFlag" title="Blank or needs update"></span>`;
+  return escapeHtml(raw);
+}
+function subtleBadge(v, extra=''){
+  const raw = normalize(v) || 'Not set';
+  if(isBlankishValue(raw)) return `<span class="badge unknown ${extra}">${escapeHtml(raw)}</span><span class="blankFlag" title="Blank or needs update"></span>`;
+  return badge(raw, extra);
+}
+function setSort(f){ if(sortField===f) sortDir*=-1; else { sortField=f; sortDir=1; } document.getElementById('sortBy').value = f === 'storeLocation' ? 'name' : f; render(); }
+function filteredItems(){
+  const q=normalize(document.getElementById('search').value).toLowerCase();
+  const cat=document.getElementById('categoryFilter').value;
+  const stor=document.getElementById('storageFilter').value;
+  const stat=document.getElementById('statusFilter').value;
+  const pick=document.getElementById('pickupFilter').value;
+  sortField=document.getElementById('sortBy').value || sortField;
+  return items.filter(it=>{
+    const hay=[it.name,it.storeLocation,it.storage,it.category,it.status,it.price,it.notes].join(' ').toLowerCase();
+    if(q && !hay.includes(q)) return false;
+    if(cat !== 'all' && it.category !== cat) return false;
+    if(stor !== 'all' && it.storage !== stor) return false;
+    if(stat !== 'all' && it.status !== stat) return false;
+    if(pick === 'pickup' && !pickupNeeded(it)) return false;
+    if(pick === 'noPickup' && pickupNeeded(it)) return false;
+    if(pick === 'cleanup' && !needsCleanup(it)) return false;
+    return true;
+  }).sort((a,b)=>{
+    let av=a[sortField]??'', bv=b[sortField]??'';
+    if(sortField==='price') return (moneyNumber(av)-moneyNumber(bv))*sortDir;
+    if(sortField==='updated') { av=a.lastUpdated||''; bv=b.lastUpdated||''; }
+    return String(av).localeCompare(String(bv), undefined, {numeric:true,sensitivity:'base'})*sortDir;
+  });
+}
+function renderFilters(){
+  const cats=['all',...Array.from(new Set(items.map(i=>i.category||'UNCATEGORIZED'))).sort()];
+  const stors=['all',...Array.from(new Set(items.map(i=>i.storage||'Unassigned'))).sort()];
+  const stats=['all','In Stock','Running Low','Out of Stock','Unknown'];
+  fillSelect('categoryFilter', cats, 'All Categories'); fillSelect('storageFilter', stors, 'All Storage'); fillSelect('statusFilter', stats, 'All Status');
+}
+function fillSelect(id, vals, allLabel){
+  const el=document.getElementById(id); const cur=el.value || 'all';
+  el.innerHTML=vals.map(v=>`<option value="${escapeHtml(v)}">${v==='all'?allLabel:escapeHtml(v)}</option>`).join('');
+  if(vals.includes(cur)) el.value=cur;
+}
+function renderMetrics(){
+  const inStock=items.filter(i=>i.status==='In Stock').length, low=items.filter(i=>i.status==='Running Low').length, out=items.filter(i=>i.status==='Out of Stock').length, pickup=items.filter(pickupNeeded).length;
+  const cards=[['In Stock',inStock,'Ready to cook'],['Running Low',low,'Needs attention'],['Out of Stock',out,'Missing items'],['Pickup Needed',pickup,'Auto-generated']];
+  document.getElementById('metrics').innerHTML=cards.map(c=>`<div class="card metric"><div class="label">${c[0]}</div><div class="value">${c[1]}</div><div class="hint">${c[2]}</div></div>`).join('');
+}
+function renderTable(){
+  const list=filteredItems();
+  document.getElementById('resultCount').textContent=`Showing ${list.length} of ${items.length} items`;
+  const tbody=document.getElementById('tbody');
+  if(!list.length){ tbody.innerHTML=`<tr><td colspan="8" class="empty">No items match this filter.</td></tr>`; return; }
+  tbody.innerHTML=list.map(it=>`<tr ondblclick="openEditor('${it.id}')"><td class="nameCell">${subtleValue(it.name,'Unnamed item')}<div class="muted">${it.quantity || it.unit ? `${escapeHtml(it.quantity||'')} ${escapeHtml(it.unit||'')}` : `<span class="valueSubtle">Qty not set</span><span class="blankFlag" title="Blank quantity"></span>`}</div></td><td>${stockBadge(it.status)}${isBlankishValue(it.status)?'<span class="blankFlag" title="Blank or needs update"></span>':''}</td><td>${subtleBadge(it.category, it.category==='LUXURY'?'luxury':'')}</td><td>${subtleValue(it.storage)}</td><td>${subtleValue(it.storeLocation)}</td><td>${subtleValue(it.price)}</td><td>${pickupNeeded(it)?badge('Pickup','pickup'):badge(isLuxury(it)?'Luxury Skip':'No','unknown')}</td><td><div class="rowActions"><button class="iconBtn" onclick="event.stopPropagation();openEditor('${it.id}')">✎</button><button class="iconBtn" onclick="event.stopPropagation();quickStatus('${it.id}')">↻</button></div></td></tr>`).join('');
+}
+function renderPickup(){
+  const list=items.filter(pickupNeeded).sort((a,b)=>a.storeLocation.localeCompare(b.storeLocation)||a.name.localeCompare(b.name));
+  const el=document.getElementById('pickupList');
+  if(!list.length){ el.innerHTML='<div class="empty">Nothing marked for pickup.</div>'; return; }
+  el.innerHTML=list.map(it=>`<div class="pickupItem"><div><strong>${escapeHtml(it.name)}</strong><div class="pickupMeta">${escapeHtml(it.storeLocation)} • ${escapeHtml(it.storage)} • ${escapeHtml(it.category)} • ${escapeHtml(it.price||'')}</div></div><button class="btn good" onclick="setItemStock('${it.id}','In Stock')">Done</button></div>`).join('');
+}
+function render(){ renderFilters(); renderMetrics(); renderTable(); renderPickup(); updateHeaderCards(); }
+function openEditor(id=''){
+  hideDeleteConfirm(); const it=id ? items.find(x=>x.id===id) : null;
+  document.getElementById('modalTitle').textContent = it ? 'Edit Item' : 'Add Item';
+  document.getElementById('editId').value = it?.id || '';
+  document.getElementById('itemName').value = it?.name || '';
+  document.getElementById('storeLocation').value = it?.storeLocation || '';
+  document.getElementById('storage').value = it?.storage || 'Pantry';
+  document.getElementById('category').value = it?.category || 'STAPLES';
+  document.getElementById('status').value = it?.status || 'In Stock';
+  document.getElementById('price').value = it?.price || '';
+  document.getElementById('quantity').value = it?.quantity || '';
+  document.getElementById('unit').value = it?.unit || '';
+  document.getElementById('notes').value = it?.notes || '';
+  document.getElementById('modalBackdrop').classList.add('show');
+}
+function closeEditor(){ document.getElementById('modalBackdrop').classList.remove('show'); }
+function setModalStatus(s){ document.getElementById('status').value=s; }
+function saveItem(){
+  const id=document.getElementById('editId').value;
+  const name=normalize(document.getElementById('itemName').value);
+  if(!name){ alert('Item name is required.'); return; }
+  const data={id:id || 'pantry-'+Date.now(), name, storeLocation:normalize(document.getElementById('storeLocation').value)||'Unassigned', storage:normalize(document.getElementById('storage').value)||'Unassigned', category:normalize(document.getElementById('category').value)||'UNCATEGORIZED', status:normalize(document.getElementById('status').value)||'Unknown', price:normalize(document.getElementById('price').value), quantity:normalize(document.getElementById('quantity').value), unit:normalize(document.getElementById('unit').value), notes:normalize(document.getElementById('notes').value), lastUpdated:new Date().toISOString()};
+  const idx=items.findIndex(x=>x.id===id); if(idx>=0) items[idx]=data; else items.push(data);
+  persist(); closeEditor(); render(); toast('Saved.');
+}
+function showDeleteConfirm(){ document.getElementById('confirmBar').classList.add('show'); }
+function hideDeleteConfirm(){ document.getElementById('confirmBar').classList.remove('show'); }
+function deleteItem(){ const id=document.getElementById('editId').value; items=items.filter(x=>x.id!==id); persist(); closeEditor(); render(); toast('Deleted.'); }
+function setItemStock(id,status){ const it=items.find(x=>x.id===id); if(it){ it.status=status; it.lastUpdated=new Date().toISOString(); persist(); render(); } }
+function quickStatus(id){ const it=items.find(x=>x.id===id); if(!it) return; const order=['In Stock','Running Low','Out of Stock']; it.status=order[(order.indexOf(it.status)+1+order.length)%order.length]; it.lastUpdated=new Date().toISOString(); persist(); render(); }
+function markPickupInStock(){ if(!confirm('Mark every pickup-needed item as In Stock?')) return; items.forEach(i=>{ if(pickupNeeded(i)){ i.status='In Stock'; i.lastUpdated=new Date().toISOString(); } }); persist(); render(); toast('Pickup list cleared.'); }
+function resetDemo(){ if(!confirm('Reset inventory back to the original uploaded pantry list? This clears local edits.')) return; items=structuredClone(SEED); persist(); render(); }
+function checkRecipe(){
+  const lines=document.getElementById('recipeInput').value.split(/[\n,]+/).map(x=>normalize(x)).filter(Boolean);
+  if(!lines.length){ document.getElementById('recipeResult').innerHTML='Paste recipe ingredients first.'; return; }
+  const results=lines.map(line=>{
+    const q=line.toLowerCase();
+    let match=items.find(i=>i.name.toLowerCase()===q) || items.find(i=>i.name.toLowerCase().includes(q) || q.includes(i.name.toLowerCase()));
+    if(!match) return {line, status:'Missing From Pantry Database'};
+    return {line, match:match.name, status:match.status, pickup:pickupNeeded(match), category:match.category};
+  });
+  const missing=results.filter(r=>!r.match || ['Out of Stock','Running Low'].includes(r.status));
+  const score=missing.length===0 ? '✅ Ready to cook' : `⚠️ ${missing.length} ingredient(s) need attention`;
+  document.getElementById('recipeResult').innerHTML=`<strong>${score}</strong><br><br>`+results.map(r=> r.match ? `${escapeHtml(r.line)} → <strong>${escapeHtml(r.match)}</strong> • ${stockBadge(r.status)} ${r.pickup?badge('Pickup','pickup'):''}` : `${escapeHtml(r.line)} → ${badge('Not in database','out')}`).join('<br>');
+}
+function toast(msg){
+  const t=document.createElement('div'); t.textContent=msg; t.style.cssText='position:fixed;right:18px;bottom:18px;background:#111827;border:1px solid rgba(255,255,255,.18);color:#fff;padding:12px 14px;border-radius:14px;box-shadow:0 14px 40px rgba(0,0,0,.35);z-index:50;font-weight:900'; document.body.appendChild(t); setTimeout(()=>t.remove(),1800);
+}
+document.getElementById('modalBackdrop').addEventListener('click',e=>{ if(e.target.id==='modalBackdrop') closeEditor(); });
+
+/* Kitchen Lab v2 logic */
+const RECIPE_KEY = 'kitchen_command_recipes_v2';
+const TEST_KEY = 'kitchen_command_tests_v2';
+const TIMER_KEY = 'kitchen_command_timers_v2';
+let activeLab = 'library';
+let compareSelected = [];
+let recipes = loadRecipes();
+let testEntries = loadTests();
+let timers = loadTimers();
+let timerTick = null;
+
+function switchPage(page){
+  ['pantry','recipes','grocery'].forEach(p=>{
+    const view=document.getElementById('page-'+p), nav=document.getElementById('nav-'+p);
+    if(view) view.classList.toggle('active', p===page);
+    if(nav) nav.classList.toggle('active', p===page);
+  });
+  if(page==='recipes') renderKitchenLab();
+}
+function updateHeaderCards(){
+  const pantry=document.getElementById('navPantryCount'), grocery=document.getElementById('navGroceryCount'), recipe=document.getElementById('navRecipeCount');
+  if(pantry) pantry.textContent=items.length;
+  if(grocery) grocery.textContent=items.filter(pickupNeeded).length;
+  if(recipe) recipe.textContent=recipes.length ? recipes.length : 'Ready';
+}
+function loadRecipes(){
+  try{ const saved=localStorage.getItem(RECIPE_KEY); return saved?JSON.parse(saved):seedRecipes(); }catch(e){ return seedRecipes(); }
+}
+function loadTests(){ try{ return JSON.parse(localStorage.getItem(TEST_KEY)||'[]'); }catch(e){ return []; } }
+function loadTimers(){ try{ return JSON.parse(localStorage.getItem(TIMER_KEY)||'[]'); }catch(e){ return []; } }
+function persistRecipes(){ localStorage.setItem(RECIPE_KEY, JSON.stringify(recipes)); }
+function persistTests(){ localStorage.setItem(TEST_KEY, JSON.stringify(testEntries)); }
+function persistTimers(){ localStorage.setItem(TIMER_KEY, JSON.stringify(timers)); }
+function seedRecipes(){
+  return [
+    {id:'recipe-'+Date.now()+'-1',name:'Biscuits and Gravy',category:'Breakfast',prep:15,cook:25,difficulty:'Medium',rating:8.4,ingredients:['Flour All Purpose','Butter Unsalted','Milk Whole','Pork Sausage','Black Pepper Ground','Baking Powder'],notes:'Demo baseline recipe for pantry matching.'},
+    {id:'recipe-'+Date.now()+'-2',name:'Pantry Spaghetti',category:'Dinner',prep:10,cook:25,difficulty:'Easy',rating:7.8,ingredients:['Spaghetti','Marinara Sauce','Parmesan Cheese','Garlic Powder','Italian Seasoning'],notes:'Fast dinner comparison recipe.'},
+    {id:'recipe-'+Date.now()+'-3',name:'Chocolate Chip Cookie Test',category:'Baking',prep:20,cook:12,difficulty:'Medium',rating:8.9,ingredients:['Flour All Purpose','Butter Salted','Sugar Dark Brown','Sugar Ganulated','Chocolate Chips (Milk)','Vanilla Extract','Baking Soda'],notes:'Good for testing small changes like chilled dough or more brown sugar.'}
+  ];
+}
+function recipeIngredientsText(r){ return Array.isArray(r.ingredients)?r.ingredients.join('\n'):String(r.ingredients||''); }
+function splitLines(v){ return String(v||'').split(/[\n,]+/).map(x=>normalize(x)).filter(Boolean); }
+function pantryMatchForIngredients(ingredients){
+  const rows=ingredients.map(line=>{
+    const q=line.toLowerCase();
+    const match=items.find(i=>i.name.toLowerCase()===q) || items.find(i=>i.name.toLowerCase().includes(q) || q.includes(i.name.toLowerCase()));
+    if(!match) return {line,match:null,status:'Missing From Pantry Database',pickup:true,score:0};
+    const ok=match.status==='In Stock';
+    const low=match.status==='Running Low';
+    return {line,match:match.name,status:match.status,category:match.category,pickup:pickupNeeded(match),score:ok?1:(low?.5:0)};
+  });
+  const score = ingredients.length ? Math.round(rows.reduce((a,r)=>a+r.score,0)/ingredients.length*100) : 0;
+  return {rows,score,missing:rows.filter(r=>!r.match || r.status==='Out of Stock' || r.status==='Running Low')};
+}
+function renderKitchenLab(){ renderRecipeCards(); renderRecipeSelects(); renderTestCards(); renderCompareOptions(); renderTimers(); updateHeaderCards(); }
+function switchLab(tab){
+  activeLab=tab;
+  ['library','test','compare','timers'].forEach(t=>{
+    const p=document.getElementById('lab-'+t), b=document.getElementById('labtab-'+t);
+    if(p) p.classList.toggle('active',t===tab);
+    if(b) b.classList.toggle('active',t===tab);
+  });
+  renderKitchenLab();
+}
+function renderRecipeCards(){
+  const el=document.getElementById('recipeCards'); if(!el) return;
+  if(!recipes.length){ el.innerHTML='<div class="empty">No recipes yet. Add your first recipe on the right.</div>'; return; }
+  el.innerHTML=recipes.map(r=>{
+    const m=pantryMatchForIngredients(r.ingredients||[]);
+    const missing=m.missing.slice(0,5).map(x=>escapeHtml(x.line)).join(', ');
+    return `<div class="recipeCard"><div class="cardTitleLine"><strong>${escapeHtml(r.name)}</strong><span class="tinyChip">${m.score}% pantry</span></div><div class="miniMeta">${escapeHtml(r.category||'Recipe')} • ${escapeHtml(r.difficulty||'')} • ${Number(r.prep||0)+Number(r.cook||0)} min • Rating ${escapeHtml(r.rating||'—')}</div><div class="scoreBar"><div class="scoreFill" style="width:${m.score}%"></div></div><div class="miniMeta">${m.missing.length?`Needs: ${missing}${m.missing.length>5?'…':''}`:'All listed ingredients ready.'}</div><div class="chipRow"><span class="tinyChip">${(r.ingredients||[]).length} ingredients</span><span class="tinyChip">${testEntries.filter(t=>t.recipeId===r.id).length} tests</span></div><div class="inlineActions"><button class="btn" onclick="editRecipe('${r.id}')">Edit</button><button class="btn" onclick="duplicateRecipe('${r.id}')">Duplicate</button><button class="btn" onclick="selectRecipeForTest('${r.id}')">Test</button></div></div>`;
+  }).join('');
+}
+function focusRecipeForm(){ switchPage('recipes'); switchLab('library'); document.getElementById('recipeName')?.focus(); }
+function clearRecipeForm(){ ['recipeId','recipeName','recipeCategory','recipePrep','recipeCook','recipeRating','recipeIngredients','recipeNotes'].forEach(id=>{const e=document.getElementById(id); if(e) e.value='';}); const d=document.getElementById('recipeDifficulty'); if(d) d.value='Easy'; }
+function saveRecipe(){
+  const name=normalize(document.getElementById('recipeName').value); if(!name){ alert('Recipe name is required.'); return; }
+  const id=document.getElementById('recipeId').value || 'recipe-'+Date.now();
+  const data={id,name,category:normalize(document.getElementById('recipeCategory').value)||'Uncategorized',prep:Number(document.getElementById('recipePrep').value||0),cook:Number(document.getElementById('recipeCook').value||0),difficulty:document.getElementById('recipeDifficulty').value||'Easy',rating:document.getElementById('recipeRating').value||'',ingredients:splitLines(document.getElementById('recipeIngredients').value),notes:normalize(document.getElementById('recipeNotes').value),updated:new Date().toISOString()};
+  const idx=recipes.findIndex(r=>r.id===id); if(idx>=0) recipes[idx]=data; else recipes.push(data);
+  persistRecipes(); renderKitchenLab(); toast('Recipe saved.');
+}
+function editRecipe(id){ const r=recipes.find(x=>x.id===id); if(!r) return; switchLab('library'); document.getElementById('recipeId').value=r.id; document.getElementById('recipeName').value=r.name||''; document.getElementById('recipeCategory').value=r.category||''; document.getElementById('recipePrep').value=r.prep||''; document.getElementById('recipeCook').value=r.cook||''; document.getElementById('recipeDifficulty').value=r.difficulty||'Easy'; document.getElementById('recipeRating').value=r.rating||''; document.getElementById('recipeIngredients').value=recipeIngredientsText(r); document.getElementById('recipeNotes').value=r.notes||''; document.getElementById('recipeName').focus(); }
+function duplicateRecipe(id){ const r=recipes.find(x=>x.id===id); if(!r) return; recipes.push({...r,id:'recipe-'+Date.now(),name:r.name+' Copy',updated:new Date().toISOString()}); persistRecipes(); renderKitchenLab(); toast('Recipe duplicated.'); }
+function deleteRecipeFromForm(){ const id=document.getElementById('recipeId').value; if(!id){ clearRecipeForm(); return; } if(!confirm('Delete this recipe? Test entries will remain archived.')) return; recipes=recipes.filter(r=>r.id!==id); persistRecipes(); clearRecipeForm(); renderKitchenLab(); toast('Recipe deleted.'); }
+function renderRecipeSelects(){ const sel=document.getElementById('testRecipe'); if(!sel) return; const cur=sel.value; sel.innerHTML=recipes.map(r=>`<option value="${escapeHtml(r.id)}">${escapeHtml(r.name)}</option>`).join(''); if(recipes.some(r=>r.id===cur)) sel.value=cur; }
+function selectRecipeForTest(id){ switchLab('test'); const sel=document.getElementById('testRecipe'); if(sel) sel.value=id; }
+function clearTestForm(){ ['testGoal','testChanges','testExpected','testActual','testRating','testRecommendation'].forEach(id=>{const e=document.getElementById(id); if(e) e.value='';}); }
+function saveTestEntry(){
+  const recipeId=document.getElementById('testRecipe').value; const goal=normalize(document.getElementById('testGoal').value); if(!recipeId || !goal){ alert('Pick a recipe and enter a test goal.'); return; }
+  testEntries.unshift({id:'test-'+Date.now(),recipeId,recipeName:(recipes.find(r=>r.id===recipeId)||{}).name||'Recipe',goal,changes:normalize(document.getElementById('testChanges').value),expected:normalize(document.getElementById('testExpected').value),actual:normalize(document.getElementById('testActual').value),rating:normalize(document.getElementById('testRating').value),recommendation:normalize(document.getElementById('testRecommendation').value),date:new Date().toISOString()});
+  persistTests(); clearTestForm(); renderKitchenLab(); toast('Test entry saved.');
+}
+function renderTestCards(){
+  const el=document.getElementById('testCards'); if(!el) return;
+  if(!testEntries.length){ el.innerHTML='<div class="empty">No test entries yet.</div>'; return; }
+  el.innerHTML=testEntries.map(t=>`<div class="testCard"><div class="cardTitleLine"><strong>${escapeHtml(t.recipeName)}</strong><span class="tinyChip">${new Date(t.date).toLocaleDateString()}</span></div><div class="miniMeta"><b>Goal:</b> ${escapeHtml(t.goal)}</div><div class="miniMeta"><b>Changes:</b> ${escapeHtml(t.changes||'—')}</div><div class="miniMeta"><b>Result:</b> ${escapeHtml(t.actual||'—')}</div><div class="chipRow"><span class="tinyChip">Rating ${escapeHtml(t.rating||'—')}</span><span class="tinyChip">${escapeHtml(t.recommendation||'No recommendation')}</span></div><div class="inlineActions"><button class="btn" onclick="restoreTest('${t.id}')">Restore</button><button class="btn" onclick="duplicateTest('${t.id}')">Duplicate</button><button class="btn danger" onclick="deleteTest('${t.id}')">Delete</button></div></div>`).join('');
+}
+function restoreTest(id){ const t=testEntries.find(x=>x.id===id); if(!t) return; document.getElementById('testRecipe').value=t.recipeId; document.getElementById('testGoal').value=t.goal||''; document.getElementById('testChanges').value=t.changes||''; document.getElementById('testExpected').value=t.expected||''; document.getElementById('testActual').value=t.actual||''; document.getElementById('testRating').value=t.rating||''; document.getElementById('testRecommendation').value=t.recommendation||''; toast('Restored into test form.'); }
+function duplicateTest(id){ const t=testEntries.find(x=>x.id===id); if(!t) return; testEntries.unshift({...t,id:'test-'+Date.now(),goal:t.goal+' Copy',date:new Date().toISOString()}); persistTests(); renderKitchenLab(); }
+function deleteTest(id){ if(!confirm('Delete this test entry?')) return; testEntries=testEntries.filter(t=>t.id!==id); persistTests(); renderKitchenLab(); toast('Test deleted.'); }
+function renderCompareOptions(){
+  const el=document.getElementById('compareOptions'); if(!el) return;
+  el.innerHTML=recipes.map(r=>{ const selected=compareSelected.includes(r.id); const m=pantryMatchForIngredients(r.ingredients||[]); return `<button class="compareCard ${selected?'selected':''}" onclick="toggleCompare('${r.id}')"><div class="cardTitleLine"><strong>${escapeHtml(r.name)}</strong><span class="tinyChip">${m.score}%</span></div><div class="miniMeta">${escapeHtml(r.category||'')} • ${Number(r.prep||0)+Number(r.cook||0)} min • ${m.missing.length} needs attention</div></button>`; }).join('');
+}
+function toggleCompare(id){ if(compareSelected.includes(id)) compareSelected=compareSelected.filter(x=>x!==id); else { if(compareSelected.length>=4){ alert('Compare up to 4 recipes.'); return; } compareSelected.push(id); } renderCompareOptions(); renderCompareResult(); }
+function renderCompareResult(){
+  const el=document.getElementById('compareResult'); if(!el) return; const selected=recipes.filter(r=>compareSelected.includes(r.id));
+  if(!selected.length){ el.innerHTML='Select recipes to compare.'; return; }
+  const best=selected.map(r=>({r,m:pantryMatchForIngredients(r.ingredients||[])})).sort((a,b)=>(b.m.score-a.m.score)||((Number(b.r.rating)||0)-(Number(a.r.rating)||0))||((Number(a.r.prep)+Number(a.r.cook))-(Number(b.r.prep)+Number(b.r.cook))))[0];
+  el.innerHTML=`<div class="sideNote"><b>Recommendation:</b> ${escapeHtml(best.r.name)} — best current balance of pantry match, rating, and time.</div><table class="compareTable"><thead><tr><th>Metric</th>${selected.map(r=>`<th>${escapeHtml(r.name)}</th>`).join('')}</tr></thead><tbody><tr><td>Pantry Match</td>${selected.map(r=>`<td>${pantryMatchForIngredients(r.ingredients||[]).score}%</td>`).join('')}</tr><tr><td>Missing / Low</td>${selected.map(r=>{const m=pantryMatchForIngredients(r.ingredients||[]).missing; return `<td>${m.length?m.map(x=>escapeHtml(x.line)).join('<br>'):'Ready'}</td>`}).join('')}</tr><tr><td>Total Time</td>${selected.map(r=>`<td>${Number(r.prep||0)+Number(r.cook||0)} min</td>`).join('')}</tr><tr><td>Difficulty</td>${selected.map(r=>`<td>${escapeHtml(r.difficulty||'—')}</td>`).join('')}</tr><tr><td>Rating</td>${selected.map(r=>`<td>${escapeHtml(r.rating||'—')}</td>`).join('')}</tr></tbody></table>`;
+}
+function checkRecipe(){
+  const lines=splitLines(document.getElementById('recipeInput')?.value||document.getElementById('recipeIngredients')?.value||'');
+  const target=document.getElementById('recipeResult'); if(!target) return;
+  if(!lines.length){ target.innerHTML='Paste recipe ingredients first.'; return; }
+  const m=pantryMatchForIngredients(lines);
+  target.innerHTML=`<strong>${m.missing.length?'⚠️ '+m.missing.length+' ingredient(s) need attention':'✅ Ready to cook'} — ${m.score}% pantry match</strong><br><br>`+m.rows.map(r=> r.match ? `${escapeHtml(r.line)} → <strong>${escapeHtml(r.match)}</strong> • ${stockBadge(r.status)} ${r.pickup?badge('Pickup','pickup'):''}` : `${escapeHtml(r.line)} → ${badge('Not in database','out')}`).join('<br>');
+}
+function addTimer(){
+  const name=normalize(document.getElementById('timerName').value)||'Kitchen Timer'; const mode=document.getElementById('timerMode').value; const seconds=(Number(document.getElementById('timerHours').value||0)*3600)+(Number(document.getElementById('timerMinutes').value||0)*60)+Number(document.getElementById('timerSeconds').value||0);
+  if(mode==='countdown' && seconds<=0){ alert('Countdown needs a duration.'); return; }
+  timers.push({id:'timer-'+Date.now(),name,mode,total:seconds,remaining:seconds,elapsed:0,running:false,lastStart:null,done:false}); persistTimers(); renderTimers(); ['timerName','timerHours','timerMinutes','timerSeconds'].forEach(id=>{const e=document.getElementById(id); if(e) e.value='';});
+}
+function timerSecondsNow(t){
+  if(!t.running) return t.mode==='countdown'?t.remaining:t.elapsed;
+  const delta=Math.floor((Date.now()-t.lastStart)/1000);
+  return t.mode==='countdown'?Math.max(0,t.remaining-delta):t.elapsed+delta;
+}
+function formatSeconds(sec){ sec=Math.max(0,Math.floor(sec)); const h=Math.floor(sec/3600), m=Math.floor((sec%3600)/60), s=sec%60; return [h,m,s].map(v=>String(v).padStart(2,'0')).join(':'); }
+function renderTimers(){
+  const el=document.getElementById('timerGrid'); if(!el) return;
+  if(!timers.length){ el.innerHTML='<div class="empty">No timers yet. Add multiple countdowns or stopwatches.</div>'; return; }
+  el.innerHTML=timers.map(t=>{ const val=timerSecondsNow(t); const done=t.mode==='countdown' && val<=0; return `<div class="timerCard ${t.running?'timerRunning':''}"><div class="cardTitleLine"><strong>${escapeHtml(t.name)}</strong><span class="tinyChip">${t.mode}</span></div><div class="timerBig">${formatSeconds(val)}</div><div class="miniMeta">${done?'Done — reset or delete.':t.running?'Running':'Paused'}</div><div class="timerActions"><button class="btn ${t.running?'warn':'good'}" onclick="toggleTimer('${t.id}')">${t.running?'Pause':'Start'}</button><button class="btn" onclick="resetTimer('${t.id}')">Reset</button><button class="btn danger" onclick="deleteTimer('${t.id}')">Delete</button></div></div>`; }).join('');
+  if(!timerTick){ timerTick=setInterval(()=>{ timers.forEach(t=>{ if(t.running && t.mode==='countdown' && timerSecondsNow(t)<=0){ t.remaining=0; t.running=false; t.done=true; }}); persistTimers(); renderTimers(); },1000); }
+}
+function toggleTimer(id){ const t=timers.find(x=>x.id===id); if(!t) return; if(t.running){ const val=timerSecondsNow(t); if(t.mode==='countdown') t.remaining=val; else t.elapsed=val; t.running=false; t.lastStart=null; } else { t.running=true; t.lastStart=Date.now(); } persistTimers(); renderTimers(); }
+function resetTimer(id){ const t=timers.find(x=>x.id===id); if(!t) return; t.running=false; t.lastStart=null; t.done=false; if(t.mode==='countdown') t.remaining=t.total; else t.elapsed=0; persistTimers(); renderTimers(); }
+function deleteTimer(id){ if(!confirm('Delete this timer?')) return; timers=timers.filter(t=>t.id!==id); persistTimers(); renderTimers(); }
+
+const oldRender = render;
+render = function(){ oldRender(); renderKitchenLab(); };
+
+render();
+</script>
+</body>
+</html>
