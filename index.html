@@ -169,21 +169,28 @@ option{background:#101722;color:#fff}
 .testRecipeChooser{display:grid;gap:8px}.testRecipeChooser select{min-height:46px}.testRecipeChooser .miniMeta{padding-left:2px}
 .labGrid>*{min-width:0}/* ── Compare split layout ── */
 .comparePicker{margin-bottom:16px}
-.compareSplitGrid{display:grid;gap:14px;align-items:start}
-.cmpCard{padding:16px;display:flex;flex-direction:column;gap:10px}
-.cmpCardHead{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.cmpTitle{font-size:17px;font-weight:950;color:#39291b}
+.cmpPickerBar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.cmpPickerLabel{font-weight:900;font-size:13px;color:#39291b;white-space:nowrap}
+.compareSplitGrid{display:grid;gap:0 14px;grid-auto-rows:auto;overflow-x:auto}
+.cmpCard{padding:16px;display:grid;grid-template-rows:subgrid;grid-row:span 6;gap:0;border-radius:18px;align-content:start;min-width:220px}
+.cmpCard>*{padding-bottom:10px}
+.cmpBaseline{border-color:rgba(177,132,63,.5)!important;background:linear-gradient(145deg,#fffdf5,#f5ead0)!important}
+.cmpBaselineChip{background:#f2dfb8;border-color:#b1843f;color:#76521e}
+.cmpCardHead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;align-self:start}
+.cmpTitle{font-size:15px;font-weight:950;color:#39291b}
+.cmpMeta{font-size:11px;color:#9b7e56;font-weight:700;align-self:start}
+.cmpSection{border-top:1px solid rgba(151,111,47,.15);padding-top:8px;align-self:start}
+.cmpSectionLabel{font-size:10px;text-transform:uppercase;letter-spacing:.09em;font-weight:900;color:#9b7e56;margin-bottom:6px}
+.cmpIngRow{display:flex;align-items:baseline;gap:5px;font-size:12px;padding:3px 0;border-bottom:1px solid rgba(151,111,47,.08)}
+.cmpIngRow.cmpIngChanged{background:rgba(253,230,138,.25)}
+.cmpIngRow.cmpIngAdded{background:rgba(134,239,172,.15)}
+.cmpIngAmount{margin-left:auto;color:#9b7e56;font-size:11px;text-align:right;max-width:120px}
+.cmpOrig{color:#a0907a;font-style:italic}
+.cmpDelta{color:#b45309;font-weight:900;font-size:11px;width:14px;flex-shrink:0}
+.cmpAdded{color:#15803d;font-weight:900;font-size:11px;width:14px;flex-shrink:0}
+.cmpStep{display:flex;align-items:flex-start;gap:8px;font-size:12px;padding:4px 0;border-bottom:1px solid rgba(151,111,47,.08)}
 .cmpScoreBar{position:relative;height:8px;background:rgba(151,111,47,.15);border-radius:999px;overflow:hidden;margin:2px 0}
 .cmpScoreFill{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,#b1843f,#d4a017);border-radius:999px}
-.cmpScoreLabel{font-size:11px;font-weight:800;color:#9b7e56;display:block;margin-top:3px}
-.cmpMissing{font-size:12px;color:#a24f47;font-weight:700}
-.cmpMissing.cmpReady{color:#5f7d60}
-.cmpSection{border-top:1px solid rgba(151,111,47,.15);padding-top:8px}
-.cmpSectionLabel{font-size:10px;text-transform:uppercase;letter-spacing:.09em;font-weight:900;color:#9b7e56;margin-bottom:6px}
-.cmpIngRow{display:flex;align-items:center;gap:6px;font-size:13px;padding:3px 0;border-bottom:1px solid rgba(151,111,47,.08)}
-.cmpIngAmount{margin-left:auto;color:#9b7e56;font-size:12px}
-.cmpStep{display:flex;align-items:flex-start;gap:8px;font-size:12px;padding:4px 0;border-bottom:1px solid rgba(151,111,47,.08)}
-.cmpTestRow{padding:6px 0;border-bottom:1px solid rgba(151,111,47,.08);display:flex;flex-direction:column;gap:4px}
 
 /* ── Test lab full-width layout ── */
 .testFullLayout{display:flex;flex-direction:column;gap:14px}
@@ -211,7 +218,7 @@ option{background:#101722;color:#fff}
 .itTest{min-width:170px}
 .itStatus{white-space:nowrap}
 .itNote{min-width:160px}
-.itBaseline{font-size:11px;color:#9b7e56;font-weight:700;text-transform:uppercase;letter-spacing:.06em}.itExtra{background:#f7fff7!important}.itAddRow td{padding:8px 12px}.itAddBtn{width:100%;border:1px dashed rgba(151,111,47,.35);border-radius:10px;background:transparent;color:#9b7e56;font-weight:800;font-size:12px;padding:8px;cursor:pointer;transition:.14s}.itAddBtn:hover{background:#fdf5e6;color:#76521e;border-color:#b1843f}
+.itBaseline{font-size:11px;color:#9b7e56;font-weight:700;text-transform:uppercase;letter-spacing:.06em}.testNameRequired{border-color:#ca8a04!important;background:#fefce8!important;box-shadow:0 0 0 3px rgba(202,138,4,.18)!important}.testNameRequired.filled{border-color:rgba(151,111,47,.28)!important;background:#fffdf9!important;box-shadow:none!important}.itExtra{background:#f7fff7!important}.itAddRow td{padding:8px 12px}.itAddBtn{width:100%;border:1px dashed rgba(151,111,47,.35);border-radius:10px;background:transparent;color:#9b7e56;font-weight:800;font-size:12px;padding:8px;cursor:pointer;transition:.14s}.itAddBtn:hover{background:#fdf5e6;color:#76521e;border-color:#b1843f}
 .itNoteInput{width:100%;border:1px solid rgba(151,111,47,.22);border-radius:8px;padding:6px 8px;font-size:12px;background:#fffdf9;color:#39291b;outline:none}
 .itNoteInput:focus{border-color:#b1843f;box-shadow:0 0 0 2px rgba(177,132,63,.15)}
 .testAmountSpinner{display:flex;align-items:center;gap:4px}
@@ -710,7 +717,7 @@ body{padding-bottom:112px}
 .researchTitleBlock{display:grid;gap:6px;min-width:260px;flex:1}
 .researchTitleInput{font-size:28px;font-weight:950;letter-spacing:-.04em;border:0;background:transparent;color:#302215;padding:4px 0;outline:none;width:100%}
 .researchTitleInput:focus{box-shadow:none;color:#1f160d}
-.researchWorkspaceGrid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);gap:14px;align-items:start}
+.researchWorkspaceGrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.9fr);gap:14px;align-items:start}.researchWorkspaceGrid.pdfOpen{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
 .researchCard{padding:14px;display:grid;gap:10px}
 .researchCardHead{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .researchNotes{min-height:420px;resize:vertical;line-height:1.55;font-size:15px;background:#fffdf9}
@@ -913,6 +920,14 @@ body{padding-bottom:112px}
 .researchShell.researchFoldersHidden .researchWorkspaceOpenFolders{
   display:flex;
 }
+.researchInlinePdf{display:none;flex-direction:column;border:1px solid rgba(151,111,47,.18);border-radius:22px;overflow:hidden;position:sticky;top:12px;max-height:90vh}
+.researchWorkspaceGrid.pdfOpen .researchInlinePdf{display:flex}
+.researchWorkspaceGrid.pdfOpen .researchCard:nth-child(2){display:none}
+.researchInlinePdfHead{display:flex;align-items:center;gap:8px;padding:10px 14px;background:linear-gradient(145deg,#fffefb,#f8f0e4);border-bottom:1px solid rgba(151,111,47,.18);flex-shrink:0}
+.researchInlinePdfTitle{font-weight:900;font-size:13px;color:#39291b;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.researchInlinePdfBody{flex:1;overflow:hidden;min-height:0;background:#fff}
+.researchInlinePdfBody iframe{width:100%;height:85vh;border:none;display:block}
+.researchInlinePdfBody img{width:100%;display:block;object-fit:contain}
 .researchFolderHideBtn{
   width:100%;
   justify-content:center;
@@ -1290,7 +1305,7 @@ td.editable-cell{
             <div class="recipeCard">
               <div class="cardTitleLine"><strong>Create Test Scenario</strong><button class="btn" onclick="openTestArchive()" style="margin-left:auto;font-weight:900">Archive ↗</button></div>
               <div class="formStack">
-                <label>Test Name</label><input id="testName" class="field" placeholder="e.g. Creamier version attempt 2" />
+                <label>Test Name</label><input id="testName" class="field testNameRequired" placeholder="e.g. Creamier version attempt 2" oninput="onTestNameInput(this)" />
                 <label>Test Goal</label><input id="testGoal" class="field" placeholder="Example: make it creamier without getting greasy" />
                 <label>Changes Made</label><textarea id="testChanges" class="field" rows="4"></textarea>
                 <label>Expected Result</label><textarea id="testExpected" class="field" rows="3"></textarea>
@@ -1312,7 +1327,12 @@ td.editable-cell{
       </div>
 
       <div class="labPanel" id="lab-compare">
-        <div class="comparePicker"><div class="sideNote" style="margin-bottom:10px">Select 2–4 recipes to compare side by side.</div><div class="compareGrid" id="compareOptions"></div></div>
+        <div class="cmpPickerBar">
+          <select id="cmpRecipePicker" class="field" onchange="renderCompareResult()" style="max-width:320px">
+            <option value="">— Select a recipe —</option>
+          </select>
+          <div class="sideNote" style="margin-left:auto;text-align:right">Baseline recipe vs its test entries, side by side.</div>
+        </div>
         <div class="compareSplitGrid" id="compareSplitGrid"></div>
       </div>
     </section>
@@ -2273,10 +2293,31 @@ function openArchivedCompare(id){
 function handleTestRecipeSearch(){ testIngredientDraft={}; renderRecipeSelects(); renderTestRecipeIngredients(); }
 function syncTestRecipeSearchFromSelect(){ const sel=document.getElementById('testRecipe'), search=document.getElementById('testRecipeSearch'); const r=recipes.find(x=>x.id===sel?.value); testIngredientDraft={}; if(search && r) search.value=r.name; renderTestRecipeIngredients(); }
 function selectRecipeForTest(id){ switchLab('test'); testIngredientDraft={}; const sel=document.getElementById('testRecipe'), search=document.getElementById('testRecipeSearch'); const r=recipes.find(x=>x.id===id); if(search && r) search.value=r.name; renderRecipeSelects(); if(sel) sel.value=id; syncTestRecipeSearchFromSelect(); }
-function clearTestForm(){ ['testRecipeSearch','testName','testGoal','testChanges','testExpected','testActual','testRating','testRecommendation'].forEach(id=>{const e=document.getElementById(id); if(e) e.value='';}); testIngredientDraft={}; renderRecipeSelects(); renderTestRecipeIngredients(); }
+function clearTestForm(){ ['testRecipeSearch','testName','testGoal','testChanges','testExpected','testActual','testRating','testRecommendation'].forEach(id=>{const e=document.getElementById(id); if(e) e.value='';}); const tn=document.getElementById('testName'); if(tn) tn.classList.remove('filled'); testIngredientDraft={}; renderRecipeSelects(); renderTestRecipeIngredients(); }
+function onTestNameInput(el){
+  if(el.value.trim()){ el.classList.add('filled'); } else { el.classList.remove('filled'); }
+}
 let _saveTestPending = false, _saveTestTimer = null;
 function saveTestEntry(btn){
   if(!_saveTestPending){
+    const testNameEl = document.getElementById('testName');
+    const hasName = testNameEl && testNameEl.value.trim();
+    if(!hasName){
+      // No name yet — prompt user, don't arm yet
+      if(btn){ btn.textContent='Name Test ↑'; btn.classList.add('confirming'); }
+      testNameEl?.focus();
+      // Watch for the name to be filled in, then update button
+      const watcher = setInterval(()=>{
+        const filled = testNameEl && testNameEl.value.trim();
+        if(btn && btn.isConnected){ btn.textContent = filled ? 'Confirm Save' : 'Name Test ↑'; }
+        if(!btn || !btn.isConnected) clearInterval(watcher);
+      }, 200);
+      setTimeout(()=>{
+        clearInterval(watcher);
+        if(btn && btn.isConnected){ btn.textContent='Save Test Entry'; btn.classList.remove('confirming'); }
+      }, 15000);
+      return;
+    }
     _saveTestPending = true;
     if(btn){ btn.textContent='Confirm Save'; btn.classList.add('confirming'); }
     _saveTestTimer = setTimeout(()=>{
@@ -2287,6 +2328,8 @@ function saveTestEntry(btn){
   }
   clearTimeout(_saveTestTimer); _saveTestPending = false;
   if(btn){ btn.textContent='Save Test Entry'; btn.classList.remove('confirming'); }
+  const testNameEl = document.getElementById('testName');
+  if(!testNameEl || !testNameEl.value.trim()){ testNameEl?.focus(); testNameEl?.classList.remove('filled'); if(btn){ btn.textContent='Name Test ↑'; btn.classList.add('confirming'); } return; }
   // Resolve recipe — try hidden select first, then match search text directly
   let recipeId=document.getElementById('testRecipe').value;
   if(!recipeId){
@@ -2343,37 +2386,68 @@ function restoreTest(id){ const t=testEntries.find(x=>x.id===id); if(!t) return;
 function duplicateTest(id){ const t=testEntries.find(x=>x.id===id); if(!t) return; testEntries.unshift({...t,id:'test-'+Date.now(),goal:t.goal+' Copy',date:new Date().toISOString()}); persistTests(); renderKitchenLab(); }
 function deleteTest(id,button){ if(!armInlineDelete(button)) return; testEntries=testEntries.filter(t=>t.id!==id); persistTests(); renderKitchenLab(); toast('Test deleted.'); }
 function renderCompareOptions(){
-  const el=document.getElementById('compareOptions'); if(!el) return;
-  el.innerHTML=recipes.map(r=>{ const selected=compareSelected.includes(r.id); const m=pantryMatchForIngredients(r.ingredients||[]); return `<button class="compareCard ${selected?'selected':''}" onclick="toggleCompare('${r.id}')"><div class="cardTitleLine"><strong>${escapeHtml(r.name)}</strong><span class="tinyChip">${m.score}%</span></div><div class="miniMeta">${escapeHtml(r.category||'')} • ${normalizeRecipeIngredients(r.ingredients).length} ingredients • ${m.missing.length} needs attention</div></button>`; }).join('');
+  const sel=document.getElementById('cmpRecipePicker'); if(!sel) return;
+  const cur=sel.value;
+  sel.innerHTML='<option value="">— Select a recipe —</option>'+recipes.map(r=>`<option value="${escapeHtml(r.id)}" ${r.id===cur?'selected':''}>${escapeHtml(r.name)}</option>`).join('');
 }
-function toggleCompare(id){ if(compareSelected.includes(id)) compareSelected=compareSelected.filter(x=>x!==id); else { if(compareSelected.length>=4){ alert('Compare up to 4 recipes.'); return; } compareSelected.push(id); } renderCompareOptions(); renderCompareResult(); }
+function toggleCompare(id){} // deprecated — compare is now recipe vs its tests
 function renderCompareResult(){
   const el=document.getElementById('compareSplitGrid'); if(!el) return;
-  const selected=compareSelected.map(id=>recipes.find(r=>r.id===id)).filter(Boolean);
-  if(!selected.length){ el.innerHTML=''; return; }
-  el.style.gridTemplateColumns=`repeat(${selected.length},1fr)`;
-  el.innerHTML=selected.map(r=>{
-    const m=pantryMatchForIngredients(r.ingredients||[]);
-    const ings=normalizeRecipeIngredients(r.ingredients||[]);
-    const steps=r.preparationSteps||[];
-    const tests=testEntries.filter(t=>t.recipeId===r.id);
-    const ingRows=ings.map(ing=>{
-      const p=items.find(i=>i.id===ing.pantryId||normalize(i.name)===normalize(ing.name));
-      const statusClass=p?ingredientStatusClass({pantryId:p.id,name:p.name}):'unknown';
-      return `<div class="cmpIngRow"><span class="ingredientStatus ${statusClass}"></span><span>${escapeHtml(ing.name)}</span><span class="cmpIngAmount">${escapeHtml(ing.amount||'')}</span></div>`;
-    }).join('');
-    const stepRows=steps.map((s,i)=>`<div class="cmpStep"><span class="prepStepNumber" style="width:22px;height:22px;font-size:11px">${i+1}</span><span>${escapeHtml(s)}</span></div>`).join('');
-    const testRows=tests.slice(0,3).map(t=>`<div class="cmpTestRow"><strong>${escapeHtml(t.testName||t.goal||'Test')}</strong><span class="tinyChip">Rating ${escapeHtml(t.rating||'—')}</span><div class="miniMeta">${escapeHtml(t.actual||'—')}</div></div>`).join('');
-    return `<div class="cmpCard recipeCard">
-      <div class="cmpCardHead"><strong class="cmpTitle">${escapeHtml(r.name)}</strong><span class="tinyChip">${escapeHtml(r.category||'Recipe')}</span></div>
-      <div><div class="cmpScoreBar"><div class="cmpScoreFill" style="width:${m.score}%"></div></div><span class="cmpScoreLabel">${m.score}% pantry match</span></div>
-      ${m.missing.length?`<div class="cmpMissing">Needs: ${m.missing.slice(0,4).map(x=>escapeHtml(x.line)).join(', ')}${m.missing.length>4?'…':''}</div>`:'<div class="cmpMissing cmpReady">All ingredients ready</div>'}
-      <div class="cmpSection"><div class="cmpSectionLabel">Ingredients (${ings.length})</div>${ingRows||'<div class="miniMeta">None listed</div>'}</div>
-      <div class="cmpSection"><div class="cmpSectionLabel">Preparation (${steps.length} steps)</div>${stepRows||'<div class="miniMeta">None listed</div>'}</div>
-      <div class="cmpSection"><div class="cmpSectionLabel">Test entries (${tests.length})</div>${testRows||'<div class="miniMeta">No tests yet</div>'}</div>
-      ${r.notes?`<div class="cmpSection"><div class="cmpSectionLabel">Notes</div><div class="miniMeta">${escapeHtml(r.notes)}</div></div>`:''}
-      <div class="inlineActions" style="margin-top:10px"><button class="btn primary" onclick="editRecipe('${r.id}')">Edit</button><button class="btn" onclick="selectRecipeForTest('${r.id}')">Test</button></div>
-    </div>`;
+  const recipeId=document.getElementById('cmpRecipePicker')?.value;
+  const r=recipes.find(x=>x.id===recipeId);
+  if(!r){ el.style.gridTemplateColumns=''; el.innerHTML='<div class="empty">Select a recipe above to compare it against its test entries.</div>'; return; }
+  const tests=testEntries.filter(t=>t.recipeId===r.id);
+  const cols=[{isBaseline:true,r},{...tests.map(t=>({isBaseline:false,t}))}];
+  // Build columns: baseline + each test
+  const allCols=[{isBaseline:true},...tests.map(t=>({isBaseline:false,t}))];
+  el.style.gridTemplateColumns=`repeat(${allCols.length},minmax(220px,1fr))`;
+
+  // Collect all unique ingredient names across baseline + tests
+  const baseIngs=normalizeRecipeIngredients(r.ingredients||[]);
+  const allIngNames=[...new Set([...baseIngs.map(i=>i.name),...tests.flatMap(t=>(t.ingredientChanges||[]).map(c=>c.name))])];
+
+  el.innerHTML=allCols.map(col=>{
+    if(col.isBaseline){
+      const steps=r.preparationSteps||[];
+      const ingRows=allIngNames.map(name=>{
+        const ing=baseIngs.find(i=>i.name===name);
+        const p=ing&&items.find(i=>i.id===ing.pantryId||normalize(i.name)===normalize(name));
+        const sc=p?ingredientStatusClass({pantryId:p?.id,name}):'unknown';
+        return `<div class="cmpIngRow"><span class="ingredientStatus ${sc}"></span><span>${escapeHtml(name)}</span><span class="cmpIngAmount">${escapeHtml(ing?.amount||'—')}</span></div>`;
+      }).join('');
+      const stepRows=steps.map((s,i)=>`<div class="cmpStep"><span class="prepStepNumber" style="width:22px;height:22px;font-size:11px">${i+1}</span><span>${escapeHtml(s)}</span></div>`).join('');
+      return `<div class="cmpCard recipeCard cmpBaseline">
+        <div class="cmpCardHead"><strong class="cmpTitle">${escapeHtml(r.name)}</strong><span class="tinyChip cmpBaselineChip">Baseline</span></div>
+        <div class="cmpMeta">${escapeHtml(r.category||'Recipe')} • ${baseIngs.length} ingredients</div>
+        <div class="cmpSection"><div class="cmpSectionLabel">Ingredients</div>${ingRows||'<div class="miniMeta">None listed</div>'}</div>
+        <div class="cmpSection"><div class="cmpSectionLabel">Preparation (${steps.length} steps)</div>${stepRows||'<div class="miniMeta">None listed</div>'}</div>
+        <div class="cmpSection"><div class="cmpSectionLabel">Notes</div><div class="miniMeta">${escapeHtml(r.notes||'—')}</div></div>
+        <div class="inlineActions" style="margin-top:10px"><button class="btn primary" onclick="editRecipe('${r.id}')">Edit</button><button class="btn" onclick="selectRecipeForTest('${r.id}')">New Test</button></div>
+      </div>`;
+    } else {
+      const t=col.t;
+      const changes=t.ingredientChanges||[];
+      const ingRows=allIngNames.map(name=>{
+        const change=changes.find(c=>c.name===name);
+        const baseIng=baseIngs.find(i=>i.name===name);
+        const isChanged=change&&change.changed;
+        const isAdded=change&&!baseIng;
+        const amount=change?.testAmount||baseIng?.amount||'—';
+        return `<div class="cmpIngRow ${isChanged?'cmpIngChanged':''} ${isAdded?'cmpIngAdded':''}">
+          ${isChanged?'<span class="cmpDelta">Δ</span>':isAdded?'<span class="cmpAdded">+</span>':'<span style="width:14px;display:inline-block"></span>'}
+          <span>${escapeHtml(name)}</span>
+          <span class="cmpIngAmount">${escapeHtml(amount)}${isChanged&&change.originalAmount?`<span class="cmpOrig"> (was ${escapeHtml(change.originalAmount)})</span>`:''}${change?.note?`<span class="cmpOrig"> — ${escapeHtml(change.note)}</span>`:''}</span>
+        </div>`;
+      }).join('');
+      return `<div class="cmpCard recipeCard">
+        <div class="cmpCardHead"><strong class="cmpTitle">${escapeHtml(t.testName||t.goal||'Test')}</strong><span class="tinyChip">Rating ${escapeHtml(t.rating||'—')}</span></div>
+        <div class="cmpMeta">${new Date(t.date).toLocaleDateString()} • ${changes.filter(c=>c.changed).length} changes</div>
+        <div class="cmpSection"><div class="cmpSectionLabel">Ingredients</div>${ingRows||'<div class="miniMeta">None</div>'}</div>
+        <div class="cmpSection"><div class="cmpSectionLabel">Changes Made</div><div class="miniMeta" style="white-space:pre-wrap">${escapeHtml(t.changes||'—')}</div></div>
+        <div class="cmpSection"><div class="cmpSectionLabel">Result</div><div class="miniMeta" style="white-space:pre-wrap">${escapeHtml(t.actual||'—')}</div></div>
+        <div class="inlineActions" style="margin-top:10px"><button class="btn" onclick="restoreTest('${t.id}');switchLab('test')">Restore</button><button class="btn danger" onclick="deleteTest('${t.id}',this)">Delete</button></div>
+      </div>`;
+    }
   }).join('');
 }
 function checkRecipe(){
@@ -3021,6 +3095,13 @@ function renderResearch(){
         <div class="researchUploadBox"><strong>Add PDF or source file</strong><input class="field" type="file" accept="application/pdf,.pdf,.txt,.md,.doc,.docx,image/*" multiple onchange="handleResearchFileUpload(event)" /><div class="miniMeta">Large PDFs may hit browser local-storage limits. For global sync later, this should move to Supabase Storage.</div></div>
         <div class="researchFileList" id="researchFileList">${renderResearchFilesHtml(f)}</div>
       </section>
+      <section class="researchInlinePdf" id="researchInlinePdf">
+        <div class="researchInlinePdfHead">
+          <span class="researchInlinePdfTitle" id="researchInlinePdfTitle">PDF Viewer</span>
+          <button class="iconBtn" onclick="closeResearchInlinePdf()" title="Close viewer">✕</button>
+        </div>
+        <div class="researchInlinePdfBody" id="researchInlinePdfBody"></div>
+      </section>
     </div>`;
   updateHeaderCards();
 }
@@ -3042,7 +3123,49 @@ function handleResearchFileUpload(event){
   });
   event.target.value='';
 }
-function openResearchFile(fileId){ const f=activeResearchFolder(); const file=(f?.files||[]).find(x=>x.id===fileId); if(!file?.dataUrl) return; const win=window.open(); if(win){ win.document.write(`<iframe src="${file.dataUrl}" style="border:0;width:100%;height:100vh"></iframe>`); win.document.title=file.name||'Research file'; } }
+function openResearchFile(fileId){
+  const f=activeResearchFolder();
+  const file=(f?.files||[]).find(x=>x.id===fileId);
+  if(!file?.dataUrl){ alert('File data not found.'); return; }
+  const grid=document.querySelector('.researchWorkspaceGrid');
+  const panel=document.getElementById('researchInlinePdf');
+  const body=document.getElementById('researchInlinePdfBody');
+  const titleEl=document.getElementById('researchInlinePdfTitle');
+  if(!grid||!panel||!body){ return; }
+  if(titleEl) titleEl.textContent=file.name||'File';
+  const isPdf=file.type&&file.type.includes('pdf');
+  const isImg=file.type&&file.type.startsWith('image/');
+  if(isPdf){
+    // Use iframe with srcdoc blob URL — most reliable cross-browser approach for base64 PDFs
+    const byteStr=atob(file.dataUrl.split(',')[1]);
+    const ab=new ArrayBuffer(byteStr.length);
+    const ia=new Uint8Array(ab);
+    for(let i=0;i<byteStr.length;i++) ia[i]=byteStr.charCodeAt(i);
+    const blob=new Blob([ab],{type:'application/pdf'});
+    const url=URL.createObjectURL(blob);
+    body.innerHTML=`<iframe src="${url}" style="width:100%;height:85vh;border:none;display:block" title="${escapeHtml(file.name||'PDF')}"></iframe>`;
+  } else if(isImg){
+    body.innerHTML=`<img src="${file.dataUrl}" alt="${escapeHtml(file.name||'')}" style="width:100%;display:block;object-fit:contain">`;
+  } else {
+    body.innerHTML=`<div style="padding:20px;font-size:14px">Preview not available. <a href="${file.dataUrl}" download="${escapeHtml(file.name||'file')}" style="color:#b1843f;font-weight:900">Download file</a>.</div>`;
+  }
+  grid.classList.add('pdfOpen');
+  panel.style.display='flex';
+}
+function closeResearchInlinePdf(){
+  const grid=document.querySelector('.researchWorkspaceGrid');
+  const panel=document.getElementById('researchInlinePdf');
+  const body=document.getElementById('researchInlinePdfBody');
+  if(grid) grid.classList.remove('pdfOpen');
+  if(panel) panel.style.display='none';
+  if(body) body.innerHTML='';
+}
+function closePdfViewer(){
+  const bd=document.getElementById('pdfViewerBackdrop');
+  if(bd) bd.classList.remove('show');
+  const inner=document.getElementById('pdfViewerInner');
+  if(inner) inner.innerHTML='';
+}
 function deleteResearchFile(fileId,button){ if(!armInlineAction(button,'Confirm Delete','Delete')) return; const f=activeResearchFolder(); if(!f) return; f.files=(f.files||[]).filter(file=>file.id!==fileId); f.updatedAt=new Date().toISOString(); persistResearch(); renderResearch(); toast('Research file deleted.'); }
 
 function startOfWeek(date){ const d=new Date(date); const day=(d.getDay()+6)%7; d.setHours(0,0,0,0); d.setDate(d.getDate()-day); return d; }
@@ -3107,6 +3230,17 @@ updateBottomNav('pantry');
   <div class="modal" style="max-width:740px;width:95vw;max-height:88vh;display:flex;flex-direction:column">
     <div class="modalHead"><div><div class="panelTitle">Test Entry Archive</div><div class="muted">All saved test scenarios</div></div><button class="iconBtn" onclick="closeTestArchive()">✕</button></div>
     <div class="modalBody" style="overflow-y:auto;flex:1"><div id="testArchiveList"></div></div>
+  </div>
+</div>
+<div class="modalBackdrop" id="pdfViewerBackdrop" onclick="if(event.target.id==='pdfViewerBackdrop')closePdfViewer()" style="z-index:9999">
+  <div class="modal" style="max-width:90vw;width:1100px;max-height:92vh;display:flex;flex-direction:column">
+    <div class="modalHead">
+      <div><div class="panelTitle" id="pdfViewerTitle">File Viewer</div></div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="iconBtn" onclick="closePdfViewer()">✕</button>
+      </div>
+    </div>
+    <div class="modalBody" id="pdfViewerInner" style="flex:1;overflow:auto;padding:0;background:#1a1a2e;border-radius:0 0 18px 18px"></div>
   </div>
 </div>
 </body>
