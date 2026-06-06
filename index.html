@@ -1536,6 +1536,31 @@ html.force-mobile .pickupList.aisleListView{display:block!important;padding:12px
 .aisleItemEmoji{font-size:20px;flex-shrink:0}
 .aisleItemEmoji img{width:22px;height:22px;border-radius:5px;object-fit:cover}
 .aisleItemName{flex:1;font-size:14px;font-weight:700;color:#2d1f0e}
+
+/* Mobile clock compact vertical stack */
+@media(max-width:620px){
+  .stopwatchSimple{padding:8px;gap:8px}
+  .stopwatchTopControls{grid-template-columns:1fr!important;gap:6px!important;padding:10px!important}
+  .timerDurationInline{grid-template-columns:repeat(3,1fr)!important}
+  .cleanTimerGrid{grid-template-columns:1fr!important;gap:8px!important}
+  .timerCard{min-height:0!important;padding:12px!important}
+  .timerBig{font-size:32px!important}
+  .olderTimersPanel{margin:0!important}
+  .stopwatchHistoryList{gap:6px!important}
+  .stopwatchHistoryItem{padding:8px 10px!important}
+  #page-stopwatch .panel{overflow-x:hidden!important}
+  #page-stopwatch .tableWrap,#page-stopwatch .panelBody{overflow-x:hidden!important}
+  .timerActions{flex-wrap:wrap;gap:6px}
+  .timerActions .btn{padding:8px 12px!important;font-size:13px!important}
+  .clockRingSvg{width:80px!important;height:80px!important}
+}
+html.force-mobile .stopwatchSimple{padding:8px;gap:8px}
+html.force-mobile .stopwatchTopControls{grid-template-columns:1fr!important;gap:6px!important;padding:10px!important}
+html.force-mobile .cleanTimerGrid{grid-template-columns:1fr!important;gap:8px!important}
+html.force-mobile .timerCard{min-height:0!important;padding:12px!important}
+html.force-mobile .timerBig{font-size:32px!important}
+html.force-mobile .clockRingSvg{width:80px!important;height:80px!important}
+html.force-mobile #page-stopwatch .panel{overflow-x:hidden!important}
 </style>
 </head>
 <body>
@@ -1550,11 +1575,8 @@ html.force-mobile .pickupList.aisleListView{display:block!important;padding:12px
       <!-- Mobile-only: 3 cards + More dropdown -->
       <button class="navCard mobileOnly" id="nav-recipes-m" onclick="switchPage('recipes')"><span class="navTitle">Recipes</span><span class="navCount" id="navRecipeCountM">Ready</span></button>
       <button class="navCard mobileOnly" id="nav-grocery-m" onclick="switchPage('grocery')"><span class="navTitle">Grocery</span><span class="navCount" id="navGroceryCountM">0</span></button>
-      <div class="navCard mobileOnly" id="nav-more" onclick="toggleMobileMore(event)">
-        <span class="navTitle">More</span>
-      </div>
-      <div id="mobileMoreMenu" style="display:none;position:fixed;z-index:9999;background:#fffdf9;border:1.5px solid rgba(151,111,47,.25);border-radius:14px;box-shadow:0 16px 40px rgba(74,50,19,.25);overflow:hidden;min-width:180px">
-        <button style="display:flex;align-items:center;gap:10px;padding:14px 16px;width:100%;text-align:left;background:none;border:none;border-bottom:1px solid rgba(151,111,47,.1);font-size:15px;font-weight:800;color:#39291b;cursor:pointer" onclick="switchPage('stopwatch');closeMobileMore()">🕐 Clock</button>
+      <div class="navCard mobileOnly" id="nav-more" onclick="switchPage('stopwatch')">
+        <span class="navTitle">Clock</span>
       </div>
     </nav>
   </section>
@@ -1594,8 +1616,7 @@ html.force-mobile .pickupList.aisleListView{display:block!important;padding:12px
     <section class="panel fullPanel">
       <div class="navTabs" aria-label="Recipe tools">
         <button class="navTab active" id="labtab-library" onclick="switchLab('library')">Recipe Library</button>
-        <button class="navTab" id="labtab-test" onclick="switchLab('test')">Pantry Check</button>
-        <button class="navTab" id="labtab-compare" onclick="switchLab('compare')">Compare 3–4</button>
+        <button class="navTab" id="labtab-test" onclick="switchLab('test')">Recipe Testing</button>
         <button class="btn primary" id="addRecipeBtn" onclick="focusRecipeForm()" style="margin-left:auto">+ Add Recipe</button>
       </div>
 
@@ -1642,12 +1663,6 @@ html.force-mobile .pickupList.aisleListView{display:block!important;padding:12px
         </div>
       </div>
 
-      <div class="labPanel" id="lab-compare">
-        <div class="labGrid">
-          <div><div class="sideNote">Select up to four recipes. The app compares pantry match, missing items, time, difficulty, rating, and gives a practical recommendation.</div><div class="compareGrid" id="compareOptions" style="margin-top:10px"></div></div>
-          <div class="recipeCard"><div class="cardTitleLine"><strong>Comparison Result</strong><button class="btn primary" onclick="renderCompareResult()">Compare Selected</button></div><div id="compareResult" class="recipeResult">Select recipes to compare.</div></div>
-        </div>
-      </div>
     </section>
   </section>
 
@@ -2736,7 +2751,7 @@ function pantryMatchForIngredients(ingredients){
   const score = ingredients.length ? Math.round(rows.reduce((a,r)=>a+r.score,0)/ingredients.length*100) : 0;
   return {rows,score,missing:rows.filter(r=>!r.match || r.status==='Out of Stock' || r.status==='Running Low')};
 }
-function renderKitchenLab(){ renderRecipeCategories(document.getElementById('recipeCategory')?.value||''); renderRecipeIngredientRows(); renderRecipeScale(); renderRecipePreparationPreview(); renderRecipeCards(); renderRecipeSelects(); renderTestRecipeIngredients(); renderTestCards(); renderCompareOptions(); renderTimers(); renderRecipeFocus(); renderCookingTray(); updateHeaderCards(); }
+function renderKitchenLab(){ renderRecipeCategories(document.getElementById('recipeCategory')?.value||''); renderRecipeIngredientRows(); renderRecipeScale(); renderRecipePreparationPreview(); renderRecipeCards(); renderRecipeSelects(); renderTestRecipeIngredients(); renderTestCards(); renderTimers(); renderRecipeFocus(); renderCookingTray(); updateHeaderCards(); }
 function switchLab(tab){
   activeLab=tab;
   if(tab!=='library') recipeFocusMode=false;
@@ -3087,71 +3102,9 @@ function renderTestArchive(){
 function restoreTest(id){ const t=testEntries.find(x=>x.id===id); if(!t) return; const r=recipes.find(x=>x.id===t.recipeId); const search=document.getElementById('testRecipeSearch'); if(search) search.value=r?.name||t.recipeName||''; renderRecipeSelects(); document.getElementById('testRecipe').value=t.recipeId; testIngredientDraft={}; if(Array.isArray(t.ingredientChanges)){ const ingredients=normalizeRecipeIngredients((r||{}).ingredients||[]); t.ingredientChanges.forEach(change=>{ const idx=ingredients.findIndex(entry=>entry.name===change.name); if(idx>=0){ testIngredientDraft[testIngredientKey(ingredients[idx],idx)]={testAmount:change.testAmount||'',note:change.note||''}; } }); } document.getElementById('testName').value=t.testName||''; document.getElementById('testGoal').value=t.goal||''; document.getElementById('testChanges').value=t.changes||''; document.getElementById('testExpected').value=t.expected||''; document.getElementById('testActual').value=t.actual||''; document.getElementById('testRating').value=t.rating||''; document.getElementById('testRecommendation').value=t.recommendation||''; syncTestRecipeSearchFromSelect(); renderTestRecipeIngredients(); toast('Restored into test form.'); }
 function duplicateTest(id){ const t=testEntries.find(x=>x.id===id); if(!t) return; testEntries.unshift({...t,id:'test-'+Date.now(),goal:t.goal+' Copy',date:new Date().toISOString()}); persistTests(); renderKitchenLab(); }
 function deleteTest(id,button){ if(!armInlineDelete(button)) return; testEntries=testEntries.filter(t=>t.id!==id); persistTests(); renderKitchenLab(); toast('Test deleted.'); }
-function renderCompareOptions(){
-  const sel=document.getElementById('cmpRecipePicker'); if(!sel) return;
-  const cur=sel.value;
-  sel.innerHTML='<option value="">— Select a recipe —</option>'+recipes.map(r=>`<option value="${escapeHtml(r.id)}" ${r.id===cur?'selected':''}>${escapeHtml(r.name)}</option>`).join('');
-}
+
 function toggleCompare(id){} // deprecated — compare is now recipe vs its tests
-function renderCompareResult(){
-  const el=document.getElementById('compareSplitGrid'); if(!el) return;
-  const recipeId=document.getElementById('cmpRecipePicker')?.value;
-  const r=recipes.find(x=>x.id===recipeId);
-  if(!r){ el.style.gridTemplateColumns=''; el.innerHTML='<div class="empty">Select a recipe above to compare it against its test entries.</div>'; return; }
-  const tests=testEntries.filter(t=>t.recipeId===r.id);
-  const cols=[{isBaseline:true,r},{...tests.map(t=>({isBaseline:false,t}))}];
-  // Build columns: baseline + each test
-  const allCols=[{isBaseline:true},...tests.map(t=>({isBaseline:false,t}))];
-  el.style.gridTemplateColumns=`repeat(${allCols.length},minmax(220px,1fr))`;
 
-  // Collect all unique ingredient names across baseline + tests
-  const baseIngs=normalizeRecipeIngredients(r.ingredients||[]);
-  const allIngNames=[...new Set([...baseIngs.map(i=>i.name),...tests.flatMap(t=>(t.ingredientChanges||[]).map(c=>c.name))])];
-
-  el.innerHTML=allCols.map(col=>{
-    if(col.isBaseline){
-      const steps=r.preparationSteps||[];
-      const ingRows=allIngNames.map(name=>{
-        const ing=baseIngs.find(i=>i.name===name);
-        const p=ing&&items.find(i=>i.id===ing.pantryId||normalize(i.name)===normalize(name));
-        const sc=p?ingredientStatusClass({pantryId:p?.id,name}):'unknown';
-        return `<div class="cmpIngRow"><span class="ingredientStatus ${sc}"></span><span>${escapeHtml(name)}</span><span class="cmpIngAmount">${escapeHtml(ing?.amount||'—')}</span></div>`;
-      }).join('');
-      const stepRows=steps.map((s,i)=>`<div class="cmpStep"><span class="prepStepNumber" style="width:22px;height:22px;font-size:11px">${i+1}</span><span>${escapeHtml(s)}</span></div>`).join('');
-      return `<div class="cmpCard recipeCard cmpBaseline">
-        <div class="cmpCardHead"><strong class="cmpTitle">${escapeHtml(r.name)}</strong><span class="tinyChip cmpBaselineChip">Baseline</span></div>
-        <div class="cmpMeta">${escapeHtml(r.category||'Recipe')} • ${baseIngs.length} ingredients</div>
-        <div class="cmpSection"><div class="cmpSectionLabel">Ingredients</div>${ingRows||'<div class="miniMeta">None listed</div>'}</div>
-        <div class="cmpSection"><div class="cmpSectionLabel">Preparation (${steps.length} steps)</div>${stepRows||'<div class="miniMeta">None listed</div>'}</div>
-        <div class="cmpSection"><div class="cmpSectionLabel">Notes</div><div class="miniMeta">${escapeHtml(r.notes||'—')}</div></div>
-        <div class="inlineActions" style="margin-top:10px"><button class="btn primary" onclick="editRecipe('${r.id}')">Edit</button><button class="btn" onclick="selectRecipeForTest('${r.id}')">New Test</button></div>
-      </div>`;
-    } else {
-      const t=col.t;
-      const changes=t.ingredientChanges||[];
-      const ingRows=allIngNames.map(name=>{
-        const change=changes.find(c=>c.name===name);
-        const baseIng=baseIngs.find(i=>i.name===name);
-        const isChanged=change&&change.changed;
-        const isAdded=change&&!baseIng;
-        const amount=change?.testAmount||baseIng?.amount||'—';
-        return `<div class="cmpIngRow ${isChanged?'cmpIngChanged':''} ${isAdded?'cmpIngAdded':''}">
-          ${isChanged?'<span class="cmpDelta">Δ</span>':isAdded?'<span class="cmpAdded">+</span>':'<span style="width:14px;display:inline-block"></span>'}
-          <span>${escapeHtml(name)}</span>
-          <span class="cmpIngAmount">${escapeHtml(amount)}${isChanged&&change.originalAmount?`<span class="cmpOrig"> (was ${escapeHtml(change.originalAmount)})</span>`:''}${change?.note?`<span class="cmpOrig"> — ${escapeHtml(change.note)}</span>`:''}</span>
-        </div>`;
-      }).join('');
-      return `<div class="cmpCard recipeCard">
-        <div class="cmpCardHead"><strong class="cmpTitle">${escapeHtml(t.testName||t.goal||'Test')}</strong><span class="tinyChip">Rating ${escapeHtml(t.rating||'—')}</span></div>
-        <div class="cmpMeta">${new Date(t.date).toLocaleDateString()} • ${changes.filter(c=>c.changed).length} changes</div>
-        <div class="cmpSection"><div class="cmpSectionLabel">Ingredients</div>${ingRows||'<div class="miniMeta">None</div>'}</div>
-        <div class="cmpSection"><div class="cmpSectionLabel">Changes Made</div><div class="miniMeta" style="white-space:pre-wrap">${escapeHtml(t.changes||'—')}</div></div>
-        <div class="cmpSection"><div class="cmpSectionLabel">Result</div><div class="miniMeta" style="white-space:pre-wrap">${escapeHtml(t.actual||'—')}</div></div>
-        <div class="inlineActions" style="margin-top:10px"><button class="btn" onclick="restoreTest('${t.id}');switchLab('test')">Restore</button><button class="btn danger" onclick="deleteTest('${t.id}',this)">Delete</button></div>
-      </div>`;
-    }
-  }).join('');
-}
 function checkRecipe(){
   const lines=splitLines(document.getElementById('recipeInput')?.value||document.getElementById('recipeIngredients')?.value||'');
   const target=document.getElementById('recipeResult'); if(!target) return;
