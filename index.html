@@ -149,6 +149,25 @@ tr:hover td{background:rgba(255,255,255,.035)}
 .resolveField{padding:4px 7px;border:1px solid #a16207;border-radius:999px;background:#3b2f08;color:#fef08a;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.05em}
 .resolveIntro{margin-bottom:14px;color:var(--muted);font-size:13px;line-height:1.5}
 @media(max-width:1100px){.headerShell{grid-template-columns:1fr}.navCards{grid-template-columns:repeat(4,1fr)}.grid{grid-template-columns:repeat(3,1fr)}.main{grid-template-columns:1fr}.toolbar{grid-template-columns:1fr 1fr}.side{grid-template-columns:1fr}}
+.desktopOnly{display:block}
+.mobileOnly{display:none!important}
+.mobileMoreCard{position:relative}
+.mobileMoreMenu{display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;background:#fffdf9;border:1.5px solid rgba(151,111,47,.25);border-radius:14px;box-shadow:0 16px 40px rgba(74,50,19,.2);z-index:100;overflow:hidden;min-width:160px}
+.mobileMoreMenu.open{display:block}
+.mobileMoreMenu button{display:flex;align-items:center;gap:8px;padding:12px 14px;width:100%;text-align:left;background:none;border:none;border-bottom:1px solid rgba(151,111,47,.1);font-size:14px;font-weight:800;color:#39291b;cursor:pointer}
+.mobileMoreMenu button:last-child{border-bottom:none}
+.mobileMoreMenu button:hover{background:#fde9b0}
+@media(max-width:620px){
+  .desktopOnly{display:none!important}
+  .mobileOnly{display:flex!important}
+  .navCards{grid-template-columns:repeat(3,1fr)!important}
+  h1.desktopOnly{display:none!important}
+}
+.force-mobile .desktopOnly{display:none!important}
+.force-mobile .mobileOnly{display:flex!important}
+.force-mobile .navCards{grid-template-columns:repeat(3,1fr)!important}
+.force-mobile h1.desktopOnly{display:none!important}
+.force-mobile .app{max-width:430px;margin:0 auto}
 @media(max-width:720px){.app{padding:14px}.pantryMetricsControls{justify-content:flex-start}.metricsTinyToggle{width:auto}.headerShell{gap:12px}.header{align-items:flex-start;flex-direction:column}.actions{justify-content:flex-start}.navCards{grid-template-columns:1fr}.metricsToggle{width:100%;min-height:46px}.navCard{min-height:76px}.grid{grid-template-columns:repeat(2,1fr)}.toolbar{grid-template-columns:1fr}.formGrid{grid-template-columns:1fr}.tableWrap{max-height:none}th:nth-child(3),td:nth-child(3),th:nth-child(4),td:nth-child(4),th:nth-child(6),td:nth-child(6){display:none}}
 
 /* visibility hardening */
@@ -1248,20 +1267,127 @@ td.editable-cell{
   transition:.14s background;
 }
 
+
+/* ===== MOBILE PANTRY FIXES ===== */
+@media(max-width:620px), .force-mobile {
+
+  /* Toolbar wraps nicely */
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;padding:10px}
+  .toolbar .field{flex:1;min-width:140px;font-size:13px;padding:9px 10px}
+  #search{width:100%!important;flex:0 0 100%}
+
+  /* Metrics grid 3-col compact */
+  .pantryMetricsGrid{grid-template-columns:repeat(3,1fr)!important;gap:8px!important;padding:10px!important}
+  .metricCard{padding:10px 8px!important}
+  .metricCard .metricValue{font-size:22px!important}
+  .metricCard .metricLabel{font-size:9px!important}
+
+  /* Panel head stacks */
+  .panelHead{flex-wrap:wrap;gap:8px;padding:10px 12px}
+  .panelHead > div:last-child{width:100%;display:flex;flex-wrap:wrap;gap:6px}
+  #resolveBtn{font-size:12px;padding:8px 10px;flex:1}
+  #addRecipeBtn{font-size:12px;padding:8px 10px}
+
+  /* Pantry table - show only Item + Stock on mobile */
+  #page-pantry .inventoryTable th:nth-child(n+3),
+  #page-pantry .inventoryTable td:nth-child(n+3){display:none!important}
+  #page-pantry .inventoryTable .nameCell{min-width:0;font-size:13px}
+  #page-pantry .inventoryTable{font-size:13px}
+  #page-pantry .tableWrap{overflow-x:hidden}
+
+  /* Make table rows tappable */
+  #page-pantry .inventoryTable td{padding:10px 8px}
+  #page-pantry .inventoryTable tr{cursor:pointer}
+
+  /* Nav 3-col */
+  .navCards{grid-template-columns:repeat(3,1fr)!important;gap:6px!important;padding:6px!important}
+  .navCard{min-height:70px!important;padding:10px 8px!important;border-radius:14px!important}
+  .navIcon{font-size:20px!important}
+  .navTitle{font-size:11px!important}
+  .navCount{font-size:11px!important}
+
+  /* App padding */
+  .app{padding:10px!important}
+}
+
+@media(max-width:620px), .force-mobile {
+  #page-pantry .panelTitle{display:none!important}
+  #page-pantry .inventoryTable tbody tr:active td{background:rgba(213,174,104,.25)!important}
+  #page-pantry .rowActions{display:none}
+}
+html.force-mobile #page-pantry .panelTitle{display:none!important}
+@media(max-width:620px){
+  #page-pantry .inventoryTable .nameCell{text-align:left!important;white-space:normal!important;overflow:visible;word-break:break-word}
+  #page-pantry .inventoryTable td{text-align:center!important;vertical-align:middle;padding:8px 4px!important}
+  #page-pantry .inventoryTable th{text-align:center!important;padding:8px 4px!important}
+  #page-pantry .inventoryTable{table-layout:fixed;width:100%;border-spacing:0}
+  #page-pantry .inventoryTable colgroup{display:none}
+  #page-pantry .inventoryTable th:first-child,#page-pantry .inventoryTable td:first-child{width:65%}
+  #page-pantry .inventoryTable th:nth-child(2),#page-pantry .inventoryTable td:nth-child(2){width:35%;text-align:center!important}
+  #page-pantry .inventoryTable .nameCell{justify-content:flex-start;gap:6px}
+}
+html.force-mobile #page-pantry .inventoryTable .nameCell{text-align:left!important;white-space:normal!important;overflow:visible;word-break:break-word}
+html.force-mobile #page-pantry .inventoryTable td{text-align:center!important;vertical-align:middle;padding:8px 4px!important}
+html.force-mobile #page-pantry .inventoryTable th{text-align:center!important;padding:8px 4px!important}
+html.force-mobile #page-pantry .inventoryTable{table-layout:fixed;width:100%;border-spacing:0}
+html.force-mobile #page-pantry .inventoryTable th:first-child,html.force-mobile #page-pantry .inventoryTable td:first-child{width:65%}
+html.force-mobile #page-pantry .inventoryTable th:nth-child(2),html.force-mobile #page-pantry .inventoryTable td:nth-child(2){width:35%;text-align:center!important}
+html.force-mobile #page-pantry .inventoryTable .nameCell{justify-content:flex-start;gap:6px}
+
+@media(max-width:620px){
+  #page-pantry .inventoryTable th:nth-child(n+3),
+  #page-pantry .inventoryTable td:nth-child(n+3){display:none!important;visibility:hidden!important;width:0!important;padding:0!important;border:none!important}
+}
+html.force-mobile #page-pantry .inventoryTable th:nth-child(n+3),
+html.force-mobile #page-pantry .inventoryTable td:nth-child(n+3){display:none!important;visibility:hidden!important;width:0!important;padding:0!important;border:none!important}
+
+@media(max-width:620px){
+  #page-pantry .toolbar{display:none!important}
+}
+html.force-mobile #page-pantry .toolbar{display:none!important}
+
+.mobileSearchBar{display:none;padding:8px 10px 0}
+.mobileSearchWrap{display:flex;align-items:center;gap:8px;background:#fffdf9;border:1.5px solid rgba(151,111,47,.25);border-radius:14px;padding:8px 12px;box-shadow:0 2px 8px rgba(102,72,31,.07)}
+.mobileSearchIcon{font-size:15px;flex-shrink:0;opacity:.6}
+.mobileSearchInput{flex:1;background:none;border:none;outline:none;font-size:14px;font-weight:700;color:#2d1f0e;font-family:inherit}
+.mobileSearchInput::placeholder{color:#b8976a;font-weight:600}
+.mobileSearchClear{background:none;border:none;cursor:pointer;font-size:14px;color:#9b7e56;padding:0;line-height:1}
+.mobileSearchSuggestions{margin-top:6px;background:#fffdf9;border:1.5px solid rgba(151,111,47,.2);border-radius:12px;overflow:hidden;box-shadow:0 6px 20px rgba(102,72,31,.1);display:none}
+.mobileSearchSuggestions.show{display:block}
+.mobileSearchSug{display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;border-bottom:1px solid rgba(151,111,47,.08);transition:.1s background}
+.mobileSearchSug:last-child{border-bottom:none}
+.mobileSearchSug:hover,.mobileSearchSug:active{background:#fde9b0}
+.mobileSearchSugEmoji{font-size:18px;flex-shrink:0}
+.mobileSearchSugName{flex:1;font-size:13px;font-weight:800;color:#2d1f0e}
+.mobileSearchSugStatus{font-size:11px;font-weight:700;color:#9b7e56}
+@media(max-width:620px){.mobileSearchBar{display:block}}
+html.force-mobile .mobileSearchBar{display:block}
 </style>
 </head>
 <body>
 <div class="app">
   <section class="headerShell">
     <header class="header">
-      <div class="brand"><div><h1>Chopping Block</h1></div></div>
+      <div class="brand"><div><h1 class="desktopOnly">Chopping Block</h1></div></div>
+      <button id="viewToggleBtn" onclick="toggleViewMode()" title="Switch mobile/desktop view" style="position:fixed;bottom:16px;right:16px;z-index:9999;width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(151,111,47,.3);background:#fffdf9;box-shadow:0 4px 16px rgba(102,72,31,.2);font-size:18px;cursor:pointer;display:grid;place-items:center;transition:.15s">📱</button>
     </header>
     <nav class="navCards" aria-label="Kitchen sections">
       <button class="navCard active" id="nav-pantry" onclick="switchPage('pantry')"><div class="navCardTop"><span class="navIcon">🥫</span><span class="navCount" id="navPantryCount">0</span></div><div><div class="navTitle">Pantry</div></div></button>
-      <button class="navCard" id="nav-stopwatch" onclick="switchPage('stopwatch')"><div class="navCardTop"><span class="navIcon">🕐</span><span class="navCount" id="navStopwatchCount">0</span></div><div><div class="navTitle">Clock</div></div></button>
-      <button class="navCard" id="nav-recipes" onclick="switchPage('recipes')"><div class="navCardTop"><span class="navIcon">📖</span><span class="navCount" id="navRecipeCount">Ready</span></div><div><div class="navTitle">Recipes</div></div></button>
-      <button class="navCard" id="nav-research" onclick="switchPage('research')"><div class="navCardTop"><span class="navIcon">🧠</span><span class="navCount" id="navResearchCount">0</span></div><div><div class="navTitle">Research</div></div></button>
-      <button class="navCard" id="nav-grocery" onclick="switchPage('grocery')"><div class="navCardTop"><span class="navIcon">🛒</span><span class="navCount" id="navGroceryCount">0</span></div><div><div class="navTitle">Grocery List</div></div></button>
+      <button class="navCard desktopOnly" id="nav-stopwatch" onclick="switchPage('stopwatch')"><div class="navCardTop"><span class="navIcon">🕐</span><span class="navCount" id="navStopwatchCount">0</span></div><div><div class="navTitle">Clock</div></div></button>
+      <button class="navCard desktopOnly" id="nav-recipes" onclick="switchPage('recipes')"><div class="navCardTop"><span class="navIcon">📖</span><span class="navCount" id="navRecipeCount">Ready</span></div><div><div class="navTitle">Recipes</div></div></button>
+      <button class="navCard desktopOnly" id="nav-research" onclick="switchPage('research')"><div class="navCardTop"><span class="navIcon">🧠</span><span class="navCount" id="navResearchCount">0</span></div><div><div class="navTitle">Research</div></div></button>
+      <button class="navCard desktopOnly" id="nav-grocery" onclick="switchPage('grocery')"><div class="navCardTop"><span class="navIcon">🛒</span><span class="navCount" id="navGroceryCount">0</span></div><div><div class="navTitle">Grocery List</div></div></button>
+      <!-- Mobile-only: 3 cards + More dropdown -->
+      <button class="navCard mobileOnly" id="nav-recipes-m" onclick="switchPage('recipes')"><div class="navCardTop"><span class="navIcon">📖</span><span class="navCount" id="navRecipeCountM">Ready</span></div><div><div class="navTitle">Recipes</div></div></button>
+      <button class="navCard mobileOnly" id="nav-grocery-m" onclick="switchPage('grocery')"><div class="navCardTop"><span class="navIcon">🛒</span><span class="navCount" id="navGroceryCountM">0</span></div><div><div class="navTitle">Grocery</div></div></button>
+      <div class="navCard mobileOnly mobileMoreCard" id="nav-more" onclick="toggleMobileMore(event)">
+        <div class="navCardTop"><span class="navIcon">⋯</span><span class="navCount" id="navMoreCount"></span></div>
+        <div><div class="navTitle">More</div></div>
+        <div class="mobileMoreMenu" id="mobileMoreMenu">
+          <button onclick="event.stopPropagation();switchPage('stopwatch');closeMobileMore()">🕐 Clock</button>
+          <button onclick="event.stopPropagation();switchPage('research');closeMobileMore()">🧠 Research</button>
+        </div>
+      </div>
     </nav>
   </section>
 
@@ -1281,8 +1407,16 @@ td.editable-cell{
     </section>
 
     <main class="pageGrid">
+      <div class="mobileSearchBar" id="mobileSearchBar">
+        <div class="mobileSearchWrap">
+          <span class="mobileSearchIcon">🔍</span>
+          <input id="mobileSearch" class="mobileSearchInput" placeholder="Search items..." oninput="handleMobileSearch(this.value)" autocomplete="off" />
+          <button class="mobileSearchClear" id="mobileSearchClear" onclick="clearMobileSearch()" style="display:none">✕</button>
+        </div>
+        <div class="mobileSearchSuggestions" id="mobileSearchSuggestions"></div>
+      </div>
       <section class="panel">
-        <div class="panelHead"><div><div class="panelTitle">Pantry</div><div class="muted" id="resultCount"></div></div><div class="actions"><button class="metricsTinyToggle panelMetricsToggle" id="metricsToggle" onclick="toggleMetrics()" aria-label="Hide pantry metrics" title="Hide pantry metrics">Metrics −</button><button class="btn resolveBtn" id="resolveBtn" onclick="openResolvePopup()">Resolve Missing Values</button><button class="btn primary" onclick="openEditor()">+ Add Item</button></div></div>
+        <div class="panelHead"><div><div class="panelTitle">Pantry</div><div class="muted" id="resultCount"></div></div><div class="actions"><button class="metricsTinyToggle panelMetricsToggle" id="metricsToggle" onclick="toggleMetrics()" aria-label="Hide pantry metrics" title="Hide pantry metrics">Metrics −</button><button class="btn resolveBtn" id="resolveBtn" onclick="openResolvePopup()">Resolve Missing Values</button><button class="btn primary" onclick="openEditor()">+ Add</button></div></div>
         <div class="tableWrap"><table class="inventoryTable"><thead><tr><th onclick="setSort('name')">Item</th><th onclick="setSort('status')">Stock</th><th onclick="setSort('category')">Category</th><th onclick="setSort('storage')">Storage</th><th onclick="setSort('storeLocation')">Store Location</th><th onclick="setSort('price')">Price</th><th>Picture</th><th>Pickup</th><th></th></tr></thead><tbody id="tbody"></tbody></table></div>
       </section>
     </main>
@@ -1635,7 +1769,7 @@ function renderTable(){
   const rc=document.getElementById('resultCount'); if(rc) rc.textContent='';
   const tbody=document.getElementById('tbody'); if(!tbody) return;
   if(!list.length){ tbody.innerHTML=`<tr><td colspan="9" class="empty">No items match this filter.</td></tr>`; return; }
-  tbody.innerHTML=list.map(it=>`<tr ondblclick="openEditor('${it.id}')"><td class="nameCell"><span class="itemEmojiCell">${it.photo?`<img src="${it.photo}" class="itemPhotoThumb" alt="${escapeHtml(it.name||'')}">`:`<span class="itemEmojiIcon">${getItemEmoji(it)}</span>`}</span>${subtleValue(it.name,'Unnamed item')}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','status')" title="Click to edit stock status">${stockBadge(it.status)}${isBlankishValue(it.status)?'<span class="blankFlag" title="Blank or needs update"></span>':''}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','category')" title="Click to edit category">${subtleBadge(it.category, it.category==='LUXURY'?'luxury':'')}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','storage')" title="Click to edit storage">${subtleValue(it.storage)}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','storeLocation')" title="Click to edit store location">${subtleValue(it.storeLocation)}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','price')" title="Click to edit price">${subtleValue(it.price)}</td><td class="photoCell">${it.photo?`<button class="btn photoViewBtn" onclick="event.stopPropagation();openPhotoPopup('${it.id}')">View</button>`:`<button class="btn photoViewBtn emptyPhoto" onclick="event.stopPropagation();toast('No photo stored for this item.')">No Photo</button>`}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','pickup')" title="Click to edit pickup status">${pickupNeeded(it)?badge('Pickup','pickup'):badge(isLuxury(it)?'Luxury Skip':'No','unknown')}</td><td><div class="rowActions"><button class="iconBtn" onclick="event.stopPropagation();openEditor('${it.id}')">✎</button></div></td></tr>`).join('');
+  tbody.innerHTML=list.map(it=>`<tr ondblclick="openEditor('${it.id}')" onclick="handlePantryRowTap('${it.id}',event)"><td class="nameCell"><span class="itemEmojiCell">${it.photo?`<img src="${it.photo}" class="itemPhotoThumb" alt="${escapeHtml(it.name||'')}">`:`<span class="itemEmojiIcon">${getItemEmoji(it)}</span>`}</span>${subtleValue(it.name,'Unnamed item')}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','status')" title="Click to edit stock status">${stockBadge(it.status)}${isBlankishValue(it.status)?'<span class="blankFlag" title="Blank or needs update"></span>':''}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','category')" title="Click to edit category">${subtleBadge(it.category, it.category==='LUXURY'?'luxury':'')}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','storage')" title="Click to edit storage">${subtleValue(it.storage)}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','storeLocation')" title="Click to edit store location">${subtleValue(it.storeLocation)}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','price')" title="Click to edit price">${subtleValue(it.price)}</td><td class="photoCell">${it.photo?`<button class="btn photoViewBtn" onclick="event.stopPropagation();openPhotoPopup('${it.id}')">View</button>`:`<button class="btn photoViewBtn emptyPhoto" onclick="event.stopPropagation();toast('No photo stored for this item.')">No Photo</button>`}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','pickup')" title="Click to edit pickup status">${pickupNeeded(it)?badge('Pickup','pickup'):badge(isLuxury(it)?'Luxury Skip':'No','unknown')}</td><td><div class="rowActions"><button class="iconBtn" onclick="event.stopPropagation();openEditor('${it.id}')">✎</button></div></td></tr>`).join('');
 }
 
 function groceryCategoryForItem(it){
@@ -1791,7 +1925,7 @@ function toggleMetrics(){
 }
 function updateResolveButton(){
   const count=items.filter(needsCleanup).length;
-  const rb=document.getElementById('resolveBtn'); if(rb) rb.textContent=`Resolve Missing Values (${count})`;
+  const rb=document.getElementById('resolveBtn'); if(rb) rb.textContent=`Resolve (${count})`;
 }
 function openResolvePopup(){ renderResolveList(); document.getElementById('resolveBackdrop').classList.add('show'); }
 function closeResolvePopup(){ document.getElementById('resolveBackdrop').classList.remove('show'); }
@@ -2270,6 +2404,35 @@ function openProfilePopup(){
   document.getElementById('profileBackdrop')?.classList.add('show');
 }
 function closeProfilePopup(){ document.getElementById('bottom-profile')?.classList.remove('active'); document.getElementById('profileBackdrop')?.classList.remove('show'); updateBottomNav(document.querySelector('.pageView.active')?.id?.replace('page-','')||'mealplan'); }
+let _forceMobile = false;
+function toggleViewMode(){
+  _forceMobile = !_forceMobile;
+  const btn = document.getElementById('viewToggleBtn');
+  if(_forceMobile){
+    document.documentElement.classList.add('force-mobile');
+    if(btn) btn.textContent = '🖥️';
+    if(btn) btn.title = 'Switch to desktop view';
+  } else {
+    document.documentElement.classList.remove('force-mobile');
+    if(btn) btn.textContent = '📱';
+    if(btn) btn.title = 'Switch to mobile view';
+  }
+}
+function toggleMobileMore(e){
+  e.stopPropagation();
+  const menu=document.getElementById('mobileMoreMenu');
+  if(!menu) return;
+  menu.classList.toggle('open');
+  if(menu.classList.contains('open')){
+    setTimeout(()=>document.addEventListener('click',function _close(){
+      menu.classList.remove('open');
+      document.removeEventListener('click',_close);
+    }),0);
+  }
+}
+function closeMobileMore(){
+  document.getElementById('mobileMoreMenu')?.classList.remove('open');
+}
 function updateHeaderCards(){
   const pantry=document.getElementById('navPantryCount'), grocery=document.getElementById('navGroceryCount'), recipe=document.getElementById('navRecipeCount'), stopwatch=document.getElementById('navStopwatchCount'), researchCount=document.getElementById('navResearchCount');
   if(pantry) pantry.textContent=items.length;
@@ -2280,6 +2443,15 @@ function updateHeaderCards(){
     stopwatch.textContent=running ? `${running} live` : timers.length || '—';
   }
   if(researchCount) researchCount.textContent=(research.folders||[]).length;
+  // Sync mobile nav counts
+  const rm=document.getElementById('navRecipeCountM'); if(rm) rm.textContent=recipe?recipe.textContent:'';
+  const gm=document.getElementById('navGroceryCountM'); if(gm) gm.textContent=grocery?grocery.textContent:'';
+  // Sync active state on mobile mirrors
+  ['recipes','grocery'].forEach(page=>{
+    const dm=document.getElementById('nav-'+page+'-m');
+    const dd=document.getElementById('nav-'+page);
+    if(dm&&dd) dm.classList.toggle('active',dd.classList.contains('active'));
+  });
 }
 function loadRecipes(){
   try{ const saved=localStorage.getItem(RECIPE_KEY); return saved?JSON.parse(saved):seedRecipes(); }catch(e){ return seedRecipes(); }
@@ -3829,6 +4001,112 @@ render = function(){ oldRender(); renderKitchenLab(); renderResearch(); renderCo
 render();
 switchPage('pantry');
 updateBottomNav('pantry');
+
+let _mobileEditId = null;
+
+function handlePantryRowTap(id, e){
+  // On desktop (not force-mobile and wide screen) use normal dblclick
+  if(!_forceMobile && window.innerWidth > 620) return;
+  e.stopPropagation();
+  openMobileEditSheet(id);
+}
+
+function openMobileEditSheet(id){
+  const it = items.find(x=>x.id===id); if(!it) return;
+  _mobileEditId = id;
+
+  document.getElementById('mobileEditEmoji').textContent = it.photo ? '' : getItemEmoji(it);
+  if(it.photo){ const img=document.createElement('img'); img.src=it.photo; img.style.cssText='width:36px;height:36px;border-radius:8px;object-fit:cover'; document.getElementById('mobileEditEmoji').appendChild(img); }
+  document.getElementById('mobileEditName').textContent = it.name||'Unnamed';
+  document.getElementById('mobileEditSub').textContent = (it.category||'') + (it.storeLocation?' • '+it.storeLocation:'');
+
+  // Populate status select
+  const statuses = ['In Stock','Running Low','Out of Stock','Unknown'];
+  const meStatus = document.getElementById('meStatus');
+  meStatus.innerHTML = statuses.map(s=>`<option value="${s}" ${s===it.status?'selected':''}>${s}</option>`).join('');
+
+  // Populate storage select
+  const storages = ['Pantry','Fridge','Freezer','Spices & Oils','Baking','Other','Unassigned'];
+  const meStorage = document.getElementById('meStorage');
+  meStorage.innerHTML = storages.map(s=>`<option value="${s}" ${s===it.storage?'selected':''}>${s}</option>`).join('');
+
+  document.getElementById('meLocation').value = it.storeLocation||'';
+  document.getElementById('mePrice').value = it.price||'';
+
+  const sheet = document.getElementById('mobileEditSheet');
+  const panel = document.getElementById('mobileEditPanel');
+  sheet.style.display = 'block';
+  requestAnimationFrame(()=>{ requestAnimationFrame(()=>{ panel.style.transform='translateY(0)'; }); });
+}
+
+function closeMobileEditSheet(){
+  mobileEditSave();
+  const panel = document.getElementById('mobileEditPanel');
+  panel.style.transform = 'translateY(100%)';
+  setTimeout(()=>{ document.getElementById('mobileEditSheet').style.display='none'; }, 300);
+  _mobileEditId = null;
+}
+
+function mobileEditSave(){
+  if(!_mobileEditId) return;
+  const it = items.find(x=>x.id===_mobileEditId); if(!it) return;
+  it.status = document.getElementById('meStatus')?.value || it.status;
+  it.storage = document.getElementById('meStorage')?.value || it.storage;
+  it.storeLocation = document.getElementById('meLocation')?.value || it.storeLocation;
+  it.price = document.getElementById('mePrice')?.value || it.price;
+  it.lastUpdated = new Date().toISOString();
+  persist();
+  renderTable();
+  updateHeaderCards();
+}
+
+function mobileEditFull(){
+  closeMobileEditSheet();
+  setTimeout(()=>openEditor(_mobileEditId), 320);
+}
+
+function handleMobileSearch(val){
+  const clear = document.getElementById('mobileSearchClear');
+  const sugs = document.getElementById('mobileSearchSuggestions');
+  if(clear) clear.style.display = val ? 'block' : 'none';
+  // Also filter main table
+  const desktop = document.getElementById('search');
+  if(desktop){ desktop.value = val; render(); }
+  if(!val){ sugs.classList.remove('show'); return; }
+  // Build suggestions from items
+  const q = val.toLowerCase();
+  const matches = items.filter(it=>
+    (it.name||'').toLowerCase().includes(q) ||
+    (it.storeLocation||'').toLowerCase().includes(q) ||
+    (it.category||'').toLowerCase().includes(q)
+  ).slice(0,6);
+  if(!matches.length){ sugs.classList.remove('show'); return; }
+  sugs.innerHTML = matches.map(it=>`
+    <div class="mobileSearchSug" onclick="selectMobileSearchItem('${it.id}')">
+      <span class="mobileSearchSugEmoji">${it.photo?`<img src="${it.photo}" style="width:22px;height:22px;border-radius:5px;object-fit:cover">`:getItemEmoji(it)}</span>
+      <span class="mobileSearchSugName">${escapeHtml(it.name)}</span>
+      <span class="mobileSearchSugStatus">${it.status||''}</span>
+    </div>`).join('');
+  sugs.classList.add('show');
+}
+function selectMobileSearchItem(id){
+  const sugs = document.getElementById('mobileSearchSuggestions');
+  sugs.classList.remove('show');
+  document.getElementById('mobileSearch').value = '';
+  const clear = document.getElementById('mobileSearchClear');
+  if(clear) clear.style.display='none';
+  const desktop = document.getElementById('search');
+  if(desktop){ desktop.value=''; render(); }
+  openMobileEditSheet(id);
+}
+function clearMobileSearch(){
+  const inp = document.getElementById('mobileSearch');
+  if(inp) inp.value='';
+  document.getElementById('mobileSearchClear').style.display='none';
+  document.getElementById('mobileSearchSuggestions').classList.remove('show');
+  const desktop = document.getElementById('search');
+  if(desktop){ desktop.value=''; render(); }
+}
 </script>
 <div class="modalBackdrop" id="testArchiveBackdrop" onclick="if(event.target.id==='testArchiveBackdrop')closeTestArchive()">
   <div class="modal" style="max-width:740px;width:95vw;max-height:88vh;display:flex;flex-direction:column">
@@ -3877,5 +4155,41 @@ updateBottomNav('pantry');
     </div>
   </div>
 </div>
+<div id="mobileEditSheet" style="display:none;position:fixed;inset:0;z-index:5000">
+  <div id="mobileEditOverlay" onclick="closeMobileEditSheet()" style="position:absolute;inset:0;background:rgba(0,0,0,.45)"></div>
+  <div id="mobileEditPanel" style="position:absolute;bottom:0;left:0;right:0;background:#fffdf9;border-radius:22px 22px 0 0;padding:0 0 env(safe-area-inset-bottom);max-height:90vh;overflow-y:auto;box-shadow:0 -8px 40px rgba(74,50,19,.25);transform:translateY(100%);transition:transform .28s cubic-bezier(.22,.68,0,1.2)">
+    <div style="display:flex;align-items:center;padding:14px 16px 10px;border-bottom:1px solid rgba(151,111,47,.15)">
+      <div id="mobileEditEmoji" style="font-size:28px;margin-right:10px"></div>
+      <div style="flex:1;min-width:0"><div id="mobileEditName" style="font-size:16px;font-weight:900;color:#2d1f0e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div><div id="mobileEditSub" style="font-size:12px;color:#9b7e56;font-weight:700;margin-top:1px"></div></div>
+      <button onclick="closeMobileEditSheet()" style="width:32px;height:32px;border-radius:50%;border:1px solid rgba(151,111,47,.2);background:#f5ead2;font-size:16px;cursor:pointer;display:grid;place-items:center;flex-shrink:0">✕</button>
+    </div>
+    <div style="padding:12px 16px;display:grid;gap:10px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div>
+          <label style="font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:#9b7e56;display:block;margin-bottom:4px">Stock Status</label>
+          <select id="meStatus" class="field" style="font-size:13px;padding:9px 10px" onchange="mobileEditSave()"></select>
+        </div>
+        <div>
+          <label style="font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:#9b7e56;display:block;margin-bottom:4px">Storage</label>
+          <select id="meStorage" class="field" style="font-size:13px;padding:9px 10px" onchange="mobileEditSave()"></select>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div>
+          <label style="font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:#9b7e56;display:block;margin-bottom:4px">Store Location</label>
+          <input id="meLocation" class="field" style="font-size:13px;padding:9px 10px" placeholder="e.g. Aisle 3" onblur="mobileEditSave()" />
+        </div>
+        <div>
+          <label style="font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:#9b7e56;display:block;margin-bottom:4px">Price</label>
+          <input id="mePrice" class="field" style="font-size:13px;padding:9px 10px" placeholder="$0.00" onblur="mobileEditSave()" />
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;padding-top:4px">
+        <button class="btn primary" style="flex:1;font-size:14px;padding:12px" onclick="mobileEditFull()">✎ Full Edit</button>
+        <button class="btn" style="font-size:14px;padding:12px 16px" onclick="closeMobileEditSheet()">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
-</html>
+</html><!-- mobile pantry table fix applied below style tag via JS - using direct injection -->
