@@ -483,6 +483,29 @@ option{background:#fffdf9;color:#312418}
   font-size:11px;
   line-height:1;
 }
+.groceryTableWrap{border:1px solid rgba(151,111,47,.18);border-radius:16px;margin:0;width:100%}
+.groceryTable{width:100%;border-collapse:collapse;font-size:14px}
+#page-grocery .pickupList.tableView{max-height:none;overflow:visible;padding:16px;display:block}
+#page-grocery .pickupList.tableView .groceryTableWrap{width:100%;display:block}
+.groceryTable thead tr{background:#f5ead2}
+.groceryTable th{padding:11px 14px;text-align:left;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:#7a5a2a;border-bottom:2px solid rgba(151,111,47,.2);white-space:nowrap;cursor:pointer;user-select:none}
+.groceryTable th:hover{color:#b1843f;background:#f0e0c0}
+.groceryTable tbody tr{border-bottom:1px solid rgba(151,111,47,.1);transition:.12s background}
+.groceryTable tbody tr:last-child{border-bottom:none}
+.groceryTable tbody tr:hover{background:#fdf5e6}
+.groceryTable td{padding:10px 14px;vertical-align:middle;white-space:nowrap}
+.groceryTable .gtEmoji{font-size:22px;text-align:center;padding:8px 10px;width:44px}
+.groceryTable .gtName{font-weight:900;font-size:14px;color:#2d1f0e;white-space:normal;min-width:160px}
+.groceryTable .gtStatus{white-space:nowrap;width:130px}
+.groceryTable .gtCat{color:#6f5535;font-size:12px;font-weight:700;width:120px}
+.groceryTable .gtLoc{color:#5a4828;font-size:13px;font-weight:700;width:140px}
+.groceryTable .gtStorage{color:#7a6347;font-size:12px;width:120px}
+.groceryTable .gtPrice{font-weight:950;font-size:14px;color:#7a5a2a;text-align:right;white-space:nowrap;width:80px}
+.groceryTable .gtPickup{text-align:center;padding:6px 12px;width:52px}
+.gtCheckbox{width:26px;height:26px;border-radius:8px;border:2px solid rgba(151,111,47,.35);background:#fffdf9;cursor:pointer;display:grid;place-items:center;transition:.15s border-color,.15s background,.15s box-shadow;flex-shrink:0;margin:0 auto}
+.gtCheckbox:hover{border-color:#b1843f;background:#fef3d8;box-shadow:0 0 0 3px rgba(177,132,63,.18)}
+.gtCheckbox:active{transform:scale(.92)}
+.gtCheckbox svg{width:15px;height:15px;stroke:#b1843f;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
 #page-grocery .groceryTools{
   align-items:center;
 }
@@ -498,7 +521,7 @@ option{background:#fffdf9;color:#312418}
 
 /* First inspiration pass: weekly meal plan strip */
 .navCards{grid-template-columns:repeat(5,minmax(0,1fr))}
-.navCard,#nav-mealplan{--nav-accent:#b1843f;--nav-glow:rgba(203,166,96,.15)}
+.navCard{--nav-accent:#b1843f;--nav-glow:rgba(203,166,96,.15)}
 .mealPlannerPanel{overflow:visible}
 .mealPlannerWrap{display:grid;gap:14px;padding:16px}
 .mealPlannerTabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
@@ -552,6 +575,7 @@ option{background:#fffdf9;color:#312418}
 .groceryProgressFill{height:100%;width:0%;border-radius:999px;background:linear-gradient(90deg,#8bbf5a,#d7ad62)}
 .groceryProgressText{font-size:12px;color:#6f5b44;font-weight:900;white-space:nowrap}
 #page-grocery .panelHead{align-items:flex-start}
+#page-grocery .panel{overflow:visible}
 @media(max-width:720px){.groceryCategoryRail{padding:10px;gap:8px}.groceryCatChip{min-width:74px;padding:8px 7px}.groceryCatIcon{width:32px;height:32px;font-size:18px}.groceryListProgress{min-width:100%;width:100%}}
 
 
@@ -693,9 +717,9 @@ body{padding-bottom:112px}
 /* Research page — Notion meets NotebookLM workspace */
 .navCards{grid-template-columns:repeat(6,minmax(0,1fr))}
 .navCard,#nav-research{--nav-accent:#b1843f;--nav-glow:rgba(203,166,96,.15)}
-.researchShell{display:grid;grid-template-columns:320px minmax(0,1fr);gap:14px;padding:16px;align-items:start}
+.researchShell{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;padding:16px;align-items:start}
 .researchSidebar,.researchWorkspace,.researchCard{border:1px solid rgba(151,111,47,.18);border-radius:22px;background:linear-gradient(145deg,#fffefb,#f8f0e4);box-shadow:0 10px 22px rgba(102,72,31,.07)}
-.researchSidebar{padding:14px;display:grid;gap:12px;position:sticky;top:12px}
+.researchSidebar{padding:14px;display:grid;gap:12px;position:static}.researchFolderList{max-height:260px;overflow-y:auto}
 .researchFolderTools{display:grid;grid-template-columns:1fr auto;gap:8px}
 .researchFolderList{display:grid;gap:8px;max-height:520px;overflow:auto;padding-right:2px}
 .researchFolderBtn{border:1px solid rgba(151,111,47,.18);background:#fffdf9;border-radius:16px;padding:12px;text-align:left;cursor:pointer;display:grid;gap:6px;transition:.16s transform,.16s border-color,.16s box-shadow}
@@ -1172,56 +1196,11 @@ td.editable-cell{
       <button class="navCard" id="nav-stopwatch" onclick="switchPage('stopwatch')"><div class="navCardTop"><span class="navIcon">🕐</span><span class="navCount" id="navStopwatchCount">0</span></div><div><div class="navTitle">Clock</div></div></button>
       <button class="navCard" id="nav-recipes" onclick="switchPage('recipes')"><div class="navCardTop"><span class="navIcon">📖</span><span class="navCount" id="navRecipeCount">Ready</span></div><div><div class="navTitle">Recipes</div></div></button>
       <button class="navCard" id="nav-research" onclick="switchPage('research')"><div class="navCardTop"><span class="navIcon">🧠</span><span class="navCount" id="navResearchCount">0</span></div><div><div class="navTitle">Research</div></div></button>
-      <button class="navCard" id="nav-mealplan" onclick="switchPage('mealplan')"><div class="navCardTop"><span class="navIcon">📅</span><span class="navCount" id="navMealplanCount">0</span></div><div><div class="navTitle">Meal Plan</div></div></button>
       <button class="navCard" id="nav-grocery" onclick="switchPage('grocery')"><div class="navCardTop"><span class="navIcon">🛒</span><span class="navCount" id="navGroceryCount">0</span></div><div><div class="navTitle">Grocery List</div></div></button>
     </nav>
   </section>
 
-  <section class="pageView" id="page-mealplan">
-    <section class="panel fullPanel mealPlannerPanel">
-      <div class="panelHead"><div><div class="panelTitle">Meal Plan</div><div class="muted">First inspiration pass: weekly planning strip with quick recipe assignment by day.</div></div><div class="mealPlanHeroMeta"><span class="tinyChip" id="mealPlanWeekChip">This week</span><span class="tinyChip" id="mealPlanFilledChip">0 planned days</span></div></div>
-      <div class="mealPlannerWrap">
-        <div class="mealPlannerTabs" aria-label="Meal planner quick links">
-          <button class="plannerPill active" type="button">Meal Plan</button>
-          <button class="plannerPill" type="button" onclick="switchPage('grocery')">Grocery</button>
-          <button class="plannerPill" type="button" onclick="switchPage('pantry')">Pantry</button>
-          <button class="plannerPill" type="button" onclick="switchPage('recipes')">Recipes</button>
-        </div>
-        <div class="mealWeekCard">
-          <div class="mealWeekHeader">
-            <div>
-              <div class="mealWeekLabel">Week of</div>
-              <div class="mealWeekRange" id="mealPlanWeekLabel">May 12–18</div>
-            </div>
-            <div class="mealWeekNav">
-              <button class="mealWeekArrow" type="button" onclick="changeMealPlanWeek(-1)">‹</button>
-              <button class="btn" type="button" onclick="jumpMealPlanToCurrentWeek()">Current Week</button>
-              <button class="mealWeekArrow" type="button" onclick="changeMealPlanWeek(1)">›</button>
-            </div>
-          </div>
-          <div class="mealDayStrip" id="mealPlanDays"></div>
-        </div>
-        <div class="mealPlanDetailGrid">
-          <div class="recipeCard">
-            <div class="cardTitleLine"><div><strong id="mealPlanSelectedLabel">Selected day</strong><div class="miniMeta">Pick a day, then assign recipes to meal slots.</div></div><span class="tinyChip" id="mealPlanSelectedCount">0 meals</span></div>
-            <div class="mealSlotGrid">
-              <div class="mealSlotRow"><div class="mealSlotLabel">Breakfast</div><select class="field" id="mealPlanBreakfast" onchange="setMealPlanRecipe('breakfast',this.value)"></select></div>
-              <div class="mealSlotRow"><div class="mealSlotLabel">Lunch</div><select class="field" id="mealPlanLunch" onchange="setMealPlanRecipe('lunch',this.value)"></select></div>
-              <div class="mealSlotRow"><div class="mealSlotLabel">Dinner</div><select class="field" id="mealPlanDinner" onchange="setMealPlanRecipe('dinner',this.value)"></select></div>
-              <div class="mealSlotRow"><div class="mealSlotLabel">Snack</div><select class="field" id="mealPlanSnack" onchange="setMealPlanRecipe('snack',this.value)"></select></div>
-              <div class="mealSlotRow" style="grid-template-columns:1fr"><div><div class="mealSlotLabel" style="margin-bottom:6px">Notes</div><textarea id="mealPlanNotes" class="field mealPlanNotes" placeholder="Prep notes, shopping reminders, guests, or leftovers..." oninput="saveMealPlanNotes()"></textarea></div></div>
-            </div>
-          </div>
-          <div class="recipeCard">
-            <div class="cardTitleLine"><div><strong>This Week at a Glance</strong><div class="miniMeta">A compact summary of the current week’s assignments.</div></div><button class="btn" type="button" onclick="clearMealPlanDay(this)">Clear Day</button></div>
-            <div class="mealDaySummaryGrid" id="mealPlanWeekPreview"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </section>
-
-  <section class="pageView active" id="page-pantry">
+  <section class="pageView" id="page-pantry">
     <section class="grid pantryMetricsGrid" id="metrics"></section>
     <section class="toolbar">
       <input id="search" class="field" placeholder="Search ingredient, aisle, storage, category..." oninput="render()" />
@@ -1251,17 +1230,17 @@ td.editable-cell{
         <button class="navTab active" id="labtab-library" onclick="switchLab('library')">Recipe Library</button>
         <button class="navTab" id="labtab-test" onclick="switchLab('test')">Test Kitchen</button>
         <button class="navTab" id="labtab-compare" onclick="switchLab('compare')">Compare 3–4</button>
-        <button class="btn recipeBackBtn" onclick="closeRecipeFocus()">← Back to Recipe Library</button>
       </div>
 
       <div class="labPanel active" id="lab-library">
         <div class="labGrid recipeLibraryGrid" id="recipeLibraryGrid">
           <div class="recipeCards" id="recipeCards"></div>
           <div class="recipeCard" id="recipeFormCard">
-            <div class="cardTitleLine"><div><strong id="recipeFormTitle" style="display:block">Recipe Details</strong></div><button class="btn" onclick="openRecipeTestArchive()" style="font-weight:900;margin-left:auto">Test Archive ↗</button></div>
+            <div class="cardTitleLine"><div><button class="btn recipeBackBtn" onclick="closeRecipeFocus()">← Back to Recipe Library</button><strong id="recipeFormTitle" style="display:block;margin-top:12px">Recipe Details</strong></div><span class="tinyChip">Pantry-linked</span></div>
             <div class="formStack">
               <input type="hidden" id="recipeId" />
-              <div style="display:grid;grid-template-columns:1fr 220px;gap:12px;align-items:end"><div><label>Recipe Name</label><input id="recipeName" class="field" placeholder="Example: Biscuits and Gravy" /></div><div><label>Category</label><select id="recipeCategory" class="field" onchange="handleRecipeCategoryChange()"></select></div></div>
+              <label>Recipe Name</label><input id="recipeName" class="field" placeholder="Example: Biscuits and Gravy" />
+              <label>Category</label><select id="recipeCategory" class="field" onchange="handleRecipeCategoryChange()"></select>
               <div class="recipeScaleBar"><strong>Recipe proportions</strong><button class="btn scaleBtn" id="recipeHalf" onclick="setRecipeScale(.5)">½ Half</button><button class="btn scaleBtn" id="recipeDouble" onclick="setRecipeScale(2)">2× Double</button><span class="tinyChip" id="recipeScaleLabel">Normal</span></div>
               <label>Add Pantry Ingredient</label><div class="ingredientPicker"><input id="recipeIngredientSearch" class="field" placeholder="Type an ingredient from your pantry..." oninput="renderIngredientSuggestions()" autocomplete="off" /><div class="ingredientSuggestions" id="ingredientSuggestions"></div></div>
               <div class="recipeIngredientRows" id="recipeIngredientRows"></div>
@@ -1271,59 +1250,36 @@ td.editable-cell{
               <div class="inlineActions"><button class="btn primary" onclick="saveRecipe()">Save Recipe</button><button class="btn" onclick="clearRecipeForm()">Clear</button><button class="btn danger" onclick="deleteRecipeFromForm(this)">Delete</button></div>
             </div>
           </div>
-          <div id="recipeArchivePane" class="recipeCard" style="display:none;overflow-y:auto;max-height:85vh">
-            <div class="cardTitleLine"><strong>Test Archive</strong><button class="iconBtn" onclick="closeRecipeTestArchive()">✕</button></div>
-            <div id="recipeArchiveList" style="margin-top:10px"></div>
-          </div>
         </div>
       </div>
 
       <div class="labPanel" id="lab-test">
-        <div class="testFullLayout">
-          <!-- Ingredient table: full width -->
-          <div class="testIngredientSection recipeCard">
-            <div class="testIngredientSectionHead">
-              <div>
-                <label style="margin-bottom:6px;display:block">Recipe</label>
-                <div class="testRecipeChooser"><input id="testRecipeSearch" class="field" placeholder="Search recipe name, category, ingredient, or notes..." oninput="handleTestRecipeSearch()" list="testRecipeSearchList" autocomplete="off" /><datalist id="testRecipeSearchList"></datalist><select id="testRecipe" class="field" style="display:none" onchange="syncTestRecipeSearchFromSelect()"></select></div>
-              </div>
+        <div class="labGrid">
+          <div class="recipeCard">
+            <div class="cardTitleLine"><strong>Create Test Scenario</strong><span class="tinyChip">Small changes</span></div>
+            <div class="formStack">
+              <label>Recipe</label><div class="testRecipeChooser"><input id="testRecipeSearch" class="field" placeholder="Search recipe name, category, ingredient, or notes..." oninput="handleTestRecipeSearch()" list="testRecipeSearchList" autocomplete="off" /><datalist id="testRecipeSearchList"></datalist><select id="testRecipe" class="field" onchange="syncTestRecipeSearchFromSelect()"></select><div class="miniMeta" id="testRecipeSearchHint">Type to filter recipes, then choose one from the list.</div></div>
+              <div id="testIngredientPanel" class="testIngredientAudit"></div>
+              <label>Test Goal</label><input id="testGoal" class="field" placeholder="Example: make it creamier without getting greasy" />
+              <label>Changes Made</label><textarea id="testChanges" class="field" rows="4"></textarea>
+              <label>Expected Result</label><textarea id="testExpected" class="field" rows="3"></textarea>
+              <label>Actual Result / Review</label><textarea id="testActual" class="field" rows="4"></textarea>
+              <label>Rating / Recommendation</label><div style="display:grid;grid-template-columns:120px 1fr;gap:8px"><input id="testRating" class="field" type="number" min="0" max="10" step="0.1" placeholder="1-10"/><input id="testRecommendation" class="field" placeholder="Repeat, adjust, abandon, best version..." /></div>
+              <div class="inlineActions"><button class="btn primary" onclick="saveTestEntry()">Save Test Entry</button><button class="btn" onclick="clearTestForm()">Clear</button></div>
             </div>
-            <div id="testIngredientPanel"></div>
           </div>
-          <!-- Form + archived side by side when compare mode active, otherwise stacked -->
-          <div class="testBottomLayout" id="testBottomLayout">
-            <div class="recipeCard">
-              <div class="cardTitleLine"><strong>Create Test Scenario</strong><button class="btn" onclick="openTestArchive()" style="margin-left:auto;font-weight:900">Archive ↗</button></div>
-              <div class="formStack">
-                <label>Test Name</label><input id="testName" class="field testNameRequired" placeholder="e.g. Creamier version attempt 2" oninput="onTestNameInput(this)" />
-                <label>Test Goal</label><input id="testGoal" class="field" placeholder="Example: make it creamier without getting greasy" />
-                <label>Changes Made</label><textarea id="testChanges" class="field" rows="4"></textarea>
-                <label>Expected Result</label><textarea id="testExpected" class="field" rows="3"></textarea>
-                <label>Actual Result / Review</label><textarea id="testActual" class="field" rows="4"></textarea>
-                <label>Rating / Recommendation</label><div style="display:grid;grid-template-columns:120px 1fr;gap:8px"><input id="testRating" class="field" type="number" min="0" max="10" step="0.1" placeholder="1-10"/><input id="testRecommendation" class="field" placeholder="Repeat, adjust, abandon, best version..." /></div>
-                <div class="inlineActions"><button class="btn primary" id="saveTestBtn" onclick="saveTestEntry(this)">Save Test Entry</button><button class="btn" onclick="clearTestForm()">Clear</button></div>
-              </div>
-            </div>
-            <div class="testArchivedPane" id="testArchivedPane" style="display:none">
-              <div class="sideNote" style="margin-bottom:10px">Viewing alongside archived test. <button class="btn" onclick="closeArchivedCompare()" style="margin-left:6px">Close comparison</button></div>
-              <div id="testArchivedContent"></div>
-            </div>
-            <div class="testCardsPane">
-              <div class="sideNote">Every saved test becomes a previous entry you can preview, restore, compare, or delete.</div>
-              <div class="testCards" id="testCards" style="margin-top:10px"></div>
-            </div>
+          <div>
+            <div class="sideNote">Every saved test becomes a previous entry you can preview, restore into the form, duplicate, compare later, or delete with confirmation.</div>
+            <div class="testCards" id="testCards" style="margin-top:10px"></div>
           </div>
         </div>
       </div>
 
       <div class="labPanel" id="lab-compare">
-        <div class="cmpPickerBar">
-          <select id="cmpRecipePicker" class="field" onchange="renderCompareResult()" style="max-width:320px">
-            <option value="">— Select a recipe —</option>
-          </select>
-          <div class="sideNote" style="margin-left:auto;text-align:right">Baseline recipe vs its test entries, side by side.</div>
+        <div class="labGrid">
+          <div><div class="sideNote">Select up to four recipes. The app compares pantry match, missing items, time, difficulty, rating, and gives a practical recommendation.</div><div class="compareGrid" id="compareOptions" style="margin-top:10px"></div></div>
+          <div class="recipeCard"><div class="cardTitleLine"><strong>Comparison Result</strong><button class="btn primary" onclick="renderCompareResult()">Compare Selected</button></div><div id="compareResult" class="recipeResult">Select recipes to compare.</div></div>
         </div>
-        <div class="compareSplitGrid" id="compareSplitGrid"></div>
       </div>
     </section>
   </section>
@@ -1376,9 +1332,8 @@ td.editable-cell{
 
     <section class="pageView" id="page-grocery">
     <section class="panel fullPanel">
-      <div class="panelHead"><div><div class="panelTitle">Grocery List</div><div class="muted">Low/out items, excluding Luxury.</div></div></div>
-      <div class="groceryMiniListCard" id="groceryMiniListCard"></div>
-      <div class="groceryTools"><div class="grocerySummary" id="grocerySummary"></div><div class="groceryControls"><select id="groceryScope" class="field groceryScope" onchange="renderPickup()"><option value="all">All Items Needed</option><option value="recipes">Recipe Only</option><option value="essentials">Just Essentials</option></select><select id="grocerySort" class="field grocerySort" onchange="renderPickup()"><option value="storeLocation">Sort: Store Location</option><option value="name">Sort: Item Name</option><option value="priceDesc">Sort: Price High to Low</option><option value="priceAsc">Sort: Price Low to High</option><option value="status">Sort: Stock Status</option></select><button class="btn" onclick="markPickupInStock()">Mark Pickup Done</button></div></div>
+      <div style="display:none" id="groceryMiniListCard"></div>
+      <div class="groceryTools"><div class="grocerySummary" id="grocerySummary"></div><div class="groceryControls"><button class="btn" id="groceryViewToggle" onclick="toggleGroceryView()" title="Switch view">⊞ Table</button><select id="groceryScope" class="field groceryScope" onchange="renderPickup()"><option value="all">All Items Needed</option><option value="recipes">Recipe Only</option><option value="essentials">Just Essentials</option></select><select id="grocerySort" class="field grocerySort" onchange="renderPickup()"><option value="storeLocation">Sort: Store Location</option><option value="name">Sort: Item Name</option><option value="priceDesc">Sort: Price High to Low</option><option value="priceAsc">Sort: Price Low to High</option><option value="status">Sort: Stock Status</option></select><button class="btn" onclick="markPickupInStock()">Mark Pickup Done</button></div></div>
       <div class="pickupList" id="pickupList"></div>
     </section>
   </section>
@@ -1387,7 +1342,7 @@ td.editable-cell{
 </div>
 
 
-<div class="cookingTrayShell hidden" id="cookingTrayShell" aria-live="polite">
+<div class="cookingTrayShell hidden" id="cookingTrayShell" style="display:none!important" aria-live="polite">
   <div class="cookingTrayTop">
     <div class="cookingTrayTitle">Cooking now<strong id="cookingTrayMainTitle">No active recipes</strong></div>
     <div class="inlineActions"><button class="btn" type="button" onclick="collapseCookingTray()">Hide Detail</button><button class="btn danger" type="button" onclick="clearCookingTray(this)">Clear Cooking</button></div>
@@ -1540,14 +1495,14 @@ function subtleBadge(v, extra=''){
   if(isBlankishValue(raw)) return `<span class="badge unknown ${extra}">${escapeHtml(raw)}</span><span class="blankFlag" title="Blank or needs update"></span>`;
   return badge(raw, extra);
 }
-function setSort(f){ if(sortField===f) sortDir*=-1; else { sortField=f; sortDir=1; } document.getElementById('sortBy').value = f === 'storeLocation' ? 'name' : f; render(); }
+function setSort(f){ if(sortField===f) sortDir*=-1; else { sortField=f; sortDir=1; } const sb=document.getElementById('sortBy'); if(sb) sb.value = f === 'storeLocation' ? 'name' : f; render(); }
 function filteredItems(){
-  const q=normalize(document.getElementById('search').value).toLowerCase();
-  const cat=document.getElementById('categoryFilter').value;
-  const stor=document.getElementById('storageFilter').value;
-  const stat=document.getElementById('statusFilter').value;
-  const pick=document.getElementById('pickupFilter').value;
-  sortField=document.getElementById('sortBy').value || sortField;
+  const q=normalize(document.getElementById('search')?.value||'').toLowerCase();
+  const cat=document.getElementById('categoryFilter')?.value||'all';
+  const stor=document.getElementById('storageFilter')?.value||'all';
+  const stat=document.getElementById('statusFilter')?.value||'all';
+  const pick=document.getElementById('pickupFilter')?.value||'all';
+  sortField=document.getElementById('sortBy')?.value || sortField;
   return items.filter(it=>{
     const hay=[it.name,it.storeLocation,it.storage,it.category,it.status,it.price,it.notes].join(' ').toLowerCase();
     if(q && !hay.includes(q)) return false;
@@ -1572,14 +1527,14 @@ function renderFilters(){
   fillSelect('categoryFilter', cats, 'All Categories'); fillSelect('storageFilter', stors, 'All Storage'); fillSelect('statusFilter', stats, 'All Status');
 }
 function fillSelect(id, vals, allLabel){
-  const el=document.getElementById(id); const cur=el.value || 'all';
+  const el=document.getElementById(id); if(!el) return; const cur=el.value || 'all';
   el.innerHTML=vals.map(v=>`<option value="${escapeHtml(v)}">${v==='all'?allLabel:escapeHtml(v)}</option>`).join('');
   if(vals.includes(cur)) el.value=cur;
 }
 function renderMetrics(){
   const low=items.filter(i=>i.status==='Running Low').length, out=items.filter(i=>i.status==='Out of Stock').length, pickup=items.filter(pickupNeeded).length;
   const cards=[['Running Low',low,'Needs attention'],['Out of Stock',out,'Missing items'],['Pickup Needed',pickup,'Auto-generated']];
-  document.getElementById('metrics').innerHTML=cards.map(c=>{ const action=c[0]==='Pickup Needed'?"showPickupNeeded()":c[0]==='Out of Stock'?"showPantryStatus('Out of Stock')":c[0]==='Running Low'?"showPantryStatus('Running Low')":''; return `<div class="card metric ${action?'metricLink':''}" ${action?`onclick="${action}" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${action}}"`:''}><div class="label">${c[0]}</div><div class="value">${c[1]}</div><div class="hint">${c[2]}</div></div>`; }).join('');
+  const _m=document.getElementById('metrics'); if(_m) _m.innerHTML=cards.map(c=>{ const action=c[0]==='Pickup Needed'?"showPickupNeeded()":c[0]==='Out of Stock'?"showPantryStatus('Out of Stock')":c[0]==='Running Low'?"showPantryStatus('Running Low')":''; return `<div class="card metric ${action?'metricLink':''}" ${action?`onclick="${action}" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${action}}"`:''}><div class="label">${c[0]}</div><div class="value">${c[1]}</div><div class="hint">${c[2]}</div></div>`; }).join('');
 }
 function resetPantryFilters(){
   const defaults={
@@ -1611,8 +1566,8 @@ function showPickupNeeded(){
 }
 function renderTable(){
   const list=filteredItems();
-  document.getElementById('resultCount').textContent='';
-  const tbody=document.getElementById('tbody');
+  const rc=document.getElementById('resultCount'); if(rc) rc.textContent='';
+  const tbody=document.getElementById('tbody'); if(!tbody) return;
   if(!list.length){ tbody.innerHTML=`<tr><td colspan="9" class="empty">No items match this filter.</td></tr>`; return; }
   tbody.innerHTML=list.map(it=>`<tr ondblclick="openEditor('${it.id}')"><td class="nameCell"><span class="itemEmojiCell">${it.photo?`<img src="${it.photo}" class="itemPhotoThumb" alt="${escapeHtml(it.name||'')}">`:`<span class="itemEmojiIcon">${getItemEmoji(it)}</span>`}</span>${subtleValue(it.name,'Unnamed item')}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','status')" title="Click to edit stock status">${stockBadge(it.status)}${isBlankishValue(it.status)?'<span class="blankFlag" title="Blank or needs update"></span>':''}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','category')" title="Click to edit category">${subtleBadge(it.category, it.category==='LUXURY'?'luxury':'')}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','storage')" title="Click to edit storage">${subtleValue(it.storage)}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','storeLocation')" title="Click to edit store location">${subtleValue(it.storeLocation)}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','price')" title="Click to edit price">${subtleValue(it.price)}</td><td class="photoCell">${it.photo?`<button class="btn photoViewBtn" onclick="event.stopPropagation();openPhotoPopup('${it.id}')">View</button>`:`<button class="btn photoViewBtn emptyPhoto" onclick="event.stopPropagation();toast('No photo stored for this item.')">No Photo</button>`}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','pickup')" title="Click to edit pickup status">${pickupNeeded(it)?badge('Pickup','pickup'):badge(isLuxury(it)?'Luxury Skip':'No','unknown')}</td><td><div class="rowActions"><button class="iconBtn" onclick="event.stopPropagation();openEditor('${it.id}')">✎</button></div></td></tr>`).join('');
 }
@@ -1700,6 +1655,15 @@ function groceryProductSubline(it){
 }
 
 function priceValue(price){ const match=String(price||'').replace(/,/g,'').match(/\d+(?:\.\d+)?/); return match?Number(match[0]):null; }
+let groceryViewMode = 'card'; // 'card' or 'table'
+function toggleGroceryView(){
+  groceryViewMode = groceryViewMode === 'card' ? 'table' : 'card';
+  const btn = document.getElementById('groceryViewToggle');
+  const list = document.getElementById('pickupList');
+  if(btn) btn.textContent = groceryViewMode === 'card' ? '⊞ Table' : '▤ Cards';
+  if(list) list.classList.toggle('tableView', groceryViewMode === 'table');
+  renderPickup();
+}
 function renderPickup(){
   const sort=document.getElementById('grocerySort').value || 'storeLocation';
   const scope=document.getElementById('groceryScope').value || 'all';
@@ -1724,6 +1688,25 @@ function renderPickup(){
     const media=it.photo?`<img src="${it.photo}" alt="${escapeHtml(it.name)} photo">`:`<span class="productIcon">${getItemEmoji(it)}</span>`;
     return `<article class="pickupStamp productCard" title="${escapeHtml(it.name)}"><div class="productMedia">${media}</div><div class="productBody"><div class="productName">${escapeHtml(it.name)}</div><div class="productQty">${escapeHtml(groceryProductSubline(it))}</div><div class="productMetaLine">${escapeHtml(it.storeLocation||'Unassigned')} • ${escapeHtml(it.status||'Needed')}</div></div><div class="productFooter"><div class="productPrice"><strong>${price!==null?'$'+price.toFixed(2):'—'}</strong><span>${price!==null?'est. price':'price needed'}</span></div><button class="btn primary productAdd" title="Mark picked up" onclick="setItemStock('${it.id}','In Stock')">+</button></div></article>`;
   };
+  // Table view
+  if(groceryViewMode === 'table'){
+    const rows = list.map(it=>{
+      const price=priceValue(it.price);
+      const emoji=it.photo?`<img src="${it.photo}" style="width:28px;height:28px;border-radius:6px;object-fit:cover">`:`<span>${getItemEmoji(it)}</span>`;
+      return `<tr>
+        <td class="gtPickup"><div class="gtCheckbox" onclick="setItemStock('${it.id}','In Stock')" title="Mark as picked up"><svg viewBox="0 0 16 16"><polyline points="2.5,8 6.5,12 13.5,4"/></svg></div></td>
+        <td class="gtEmoji">${emoji}</td>
+        <td class="gtName">${escapeHtml(it.name)}</td>
+        <td class="gtStatus">${stockBadge(it.status)}</td>
+        <td class="gtCat">${escapeHtml(it.category||'—')}</td>
+        <td class="gtLoc">${escapeHtml(it.storeLocation||'Unassigned')}</td>
+        <td class="gtStorage">${escapeHtml(it.storage||'—')}</td>
+        <td class="gtPrice">${price!==null?'$'+price.toFixed(2):'—'}</td>
+      </tr>`;
+    }).join('');
+    el.innerHTML=`<div class="groceryTableWrap"><table class="groceryTable"><thead><tr><th style="width:52px"></th><th style="width:44px"></th><th>Item</th><th>Status</th><th>Category</th><th>Store Location</th><th>Storage</th><th style="text-align:right;width:80px">Price</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+    return;
+  }
   if(sort!=='storeLocation'){ el.innerHTML=list.map(itemHtml).join(''); return; }
   const groups={};
   list.forEach(it=>{ const location=it.storeLocation||'Unassigned'; (groups[location] ||= []).push(it); });
@@ -1742,7 +1725,7 @@ function toggleMetrics(){
 }
 function updateResolveButton(){
   const count=items.filter(needsCleanup).length;
-  document.getElementById('resolveBtn').textContent=`Resolve Missing Values (${count})`;
+  const rb=document.getElementById('resolveBtn'); if(rb) rb.textContent=`Resolve Missing Values (${count})`;
 }
 function openResolvePopup(){ renderResolveList(); document.getElementById('resolveBackdrop').classList.add('show'); }
 function closeResolvePopup(){ document.getElementById('resolveBackdrop').classList.remove('show'); }
@@ -1847,7 +1830,7 @@ function quickStatus(id){ const it=items.find(x=>x.id===id); if(!it) return; con
 function markPickupInStock(){ if(!confirm('Mark every pickup-needed item as In Stock?')) return; items.forEach(i=>{ if(pickupNeeded(i)){ i.status='In Stock'; i.lastUpdated=new Date().toISOString(); } }); persist(); render(); toast('Pickup list cleared.'); }
 function checkRecipe(){
   const lines=document.getElementById('recipeInput').value.split(/[\n,]+/).map(x=>normalize(x)).filter(Boolean);
-  if(!lines.length){ document.getElementById('recipeResult').innerHTML='Paste recipe ingredients first.'; return; }
+  if(!lines.length){ const _rr=document.getElementById('recipeResult'); if(_rr) _rr.innerHTML='Paste recipe ingredients first.'; return; }
   const results=lines.map(line=>{
     const q=line.toLowerCase();
     let match=items.find(i=>i.name.toLowerCase()===q) || items.find(i=>i.name.toLowerCase().includes(q) || q.includes(i.name.toLowerCase()));
@@ -1856,7 +1839,7 @@ function checkRecipe(){
   });
   const missing=results.filter(r=>!r.match || ['Out of Stock','Running Low'].includes(r.status));
   const score=missing.length===0 ? '✅ Ready to cook' : `⚠️ ${missing.length} ingredient(s) need attention`;
-  document.getElementById('recipeResult').innerHTML=`<strong>${score}</strong><br><br>`+results.map(r=> r.match ? `${escapeHtml(r.line)} → <strong>${escapeHtml(r.match)}</strong> • ${stockBadge(r.status)} ${r.pickup?badge('Pickup','pickup'):''}` : `${escapeHtml(r.line)} → ${badge('Not in database','out')}`).join('<br>');
+  const _rr=document.getElementById('recipeResult'); if(_rr) _rr.innerHTML=`<strong>${score}</strong><br><br>`+results.map(r=> r.match ? `${escapeHtml(r.line)} → <strong>${escapeHtml(r.match)}</strong> • ${stockBadge(r.status)} ${r.pickup?badge('Pickup','pickup'):''}` : `${escapeHtml(r.line)} → ${badge('Not in database','out')}`).join('<br>');
 }
 function toast(msg){
   const t=document.createElement('div'); t.textContent=msg; t.style.cssText='position:fixed;right:18px;bottom:18px;background:#111827;border:1px solid rgba(255,255,255,.18);color:#fff;padding:12px 14px;border-radius:14px;box-shadow:0 14px 40px rgba(0,0,0,.35);z-index:50;font-weight:900'; document.body.appendChild(t); setTimeout(()=>t.remove(),1800);
@@ -1983,15 +1966,14 @@ let researchFoldersHidden = false;
 let activeCooking = loadActiveCooking();
 
 function switchPage(page){
-  ['mealplan','stopwatch','pantry','recipes','research','grocery'].forEach(p=>{
+  ['stopwatch','pantry','recipes','research','grocery'].forEach(p=>{
     const view=document.getElementById('page-'+p), nav=document.getElementById('nav-'+p);
     if(view) view.classList.toggle('active', p===page);
     if(nav) nav.classList.toggle('active', p===page);
   });
   if(page==='recipes') renderKitchenLab();
   if(page==='stopwatch') renderTimers();
-  if(page==='mealplan') renderMealPlan();
-  if(page==='research') renderResearch();
+    if(page==='research') renderResearch();
   updateBottomNav(page);
 }
 function updateBottomNav(page){
@@ -2012,17 +1994,13 @@ function openProfilePopup(){
 }
 function closeProfilePopup(){ document.getElementById('bottom-profile')?.classList.remove('active'); document.getElementById('profileBackdrop')?.classList.remove('show'); updateBottomNav(document.querySelector('.pageView.active')?.id?.replace('page-','')||'mealplan'); }
 function updateHeaderCards(){
-  const pantry=document.getElementById('navPantryCount'), grocery=document.getElementById('navGroceryCount'), recipe=document.getElementById('navRecipeCount'), stopwatch=document.getElementById('navStopwatchCount'), mealplan=document.getElementById('navMealplanCount'), researchCount=document.getElementById('navResearchCount');
+  const pantry=document.getElementById('navPantryCount'), grocery=document.getElementById('navGroceryCount'), recipe=document.getElementById('navRecipeCount'), stopwatch=document.getElementById('navStopwatchCount'), researchCount=document.getElementById('navResearchCount');
   if(pantry) pantry.textContent=items.length;
   if(grocery) grocery.textContent=items.filter(pickupNeeded).length;
   if(recipe) recipe.textContent=recipes.length ? recipes.length : 'Ready';
   if(stopwatch){
     const running=timers.filter(t=>t.running).length;
     stopwatch.textContent=running ? `${running} live` : timers.length || '—';
-  }
-  if(mealplan){
-    const plannedDays=Object.values(mealPlan.days||{}).filter(entry=>entry && ['breakfast','lunch','dinner','snack'].some(slot=>normalize(entry[slot]))).length;
-    mealplan.textContent=plannedDays;
   }
   if(researchCount) researchCount.textContent=(research.folders||[]).length;
 }
@@ -2091,7 +2069,7 @@ function pantryMatchForIngredients(ingredients){
   const score = ingredients.length ? Math.round(rows.reduce((a,r)=>a+r.score,0)/ingredients.length*100) : 0;
   return {rows,score,missing:rows.filter(r=>!r.match || r.status==='Out of Stock' || r.status==='Running Low')};
 }
-function renderKitchenLab(){ renderRecipeCategories(document.getElementById('recipeCategory')?.value||''); renderRecipeIngredientRows(); renderRecipeScale(); renderRecipePreparationPreview(); renderRecipeCards(); renderRecipeSelects(); renderTestRecipeIngredients(); renderTestCards(); renderCompareOptions(); renderTimers(); renderRecipeFocus(); renderMealPlan(); renderCookingTray(); updateHeaderCards(); }
+function renderKitchenLab(){ renderRecipeCategories(document.getElementById('recipeCategory')?.value||''); renderRecipeIngredientRows(); renderRecipeScale(); renderRecipePreparationPreview(); renderRecipeCards(); renderRecipeSelects(); renderTestRecipeIngredients(); renderTestCards(); renderCompareOptions(); renderTimers(); renderRecipeFocus(); renderCookingTray(); updateHeaderCards(); }
 function switchLab(tab){
   activeLab=tab;
   if(tab!=='library') recipeFocusMode=false;
@@ -2635,28 +2613,7 @@ function selectCookingRecipe(id){ activeCooking.activeId=id; activeCooking.expan
 function removeCookingRecipe(id,event){ if(event) event.stopPropagation(); activeCooking.recipeIds=activeCooking.recipeIds.filter(x=>x!==id); if(activeCooking.activeId===id) activeCooking.activeId=activeCooking.recipeIds[0]||''; persistActiveCooking(); renderCookingTray(); renderRecipeCards(); }
 function collapseCookingTray(){ activeCooking.expanded=!activeCooking.expanded; persistActiveCooking(); renderCookingTray(); }
 function clearCookingTray(button){ if(!armInlineAction(button,'Confirm Clear','Clear Cooking')) return; activeCooking={recipeIds:[],activeId:'',expanded:true}; persistActiveCooking(); renderCookingTray(); renderRecipeCards(); toast('Cooking tray cleared.'); }
-function renderCookingTray(){
-  const shell=document.getElementById('cookingTrayShell'), tabs=document.getElementById('cookingTrayTabs'), detail=document.getElementById('cookingTrayDetail'), title=document.getElementById('cookingTrayMainTitle');
-  if(!shell||!tabs||!detail) return;
-  const active=activeCookingRecipes();
-  if(!active.length){ shell.classList.add('hidden'); tabs.innerHTML=''; detail.innerHTML=''; if(title) title.textContent='No active recipes'; return; }
-  shell.classList.remove('hidden');
-  const current=recipes.find(r=>r.id===activeCooking.activeId) || active[0];
-  activeCooking.activeId=current.id;
-  if(title) title.textContent=`${active.length} active recipe${active.length===1?'':'s'} • ${current.name}`;
-  tabs.innerHTML=active.map(r=>`<button type="button" class="cookingTab ${r.id===current.id?'active':''}" onclick="selectCookingRecipe('${r.id}')"><span>${escapeHtml(r.name)}</span><span class="tinyChip">${(r.preparationSteps||[]).length} steps</span><span class="cookingTabClose" onclick="removeCookingRecipe('${r.id}',event)">×</span></button>`).join('');
-  const toggleBtn=shell.querySelector('.cookingTrayTop .inlineActions .btn');
-  if(toggleBtn) toggleBtn.textContent=activeCooking.expanded?'Hide Detail':'Show Detail';
-  if(!activeCooking.expanded){ detail.innerHTML=''; return; }
-  const ingredients=normalizeRecipeIngredients(current.ingredients||[]);
-  const steps=Array.isArray(current.preparationSteps)?current.preparationSteps:[];
-  const activeTimers=recipeStepTimers(current.id).filter(t=>!t.done);
-  const ingredientHtml=ingredients.length?ingredients.map(entry=>`<div class="cookingIngredient"><div><strong>${escapeHtml(entry.name)}</strong><div class="miniMeta">${escapeHtml((ingredientPantryItem(entry)||{}).status||'Not in pantry')}</div></div><div class="cookingIngredientAmount">${escapeHtml(entry.amount||'—')}</div></div>`).join(''):'<div class="sideNote">No ingredients saved for this recipe.</div>';
-  const stepHtml=steps.length?steps.map((step,index)=>renderCookingStep(current,step,index)).join(''):'<div class="sideNote">No preparation steps saved for this recipe.</div>';
-  const timerHtml=activeTimers.length?`<div class="cookingRunningTimers"><div class="cookingRunningTimersTitle"><span>Running for ${escapeHtml(current.name)}</span><button class="btn" type="button" onclick="switchPage('stopwatch')">Open Stopwatch</button></div><div class="cookingTimerMiniGrid">${activeTimers.map(t=>`<div class="cookingTimerMini"><div><div class="cookingTimerMiniName">${escapeHtml(t.name)}</div><div class="cookingTimerMiniMeta">Step ${(Number(t.sourceStepIndex)||0)+1} • ${t.running?'Running':'Paused'}</div></div><div class="cookingTimerMiniClock">${formatSeconds(timerSecondsNow(t))}</div></div>`).join('')}</div></div>`:'';
-  detail.innerHTML=`<div class="cookingPanel"><div class="cookingPanelHead"><strong>Ingredients</strong><span class="tinyChip">${ingredients.length}</span></div><div class="cookingIngredientList">${ingredientHtml}</div></div><div class="cookingPanel"><div class="cookingPanelHead"><strong>Steps</strong><span class="tinyChip">${steps.length}</span></div><div class="cookingStepList">${stepHtml}</div></div>${timerHtml}`;
-  persistActiveCooking();
-}
+function renderCookingTray(){}
 function renderCookingStep(recipe,step,index){
   const parsed=parseStepTimerInstruction(step);
   const tools=parsed?`<div class="cookingStepTools"><span class="cookingTimerBadge">⏱ ${escapeHtml(parsed.label)}</span><button class="btn prepTimerBtn" type="button" onclick="startCookingRecipeStepTimer('${recipe.id}',${index})">${parsed.mode==='stopwatch'?'Start Stopwatch':'Start Timer'}</button></div>`:'';
@@ -3120,7 +3077,7 @@ function renderResearch(){
     </div>
     <div class="researchWorkspaceGrid">
       <section class="researchCard">
-        <div class="researchCardHead"><div><strong>Notebook</strong><div class="miniMeta">Type quotes, chapter notes, questions, and ideas here.</div></div><span class="tinyChip">Rich editor • Auto-saves</span></div>
+        <div class="researchCardHead" style="display:none"></div>
         <div class="researchNotebookToolbar" aria-label="Notebook formatting tools">
           <button class="btn" type="button" onclick="formatResearchNote('bold')"><strong>B</strong></button>
           <button class="btn" type="button" onclick="formatResearchNote('italic')"><em>I</em></button>
@@ -3254,8 +3211,8 @@ function renderMealPlan(){
   if(filledChip) filledChip.textContent=`${filledDays} planned day${filledDays===1?'':'s'}`;
   const selectedDate=mealPlanDayDate(mealPlanSelectedDay);
   const selectedEntry=mealPlanEntryFor(selectedDate);
-  document.getElementById('mealPlanSelectedLabel').textContent=selectedDate.toLocaleDateString([], {weekday:'long', month:'long', day:'numeric'});
-  document.getElementById('mealPlanSelectedCount').textContent=`${mealPlanSlotCount(selectedEntry)} meals`;
+  const _msl=document.getElementById('mealPlanSelectedLabel'); if(_msl) _msl.textContent=selectedDate.toLocaleDateString([], {weekday:'long', month:'long', day:'numeric'});
+  const _msc=document.getElementById('mealPlanSelectedCount'); if(_msc) _msc.textContent=`${mealPlanSlotCount(selectedEntry)} meals`;
   renderMealPlanRecipeOptions('mealPlanBreakfast', selectedEntry.breakfast||'');
   renderMealPlanRecipeOptions('mealPlanLunch', selectedEntry.lunch||'');
   renderMealPlanRecipeOptions('mealPlanDinner', selectedEntry.dinner||'');
@@ -3270,17 +3227,18 @@ function renderMealPlan(){
   }
   updateHeaderCards();
 }
-function selectMealPlanDay(index){ mealPlanSelectedDay=index; renderMealPlan(); }
-function changeMealPlanWeek(delta){ mealPlanWeekOffset += delta; renderMealPlan(); }
-function jumpMealPlanToCurrentWeek(){ mealPlanWeekOffset=0; mealPlanSelectedDay=new Date().getDay()===0?6:new Date().getDay()-1; renderMealPlan(); }
-function setMealPlanRecipe(slot, value){ const entry=mealPlanEntryFor(mealPlanDayDate(mealPlanSelectedDay)); entry[slot]=value||''; persistMealPlan(); renderMealPlan(); }
+function selectMealPlanDay(index){ mealPlanSelectedDay=index; }
+function changeMealPlanWeek(delta){ mealPlanWeekOffset += delta; }
+function jumpMealPlanToCurrentWeek(){ mealPlanWeekOffset=0; mealPlanSelectedDay=new Date().getDay()===0?6:new Date().getDay()-1; }
+function setMealPlanRecipe(slot, value){ const entry=mealPlanEntryFor(mealPlanDayDate(mealPlanSelectedDay)); entry[slot]=value||''; persistMealPlan(); }
 function saveMealPlanNotes(){ const entry=mealPlanEntryFor(mealPlanDayDate(mealPlanSelectedDay)); const notes=document.getElementById('mealPlanNotes'); entry.notes=notes?notes.value:''; persistMealPlan(); updateHeaderCards(); }
-function clearMealPlanDay(button){ if(!armInlineAction(button,'Confirm Clear Day','Clear Day')) return; const key=mealPlanDateKey(mealPlanDayDate(mealPlanSelectedDay)); mealPlan.days[key]={breakfast:'',lunch:'',dinner:'',snack:'',notes:''}; persistMealPlan(); renderMealPlan(); toast('Meal plan day cleared.'); }
+function clearMealPlanDay(button){ if(!armInlineAction(button,'Confirm Clear Day','Clear Day')) return; const key=mealPlanDateKey(mealPlanDayDate(mealPlanSelectedDay)); mealPlan.days[key]={breakfast:'',lunch:'',dinner:'',snack:'',notes:''}; persistMealPlan(); toast('Meal plan day cleared.'); }
 
 const oldRender = render;
-render = function(){ oldRender(); renderKitchenLab(); renderMealPlan(); renderResearch(); renderCookingTray(); };
+render = function(){ oldRender(); renderKitchenLab(); renderResearch(); renderCookingTray(); };
 
 render();
+switchPage('pantry');
 updateBottomNav('pantry');
 </script>
 <div class="modalBackdrop" id="testArchiveBackdrop" onclick="if(event.target.id==='testArchiveBackdrop')closeTestArchive()">
