@@ -575,6 +575,12 @@ option{background:#fffdf9;color:#312418}
 .groceryProgressFill{height:100%;width:0%;border-radius:999px;background:linear-gradient(90deg,#8bbf5a,#d7ad62)}
 .groceryProgressText{font-size:12px;color:#6f5b44;font-weight:900;white-space:nowrap}
 #page-grocery .panelHead{align-items:flex-start}
+.recentlyCheckedBank{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:12px 16px;border-top:1px solid rgba(151,111,47,.15);background:#f9f3e8}
+.rcLabel{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:#9b7e56;white-space:nowrap}
+.rcItem{display:flex;align-items:center;gap:6px;background:#fffdf9;border:1px solid rgba(151,111,47,.2);border-radius:12px;padding:6px 10px}
+.rcEmoji{font-size:18px}
+.rcName{font-size:13px;font-weight:800;color:#39291b}
+.rcUndo{padding:4px 10px;font-size:12px;font-weight:900;border-radius:8px}
 #page-grocery .panel{overflow:visible}
 @media(max-width:720px){.groceryCategoryRail{padding:10px;gap:8px}.groceryCatChip{min-width:74px;padding:8px 7px}.groceryCatIcon{width:32px;height:32px;font-size:18px}.groceryListProgress{min-width:100%;width:100%}}
 
@@ -592,20 +598,20 @@ option{background:#fffdf9;color:#312418}
   border-bottom:0;
 }
 #page-grocery .pickupStamp.productCard{
-  min-height:188px;
-  padding:8px;
+  min-height:0;
+  padding:6px;
   border:1px solid rgba(151,111,47,.18);
-  border-radius:18px;
+  border-radius:14px;
   background:linear-gradient(180deg,#fffefb,#faf3e8);
-  box-shadow:0 10px 22px rgba(102,72,31,.09);
-  gap:7px;
+  box-shadow:0 6px 14px rgba(102,72,31,.07);
+  gap:4px;
   overflow:visible;
 }
 #page-grocery .pickupStamp.productCard:before{display:none}
 #page-grocery .productMedia{
   position:relative;
-  height:82px;
-  border-radius:15px;
+  height:56px;
+  border-radius:10px;
   border:1px solid rgba(151,111,47,.15);
   background:radial-gradient(circle at 50% 30%,#fffefb 0,#f5ead5 78%);
   display:grid;
@@ -613,7 +619,7 @@ option{background:#fffdf9;color:#312418}
   overflow:hidden;
 }
 #page-grocery .productMedia img{width:100%;height:100%;object-fit:cover;display:block}
-#page-grocery .productIcon{font-size:38px;filter:drop-shadow(0 8px 10px rgba(93,67,31,.13))}
+#page-grocery .productIcon{font-size:28px;filter:drop-shadow(0 4px 6px rgba(93,67,31,.1))}
 
 #page-grocery .productCheck{
   position:absolute;
@@ -630,18 +636,19 @@ option{background:#fffdf9;color:#312418}
   font-weight:950;
   box-shadow:0 0 0 3px rgba(255,255,255,.85);
 }
-#page-grocery .productBody{display:grid;gap:3px;min-height:56px}
+#page-grocery .productBody{display:grid;gap:1px;min-height:0}
 #page-grocery .productName{
   color:#2f2114;
-  font-size:12px;
-  line-height:1.15;
+  font-size:11px;
+  line-height:1.1;
   font-weight:950;
   display:-webkit-box;
   -webkit-line-clamp:2;
   -webkit-box-orient:vertical;
   overflow:hidden;
 }
-#page-grocery .productQty{font-size:10px;color:#806f5d;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#page-grocery .productQty{font-size:9px;color:#806f5d;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#page-grocery .productMeta{font-size:9px;color:#a08060;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #page-grocery .productFooter{
   display:flex;
   align-items:flex-end;
@@ -666,7 +673,7 @@ option{background:#fffdf9;color:#312418}
 }
 #page-grocery .productMetaLine{font-size:9.5px;color:#927d62;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #page-grocery .pickupStamp.productCard .stampDone{display:none}
-@media(max-width:720px){#page-grocery .pickupList{grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:9px;padding:10px}#page-grocery .pickupStamp.productCard{min-height:174px}#page-grocery .productMedia{height:72px}}
+@media(max-width:720px){#page-grocery .pickupList{grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:9px;padding:10px}#page-grocery .pickupStamp.productCard{min-height:0}#page-grocery .productMedia{height:52px}}
 
 
 
@@ -719,7 +726,21 @@ body{padding-bottom:112px}
 .navCard,#nav-research{--nav-accent:#b1843f;--nav-glow:rgba(203,166,96,.15)}
 .researchShell{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;padding:16px;align-items:start}
 .researchSidebar,.researchWorkspace,.researchCard{border:1px solid rgba(151,111,47,.18);border-radius:22px;background:linear-gradient(145deg,#fffefb,#f8f0e4);box-shadow:0 10px 22px rgba(102,72,31,.07)}
-.researchSidebar{padding:14px;display:grid;gap:12px;position:static}.researchFolderList{max-height:260px;overflow-y:auto}
+.researchSidebar{padding:14px;display:grid;gap:12px;position:static}.researchFolderList{max-height:360px;overflow-y:auto;padding:4px 0}
+.rFolderRow{display:flex;align-items:center;gap:0;border-radius:10px;cursor:pointer;transition:.12s background;user-select:none}
+.rFolderRow:hover{background:rgba(151,111,47,.08)}
+.rFolderRow.active{background:linear-gradient(145deg,#f2dfb8,#e8c97a);color:#3c2812}
+.rFolderToggle{width:28px;height:32px;display:grid;place-items:center;flex-shrink:0;font-size:11px;color:#9b7e56;transition:.15s transform}
+.rFolderToggle.open{transform:rotate(90deg)}
+.rFolderIcon{font-size:14px;margin-right:4px;flex-shrink:0;color:#9b7e56}
+.rFolderLabel{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;font-weight:800;padding:8px 8px 8px 0;color:#3c2812}
+.rFolderRow.active .rFolderLabel{color:#3c2812}
+.rFolderFiles{padding-left:28px;display:none}
+.rFolderFiles.open{display:block}
+.rFileRow{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;cursor:pointer;transition:.12s background;font-size:12px;color:#6f5535;font-weight:700}
+.rFileRow:hover{background:rgba(151,111,47,.08);color:#3c2812}
+.rFileIcon{font-size:13px;flex-shrink:0;opacity:.7}
+.rFileLabel{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .researchFolderTools{display:grid;grid-template-columns:1fr auto;gap:8px}
 .researchFolderList{display:grid;gap:8px;max-height:520px;overflow:auto;padding-right:2px}
 .researchFolderBtn{border:1px solid rgba(151,111,47,.18);background:#fffdf9;border-radius:16px;padding:12px;text-align:left;cursor:pointer;display:grid;gap:6px;transition:.16s transform,.16s border-color,.16s box-shadow}
@@ -988,6 +1009,15 @@ body{padding-bottom:112px}
   border-radius:12px;
   cursor:pointer;
 }
+/* Block handle */
+.researchNotesWrap{position:relative;padding-left:6px}
+.blockHandle{position:absolute;left:-28px;top:0;width:22px;height:22px;border-radius:6px;display:none;align-items:center;justify-content:center;cursor:pointer;color:#b1843f;font-size:13px;background:#fffdf9;border:1px solid rgba(151,111,47,.2);box-shadow:0 2px 8px rgba(102,72,31,.1);z-index:10;transition:.12s background;user-select:none;letter-spacing:-1px}
+.blockHandle:hover{background:#fde9b0;border-color:#b1843f}
+.blockMenuPopover{position:fixed;z-index:200;background:#fffdf9;border:1px solid rgba(177,132,63,.3);border-radius:14px;box-shadow:0 16px 40px rgba(74,50,19,.2);padding:6px;min-width:180px;display:none;flex-direction:column;gap:2px;animation:popoverIn .1s ease}
+.blockMenuPopover.show{display:flex}
+.blockMenuBtn{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:9px;cursor:pointer;font-size:13px;font-weight:700;color:#3c2812;border:none;background:none;width:100%;text-align:left;transition:.1s background}
+.blockMenuBtn:hover{background:#fde9b0;color:#7c3f00}
+.blockMenuDivider{height:1px;background:rgba(151,111,47,.15);margin:3px 2px}
 .researchRichNotes{
   min-height:420px;
   resize:vertical;
@@ -1335,6 +1365,7 @@ td.editable-cell{
       <div style="display:none" id="groceryMiniListCard"></div>
       <div class="groceryTools"><div class="grocerySummary" id="grocerySummary"></div><div class="groceryControls"><button class="btn" id="groceryViewToggle" onclick="toggleGroceryView()" title="Switch view">⊞ Table</button><select id="groceryScope" class="field groceryScope" onchange="renderPickup()"><option value="all">All Items Needed</option><option value="recipes">Recipe Only</option><option value="essentials">Just Essentials</option></select><select id="grocerySort" class="field grocerySort" onchange="renderPickup()"><option value="storeLocation">Sort: Store Location</option><option value="name">Sort: Item Name</option><option value="priceDesc">Sort: Price High to Low</option><option value="priceAsc">Sort: Price Low to High</option><option value="status">Sort: Stock Status</option></select><button class="btn" onclick="markPickupInStock()">Mark Pickup Done</button></div></div>
       <div class="pickupList" id="pickupList"></div>
+      <div id="recentlyCheckedBank" class="recentlyCheckedBank" style="display:none"></div>
     </section>
   </section>
 
@@ -1686,7 +1717,7 @@ function renderPickup(){
   const itemHtml=it=>{
     const price=priceValue(it.price);
     const media=it.photo?`<img src="${it.photo}" alt="${escapeHtml(it.name)} photo">`:`<span class="productIcon">${getItemEmoji(it)}</span>`;
-    return `<article class="pickupStamp productCard" title="${escapeHtml(it.name)}"><div class="productMedia">${media}</div><div class="productBody"><div class="productName">${escapeHtml(it.name)}</div><div class="productQty">${escapeHtml(groceryProductSubline(it))}</div><div class="productMetaLine">${escapeHtml(it.storeLocation||'Unassigned')} • ${escapeHtml(it.status||'Needed')}</div></div><div class="productFooter"><div class="productPrice"><strong>${price!==null?'$'+price.toFixed(2):'—'}</strong><span>${price!==null?'est. price':'price needed'}</span></div><button class="btn primary productAdd" title="Mark picked up" onclick="setItemStock('${it.id}','In Stock')">+</button></div></article>`;
+    return `<article class="pickupStamp productCard" title="${escapeHtml(it.name)}"><div class="productMedia">${media}</div><div class="productBody"><div class="productName">${escapeHtml(it.name)}</div><div class="productMeta">${escapeHtml(it.storeLocation||'Unassigned')}</div></div><div class="productFooter"><div class="productPrice"><strong>${price!==null?'$'+price.toFixed(2):'—'}</strong><span>${price!==null?'est.':'needed'}</span></div><button class="btn primary productAdd" title="Mark picked up" onclick="setItemStock('${it.id}','In Stock')">+</button></div></article>`;
   };
   // Table view
   if(groceryViewMode === 'table'){
@@ -1825,8 +1856,38 @@ function saveItem(){
 function armInlineAction(button,label='Confirm',fallback='Confirm'){ if(!button) return true; if(button.dataset.confirming==='true') return true; button.dataset.confirming='true'; button.dataset.originalText=button.textContent; button.textContent=label; button.classList.add('confirming'); setTimeout(()=>{ if(button.isConnected&&button.dataset.confirming==='true'){ button.textContent=button.dataset.originalText||fallback; button.classList.remove('confirming'); delete button.dataset.confirming; delete button.dataset.originalText; } },6000); return false; }
 function armInlineDelete(button,label='Confirm Delete'){ return armInlineAction(button,label,'Delete'); }
 function deleteItem(button){ if(!armInlineDelete(button)) return; const id=document.getElementById('editId').value; items=items.filter(x=>x.id!==id); persist(); closeEditor(); render(); toast('Deleted.'); }
-function setItemStock(id,status){ const it=items.find(x=>x.id===id); if(it){ it.status=status; it.lastUpdated=new Date().toISOString(); persist(); render(); } }
+const recentlyChecked = [];
+function setItemStock(id,status){
+  const it=items.find(x=>x.id===id); if(!it) return;
+  const prevStatus = it.status;
+  it.status=status; it.lastUpdated=new Date().toISOString();
+  // Log to recently checked bank if marking as In Stock from a pickup-needed state
+  if(status==='In Stock' && (prevStatus==='Out of Stock'||prevStatus==='Running Low')){
+    recentlyChecked.unshift({id, name:it.name, prevStatus, emoji:getItemEmoji(it), ts:Date.now()});
+    if(recentlyChecked.length>3) recentlyChecked.length=3;
+  }
+  persist(); render(); renderRecentlyChecked();
+}
 function quickStatus(id){ const it=items.find(x=>x.id===id); if(!it) return; const order=['In Stock','Running Low','Out of Stock']; it.status=order[(order.indexOf(it.status)+1+order.length)%order.length]; it.lastUpdated=new Date().toISOString(); persist(); render(); }
+function restoreCheckedItem(id, prevStatus){
+  const it=items.find(x=>x.id===id); if(!it) return;
+  it.status=prevStatus; it.lastUpdated=new Date().toISOString();
+  const idx=recentlyChecked.findIndex(r=>r.id===id);
+  if(idx>-1) recentlyChecked.splice(idx,1);
+  persist(); render(); renderRecentlyChecked();
+  toast('Restored to '+prevStatus+'.');
+}
+function renderRecentlyChecked(){
+  const el=document.getElementById('recentlyCheckedBank'); if(!el) return;
+  if(!recentlyChecked.length){ el.style.display='none'; return; }
+  el.style.display='flex';
+  el.innerHTML=`<span class="rcLabel">Recently checked off:</span>`+recentlyChecked.map(r=>`
+    <div class="rcItem">
+      <span class="rcEmoji">${r.emoji}</span>
+      <span class="rcName">${escapeHtml(r.name)}</span>
+      <button class="btn rcUndo" onclick="restoreCheckedItem('${r.id}','${escapeHtml(r.prevStatus)}')" title="Undo — restore to ${escapeHtml(r.prevStatus)}">↩ Undo</button>
+    </div>`).join('');
+}
 function markPickupInStock(){ if(!confirm('Mark every pickup-needed item as In Stock?')) return; items.forEach(i=>{ if(pickupNeeded(i)){ i.status='In Stock'; i.lastUpdated=new Date().toISOString(); } }); persist(); render(); toast('Pickup list cleared.'); }
 function checkRecipe(){
   const lines=document.getElementById('recipeInput').value.split(/[\n,]+/).map(x=>normalize(x)).filter(Boolean);
@@ -2996,6 +3057,89 @@ function formatResearchNote(command){
   document.execCommand(command,false,null);
   saveResearchNotes();
 }
+let _savedSelection = null;
+
+function positionBlockHandle(){
+  const notes = document.getElementById('researchNotes');
+  const handle = document.getElementById('blockHandle');
+  if(!notes || !handle) return;
+  const sel = window.getSelection();
+  if(!sel || !sel.rangeCount){ handle.style.display='none'; return; }
+  const range = sel.getRangeAt(0);
+  // Use the range's bounding rect for accurate line position (works for first line too)
+  let rect = range.getBoundingClientRect();
+  // If range rect is empty (collapsed at start), expand to get coordinates
+  if(!rect || rect.height === 0){
+    const r2 = range.cloneRange();
+    r2.selectNodeContents(range.startContainer);
+    rect = r2.getBoundingClientRect();
+  }
+  if(!rect || rect.height === 0){ handle.style.display='none'; return; }
+  const noteRect = notes.getBoundingClientRect();
+  handle.style.display = 'flex';
+  handle.style.top = (rect.top - noteRect.top + notes.scrollTop) + 'px';
+}
+
+function hideBlockHandle(){
+  const handle = document.getElementById('blockHandle');
+  if(handle) handle.style.display = 'none';
+}
+
+function openBlockMenu(e){
+  e.preventDefault();
+  e.stopPropagation();
+  const notes = document.getElementById('researchNotes');
+  if(notes) notes.focus();
+  const sel = window.getSelection();
+  if(sel && sel.rangeCount) _savedSelection = sel.getRangeAt(0).cloneRange();
+  const pop = document.getElementById('blockMenuPopover');
+  if(!pop) return;
+  // Position to the right of the handle
+  const hr = e.currentTarget.getBoundingClientRect();
+  // Position to the LEFT of the handle
+  pop.style.top = hr.top + 'px';
+  pop.style.left = '0px'; // temp, will recalc after render
+  pop.classList.add('show');
+  requestAnimationFrame(()=>{
+    const pr = pop.getBoundingClientRect();
+    let left = hr.left - pr.width - 6;
+    if(left < 8) left = hr.right + 6; // fallback right if no room
+    pop.style.left = left + 'px';
+    let top = hr.top;
+    if(top + pr.height > window.innerHeight - 8) top = window.innerHeight - pr.height - 8;
+    pop.style.top = top + 'px';
+    // Only attach outside-click listener AFTER this frame so it doesn't catch the current mousedown
+    setTimeout(()=>{
+      document.addEventListener('mousedown', function _close(ev){
+        if(!pop.contains(ev.target) && ev.target.id !== 'blockHandle'){
+          pop.classList.remove('show');
+          document.removeEventListener('mousedown', _close);
+        }
+      });
+    }, 100);
+  });
+}
+
+function closeBlockMenuOutside(){ document.getElementById('blockMenuPopover')?.classList.remove('show'); }
+
+function blockMenuAction(action){
+  document.getElementById('blockMenuPopover')?.classList.remove('show');
+  const notes = document.getElementById('researchNotes');
+  if(notes) notes.focus();
+  if(_savedSelection){
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    try{ sel.addRange(_savedSelection); }catch(e){}
+  }
+  if(action==='bold') formatResearchNote('bold');
+  else if(action==='italic') formatResearchNote('italic');
+  else if(action==='underline') formatResearchNote('underline');
+  else if(action==='highlight') highlightResearchNote();
+  else if(['h1','h2','h3','p'].includes(action)) applyResearchHeading(action);
+  else if(action==='callout') insertResearchCallout();
+  else if(action==='toggle') insertResearchToggle();
+}
+
 function applyResearchHeading(tag){
   if(!tag) return;
   const el=focusResearchEditor(); if(!el) return;
@@ -3052,11 +3196,27 @@ function clearResearchNotes(button){ if(!armInlineAction(button,'Confirm Clear N
 function researchSearchText(){ return normalize(document.getElementById('researchSearch')?.value||'').toLowerCase(); }
 function filteredResearchFolders(){ const q=researchSearchText(); const folders=research.folders||[]; if(!q) return folders; return folders.filter(f=>`${f.name||''} ${f.notes||''} ${(f.files||[]).map(file=>file.name).join(' ')}`.toLowerCase().includes(q)); }
 function formatBytes(bytes){ const n=Number(bytes||0); if(!n) return '0 KB'; if(n<1024*1024) return `${Math.max(1,Math.round(n/1024))} KB`; return `${(n/(1024*1024)).toFixed(1)} MB`; }
+const _rFolderOpen = {};
+function toggleRFolder(id, e){ e.stopPropagation(); _rFolderOpen[id]=!_rFolderOpen[id]; renderResearchFolderListOnly(); }
 function renderResearchFolderListOnly(){
   const list=document.getElementById('researchFolderList'); if(!list) return;
   const folders=filteredResearchFolders();
   if(!folders.length){ list.innerHTML='<div class="researchEmptyState">No matching folders yet.</div>'; return; }
-  list.innerHTML=folders.map(f=>`<button class="researchFolderBtn ${f.id===research.activeId?'active':''}" onclick="selectResearchFolder('${f.id}')"><div class="researchFolderName">${escapeHtml(f.name||'Untitled')}</div><div class="researchFolderMeta"><span>${(f.files||[]).length} PDF/file${(f.files||[]).length===1?'':'s'}</span><span>${f.notes?f.notes.length:0} chars</span></div></button>`).join('');
+  list.innerHTML=folders.map(f=>{
+    const isActive=f.id===research.activeId;
+    const isOpen=_rFolderOpen[f.id]||false;
+    const files=f.files||[];
+    const fileRows=files.map(file=>`<div class="rFileRow" onclick="openResearchFile('${file.id}')" title="${escapeHtml(file.name||'File')}"><span class="rFileIcon">📄</span><span class="rFileLabel">${escapeHtml(file.name||'Unnamed file')}</span></div>`).join('');
+    const filesHtml=files.length?`<div class="rFolderFiles ${isOpen?'open':''}" id="rff-${f.id}">${fileRows}</div>`:'';
+    return `<div>
+      <div class="rFolderRow ${isActive?'active':''}" onclick="selectResearchFolder('${f.id}')">
+        <span class="rFolderToggle ${isOpen?'open':''}" onclick="toggleRFolder('${f.id}',event)">▶</span>
+        <span class="rFolderIcon">📁</span>
+        <span class="rFolderLabel">${escapeHtml(f.name||'Untitled')}</span>
+      </div>
+      ${filesHtml}
+    </div>`;
+  }).join('');
 }
 function renderResearch(){
   const shell=document.querySelector('#page-research .researchShell');
@@ -3076,38 +3236,34 @@ function renderResearch(){
       <div class="researchTopActions" style="margin-top:0"><button class="btn researchWorkspaceOpenFolders" onclick="showResearchFolders()">Show Folders</button><button class="btn" onclick="clearResearchNotes(this)">Clear Notes</button><button class="btn danger" onclick="deleteResearchFolder(this)">Delete Folder</button></div>
     </div>
     <div class="researchWorkspaceGrid">
-      <section class="researchCard">
-        <div class="researchCardHead" style="display:none"></div>
-        <div class="researchNotebookToolbar" aria-label="Notebook formatting tools">
-          <button class="btn" type="button" onclick="formatResearchNote('bold')"><strong>B</strong></button>
-          <button class="btn" type="button" onclick="formatResearchNote('italic')"><em>I</em></button>
-          <button class="btn" type="button" onclick="formatResearchNote('underline')"><u>U</u></button>
-          <span class="researchToolbarDivider"></span>
-          <select class="field" onchange="applyResearchHeading(this.value); this.value=''">
-            <option value="">Header style</option>
-            <option value="h1">Big Header</option>
-            <option value="h2">Section Header</option>
-            <option value="h3">Small Header</option>
-            <option value="p">Normal Text</option>
-          </select>
-          <select class="field" onchange="applyResearchFont(this.value); this.value=''">
-            <option value="">Font style</option>
-            <option value="researchFontSerif">Serif / Book</option>
-            <option value="researchFontSans">Sans / Clean</option>
-            <option value="researchFontMono">Mono / Source</option>
-          </select>
-          <span class="researchToolbarDivider"></span>
-          <button class="btn warn" type="button" onclick="highlightResearchNote()">Highlight</button>
-          <label class="tinyChip">Text <input class="researchColorInput" type="color" value="#7c5720" onchange="applyResearchColor(this.value)" /></label>
-          <button class="btn" type="button" onclick="insertResearchCallout()">+ Callout</button>
-          <button class="btn" type="button" onclick="insertResearchToggle()">+ Toggle</button>
+      <section class="researchCard" id="researchPdfCard">
+        <div class="researchCardHead"><div><strong>Book PDFs / Sources</strong><div class="miniMeta">Upload PDFs or related files for this folder. Stored locally in this browser.</div></div><div style="display:flex;gap:8px;align-items:center"><span class="tinyChip">${files.length} file${files.length===1?'':'s'}</span><button class="iconBtn" onclick="toggleResearchPdfSection()" title="Hide/show files">⊟</button></div></div>
+        <div id="researchPdfBody">
+          <div class="researchUploadBox"><strong>Add PDF or source file</strong><input class="field" type="file" accept="application/pdf,.pdf,.txt,.md,.doc,.docx,image/*" multiple onchange="handleResearchFileUpload(event)" /><div class="miniMeta">Large PDFs may hit browser local-storage limits. For global sync later, this should move to Supabase Storage.</div></div>
+          <div class="researchFileList" id="researchFileList">${renderResearchFilesHtml(f)}</div>
         </div>
-        <div id="researchNotes" class="field researchNotes researchRichNotes" contenteditable="true" data-placeholder="Book notes, passages, questions, chapter summaries, idea fragments..." oninput="saveResearchNotes()" onblur="saveResearchNotes()">${sanitizeResearchHtml(f.notes||'')}</div>
       </section>
       <section class="researchCard">
-        <div class="researchCardHead"><div><strong>Book PDFs / Sources</strong><div class="miniMeta">Upload PDFs or related files for this folder. Stored locally in this browser.</div></div><span class="tinyChip">${files.length} file${files.length===1?'':'s'}</span></div>
-        <div class="researchUploadBox"><strong>Add PDF or source file</strong><input class="field" type="file" accept="application/pdf,.pdf,.txt,.md,.doc,.docx,image/*" multiple onchange="handleResearchFileUpload(event)" /><div class="miniMeta">Large PDFs may hit browser local-storage limits. For global sync later, this should move to Supabase Storage.</div></div>
-        <div class="researchFileList" id="researchFileList">${renderResearchFilesHtml(f)}</div>
+        <div class="researchCardHead" style="display:none"></div>
+        <div class="researchNotebookToolbar" aria-label="Notebook formatting tools" style="display:none"></div>
+        <div class="researchNotesWrap">
+          <div id="blockHandle" class="blockHandle" onmousedown="openBlockMenu(event)">⋮⋮</div>
+          <div id="researchNotes" class="field researchNotes researchRichNotes" contenteditable="true" data-placeholder="Book notes, passages, questions, chapter summaries, idea fragments..." oninput="saveResearchNotes()" onblur="saveResearchNotes()" onclick="positionBlockHandle()" onkeyup="positionBlockHandle()">${sanitizeResearchHtml(f.notes||'')}</div>
+        </div>
+        <div id="blockMenuPopover" class="blockMenuPopover">
+          <button class="blockMenuBtn" onclick="blockMenuAction('bold')"><strong>B</strong> Bold</button>
+          <button class="blockMenuBtn" onclick="blockMenuAction('italic')"><em>I</em> Italic</button>
+          <button class="blockMenuBtn" onclick="blockMenuAction('underline')"><u>U</u> Underline</button>
+          <button class="blockMenuBtn" onclick="blockMenuAction('highlight')">🟡 Highlight</button>
+          <div class="blockMenuDivider"></div>
+          <button class="blockMenuBtn" onclick="blockMenuAction('h1')">H1 Big Header</button>
+          <button class="blockMenuBtn" onclick="blockMenuAction('h2')">H2 Section</button>
+          <button class="blockMenuBtn" onclick="blockMenuAction('h3')">H3 Small</button>
+          <button class="blockMenuBtn" onclick="blockMenuAction('p')">¶ Normal text</button>
+          <div class="blockMenuDivider"></div>
+          <button class="blockMenuBtn" onclick="blockMenuAction('callout')">📌 Add Callout</button>
+          <button class="blockMenuBtn" onclick="blockMenuAction('toggle')">▶ Add Toggle</button>
+        </div>
       </section>
       <section class="researchInlinePdf" id="researchInlinePdf">
         <div class="researchInlinePdfHead">
@@ -3118,6 +3274,14 @@ function renderResearch(){
       </section>
     </div>`;
   updateHeaderCards();
+}
+function toggleResearchPdfSection(){
+  const body = document.getElementById('researchPdfBody');
+  const btn = document.querySelector('#researchPdfCard .iconBtn');
+  if(!body) return;
+  const hidden = body.style.display === 'none';
+  body.style.display = hidden ? '' : 'none';
+  if(btn) btn.textContent = hidden ? '⊟' : '⊞';
 }
 function renderResearchFilesHtml(folder){ const files=folder.files||[]; if(!files.length) return '<div class="researchEmptyState">No PDFs or source files added yet.</div>'; return files.map(file=>`<div class="researchFileItem"><div class="researchFileIcon">${file.type&&file.type.includes('pdf')?'PDF':'▤'}</div><div><div class="researchFileName">${escapeHtml(file.name||'Untitled file')}</div><div class="researchFileMeta">${escapeHtml(file.type||'file')} • ${formatBytes(file.size)} • ${file.addedAt?new Date(file.addedAt).toLocaleDateString():''}</div></div><div class="researchFileActions"><button class="btn" onclick="openResearchFile('${file.id}')">Open</button><button class="btn danger" onclick="deleteResearchFile('${file.id}',this)">Delete</button></div></div>`).join(''); }
 function handleResearchFileUpload(event){
