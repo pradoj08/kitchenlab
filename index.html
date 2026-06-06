@@ -1476,6 +1476,66 @@ html.force-mobile .groceryTable tbody tr{cursor:pointer}
 }
 html.force-mobile .groceryTable .gtPrice,
 html.force-mobile .groceryTable th:last-child{display:none!important}
+
+/* Aisle grouped list */
+.aisleGroup{margin-bottom:20px}
+.aisleGroupHead{display:flex;align-items:center;gap:12px;margin-bottom:8px;padding:0 4px}
+.aisleNumBadge{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#b1843f,#7c4f1a);color:#fff;font-size:13px;font-weight:950;display:grid;place-items:center;flex-shrink:0;box-shadow:0 3px 10px rgba(177,132,63,.35)}
+.aisleGroupName{font-size:14px;font-weight:900;color:#39291b}
+.aisleGroupItems{display:flex;flex-direction:column;gap:2px;padding-left:16px;border-left:2px solid rgba(151,111,47,.15);margin-left:15px}
+.aisleItem{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:12px;background:#fff;transition:.12s background;cursor:pointer}
+.aisleItem:hover{background:#fef5e4}
+.aisleCircle{width:24px;height:24px;border-radius:50%;border:2px solid rgba(151,111,47,.3);flex-shrink:0;display:grid;place-items:center;transition:.15s;background:#fffdf9}
+.aisleCircle:hover{border-color:#b1843f;background:#fde9b0}
+.aisleCircle svg{width:12px;height:12px;stroke:#6f9769;stroke-width:2.5;fill:none;opacity:0;transition:.15s}
+.aisleCircle.armed{border-color:#b1843f;background:#fde9b0}
+.aisleCircle.armed svg{opacity:1;stroke:#b1843f}
+.aisleItemEmoji{font-size:20px;flex-shrink:0}
+.aisleItemEmoji img{width:24px;height:24px;border-radius:6px;object-fit:cover}
+.aisleItemName{flex:1;font-size:14px;font-weight:800;color:#2d1f0e}
+.aisleItemPrice{font-size:12px;font-weight:900;color:#9b7e56}
+
+
+/* Mobile aisle grouped list */
+.pickupList.aisleListView{display:block!important;padding:12px!important;max-height:none!important}
+@media(max-width:620px){
+  .pickupList.aisleListView{display:block!important;padding:12px!important;max-height:none!important}
+}
+html.force-mobile .pickupList.aisleListView{display:block!important;padding:12px!important;max-height:none!important}
+.aisleGroup{margin-bottom:6px;width:100%}
+.aisleGroupHead{display:flex;align-items:center;gap:12px;padding:4px 0}
+.aisleNumBadge{width:34px;height:34px;border-radius:50%;color:#fff;font-size:13px;font-weight:950;display:grid;place-items:center;flex-shrink:0;box-shadow:0 3px 10px rgba(0,0,0,.15)}
+.aisleGroup:nth-child(1) .aisleNumBadge{background:linear-gradient(135deg,#e74c3c,#c0392b)}
+.aisleGroup:nth-child(2) .aisleNumBadge{background:linear-gradient(135deg,#e67e22,#d35400)}
+.aisleGroup:nth-child(3) .aisleNumBadge{background:linear-gradient(135deg,#f1c40f,#d4ac0d);color:#39291b}
+.aisleGroup:nth-child(4) .aisleNumBadge{background:linear-gradient(135deg,#2ecc71,#27ae60)}
+.aisleGroup:nth-child(5) .aisleNumBadge{background:linear-gradient(135deg,#1abc9c,#16a085)}
+.aisleGroup:nth-child(6) .aisleNumBadge{background:linear-gradient(135deg,#3498db,#2980b9)}
+.aisleGroup:nth-child(7) .aisleNumBadge{background:linear-gradient(135deg,#9b59b6,#8e44ad)}
+.aisleGroup:nth-child(8) .aisleNumBadge{background:linear-gradient(135deg,#e91e8c,#c2185b)}
+.aisleGroup:nth-child(9) .aisleNumBadge{background:linear-gradient(135deg,#00bcd4,#0097a7)}
+.aisleGroup:nth-child(10) .aisleNumBadge{background:linear-gradient(135deg,#ff5722,#e64a19)}
+.aisleGroupName{font-size:15px;font-weight:900;color:#39291b}
+.aisleGroupItems{display:flex;flex-direction:column;gap:0;padding-left:16px;border-left:3px solid rgba(151,111,47,.2);margin-left:16px;margin-top:2px;margin-bottom:8px}
+.aisleGroup:nth-child(1) .aisleGroupItems{border-left-color:#e74c3c40}
+.aisleGroup:nth-child(2) .aisleGroupItems{border-left-color:#e67e2240}
+.aisleGroup:nth-child(3) .aisleGroupItems{border-left-color:#f1c40f40}
+.aisleGroup:nth-child(4) .aisleGroupItems{border-left-color:#2ecc7140}
+.aisleGroup:nth-child(5) .aisleGroupItems{border-left-color:#1abc9c40}
+.aisleGroup:nth-child(6) .aisleGroupItems{border-left-color:#3498db40}
+.aisleGroup:nth-child(7) .aisleGroupItems{border-left-color:#9b59b640}
+.aisleGroup:nth-child(8) .aisleGroupItems{border-left-color:#e91e8c40}
+.aisleGroup:nth-child(9) .aisleGroupItems{border-left-color:#00bcd440}
+.aisleGroup:nth-child(10) .aisleGroupItems{border-left-color:#ff572240}
+.aisleItem{display:flex;align-items:center;gap:10px;padding:9px 8px;border-radius:10px;cursor:pointer;transition:.1s background}
+.aisleItem:active{background:rgba(151,111,47,.08)}
+.aisleCircle{width:22px;height:22px;border-radius:50%;border:2px solid rgba(151,111,47,.3);flex-shrink:0;display:grid;place-items:center;background:#fffdf9;transition:.15s}
+.aisleCircle.armed{border-color:#b1843f;background:#fde9b0}
+.aisleCircle svg{width:11px;height:11px;stroke:#6f9769;stroke-width:2.5;fill:none;opacity:0;transition:.15s}
+.aisleCircle.armed svg{opacity:1;stroke:#b1843f}
+.aisleItemEmoji{font-size:20px;flex-shrink:0}
+.aisleItemEmoji img{width:22px;height:22px;border-radius:5px;object-fit:cover}
+.aisleItemName{flex:1;font-size:14px;font-weight:700;color:#2d1f0e}
 </style>
 </head>
 <body>
@@ -1495,7 +1555,6 @@ html.force-mobile .groceryTable th:last-child{display:none!important}
       </div>
       <div id="mobileMoreMenu" style="display:none;position:fixed;z-index:9999;background:#fffdf9;border:1.5px solid rgba(151,111,47,.25);border-radius:14px;box-shadow:0 16px 40px rgba(74,50,19,.25);overflow:hidden;min-width:180px">
         <button style="display:flex;align-items:center;gap:10px;padding:14px 16px;width:100%;text-align:left;background:none;border:none;border-bottom:1px solid rgba(151,111,47,.1);font-size:15px;font-weight:800;color:#39291b;cursor:pointer" onclick="switchPage('stopwatch');closeMobileMore()">🕐 Clock</button>
-        <button style="display:flex;align-items:center;gap:10px;padding:14px 16px;width:100%;text-align:left;background:none;border:none;font-size:15px;font-weight:800;color:#39291b;cursor:pointer" onclick="switchPage('research');closeMobileMore()">🧠 Research</button>
       </div>
     </nav>
   </section>
@@ -2021,9 +2080,24 @@ function renderPickup(){ applyMobileDropdownLabels();
         <td class="gtPrice">${price!==null?'$'+price.toFixed(2):'—'}</td>
       </tr>`;
     }).join('');
-    el.innerHTML=`<div class="groceryTableWrap"><table class="groceryTable"><thead><tr><th style="width:52px"></th><th>Item</th><th>Store Location</th><th style="text-align:right;width:80px">Price</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+    el.innerHTML=`<div class="groceryTableWrap"><table class="groceryTable"><tbody>${rows}</tbody></table></div>`;
     return;
   }
+  const isMob=_forceMobile||window.innerWidth<=620;
+  if(isMob){
+    // Mobile: aisle grouped list
+    list.sort((a,b)=>(a.storeLocation||'Unassigned').localeCompare(b.storeLocation||'Unassigned',undefined,{numeric:true})||a.name.localeCompare(b.name));
+    el.classList.add('aisleListView');
+    if(sort!=='storeLocation'){ el.innerHTML=`<div class="aisleGroup"><div class="aisleGroupItems">${list.map(it=>aisleItemHtml(it)).join('')}</div></div>`; return; }
+    const mgroups={};
+    list.forEach(it=>{ const loc=it.storeLocation||'Unassigned'; (mgroups[loc]||=[]).push(it); });
+    el.innerHTML=Object.entries(mgroups).map(([location,group],gi)=>{
+      const num=location.match(/\d+/)?.[0]||String(gi+1);
+      return `<div class="aisleGroup"><div class="aisleGroupHead"><div class="aisleNumBadge">${num}</div><span class="aisleGroupName">${escapeHtml(location)}</span></div><div class="aisleGroupItems">${group.map(it=>aisleItemHtml(it)).join('')}</div></div>`;
+    }).join('');
+    return;
+  }
+  el.classList.remove('aisleListView');
   if(sort!=='storeLocation'){ el.innerHTML=list.map(itemHtml).join(''); return; }
   const groups={};
   list.forEach(it=>{ const location=it.storeLocation||'Unassigned'; (groups[location] ||= []).push(it); });
@@ -2496,12 +2570,18 @@ let activeCooking = loadActiveCooking();
 function switchPage(page){
   ['stopwatch','pantry','recipes','research','grocery'].forEach(p=>{
     const view=document.getElementById('page-'+p), nav=document.getElementById('nav-'+p);
+    const navM=document.getElementById('nav-'+p+'-m');
     if(view) view.classList.toggle('active', p===page);
     if(nav) nav.classList.toggle('active', p===page);
+    if(navM) navM.classList.toggle('active', p===page);
   });
+  // nav-pantry is shared (no -m version), sync nav-more
+  const navMore=document.getElementById('nav-more');
+  if(navMore) navMore.classList.toggle('active', page==='stopwatch'||page==='research');
   if(page==='recipes') renderKitchenLab();
   if(page==='stopwatch') renderTimers();
-    if(page==='research') renderResearch();
+  if(page==='research') renderResearch();
+  if(page==='grocery') renderPickup();
   updateBottomNav(page);
 }
 function updateBottomNav(page){
@@ -4138,6 +4218,7 @@ render = function(){ oldRender(); renderKitchenLab(); renderResearch(); renderCo
 
 render();
 switchPage('pantry');
+renderPickup();
 updateBottomNav('pantry');
 
 let _mobileEditId = null;
@@ -4306,6 +4387,41 @@ function applyMobileDropdownLabels(){
       else if(!isMob && opt.dataset.long) opt.textContent = opt.dataset.long;
     });
   });
+}
+
+const _aisleArmed = {};
+function aisleItemHtml(it){
+  const emoji=it.photo?`<img src="${it.photo}" alt="${escapeHtml(it.name)}">`:getItemEmoji(it);
+  return `<div class="aisleItem" onclick="armAisleItem('${it.id}',this)">
+    <div class="aisleCircle" id="aisle-circle-${it.id}"><svg viewBox="0 0 14 14"><polyline points="2,7 5.5,10.5 12,3"/></svg></div>
+    <span class="aisleItemEmoji">${emoji}</span>
+    <span class="aisleItemName">${escapeHtml(it.name)}</span>
+  </div>`;
+}
+function armAisleItem(id, row){
+  const circle=document.getElementById('aisle-circle-'+id);
+  if(_aisleArmed[id]){
+    clearTimeout(_aisleArmed[id]);
+    delete _aisleArmed[id];
+    setItemStock(id,'In Stock');
+    return;
+  }
+  // Show green check as confirm state
+  if(circle){
+    circle.classList.add('armed');
+    circle.style.background='#2ecc71';
+    circle.style.borderColor='#27ae60';
+    circle.innerHTML='<svg viewBox="0 0 14 14" style="opacity:1;stroke:#fff;stroke-width:2.5;fill:none;width:11px;height:11px"><polyline points="2,7 5.5,10.5 12,3"/></svg>';
+  }
+  _aisleArmed[id]=setTimeout(()=>{
+    delete _aisleArmed[id];
+    if(circle){
+      circle.classList.remove('armed');
+      circle.style.background='';
+      circle.style.borderColor='';
+      circle.innerHTML='<svg viewBox="0 0 14 14"><polyline points="2,7 5.5,10.5 12,3"/></svg>';
+    }
+  },3000);
 }
 </script>
 <div class="modalBackdrop" id="testArchiveBackdrop" onclick="if(event.target.id==='testArchiveBackdrop')closeTestArchive()">
