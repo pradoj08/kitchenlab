@@ -1013,7 +1013,39 @@ body{padding-bottom:112px}
   cursor:pointer;
 }
 /* Block handle */
+
+.notePageBar{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:2px solid rgba(151,111,47,.15);background:linear-gradient(135deg,#f5ead2,#ede0c4)}
+.notePageSelector{position:relative;flex:1;min-width:0}
+.notePageDropBtn{display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:12px;border:1.5px solid rgba(151,111,47,.3);background:#fffdf9;cursor:pointer;width:100%;text-align:left;font-weight:900;font-size:13px;color:#39291b;transition:.12s;box-shadow:0 2px 8px rgba(102,72,31,.08)}
+.notePageDropBtn:hover{border-color:#b1843f;background:#fef5e4}
+.notePageDropBtn .npPageIcon{font-size:15px;flex-shrink:0}
+.notePageDropBtn .npPageName{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.notePageDropBtn .npChevron{font-size:10px;color:#9b7e56;transition:.15s transform;flex-shrink:0}
+.notePageDropBtn.open .npChevron{transform:rotate(180deg)}
+.notePageDropMenu{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fffdf9;border:1.5px solid rgba(151,111,47,.25);border-radius:14px;box-shadow:0 16px 40px rgba(74,50,19,.18);z-index:50;overflow:hidden;display:none;animation:popoverIn .1s ease}
+.notePageDropMenu.open{display:block}
+.notePageDropItem{display:flex;align-items:center;gap:10px;padding:9px 12px;cursor:pointer;font-size:13px;font-weight:800;color:#39291b;transition:.1s background;border-bottom:1px solid rgba(151,111,47,.08)}
+.notePageDropItem:last-child{border-bottom:none}
+.notePageDropItem:hover{background:#fde9b0}
+.notePageDropItem.active{background:linear-gradient(90deg,#fde9b0,#fdf3d5);color:#7c3f00}
+.notePageDropItem .npItemIcon{font-size:15px;flex-shrink:0}
+.notePageDropItem .npItemName{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.notePageDropItem .npItemDel{font-size:11px;color:#c9a87a;padding:2px 5px;border-radius:5px;transition:.1s}
+.notePageDropItem .npItemDel:hover{color:#c0392b;background:rgba(192,57,43,.12)}
+.notePageDropDivider{height:1px;background:rgba(151,111,47,.12);margin:4px 0}
+.notePageAddBtn{display:flex;align-items:center;gap:8px;padding:9px 12px;cursor:pointer;font-size:13px;font-weight:900;color:#b1843f;transition:.1s background}
+.notePageAddBtn:hover{background:#fde9b0}
+.notePageRenameBtn{width:32px;height:32px;border-radius:10px;border:1.5px solid rgba(151,111,47,.25);background:#fffdf9;cursor:pointer;font-size:14px;display:grid;place-items:center;transition:.12s;color:#7a5a2a;flex-shrink:0}
+.notePageRenameBtn:hover{border-color:#b1843f;background:#fef5e4}
 .researchNotesWrap{position:relative;padding-left:6px}
+.addNoteCard{border:1px solid rgba(151,111,47,.18);border-radius:16px;background:linear-gradient(145deg,#fffefb,#f8f0e4);box-shadow:0 6px 14px rgba(102,72,31,.06);overflow:hidden;margin-bottom:10px}
+.addNoteHeader{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid rgba(151,111,47,.12);background:#f5ead2;cursor:pointer;user-select:none}
+.addNoteToggle{font-size:11px;color:#9b7e56;transition:.15s transform;flex-shrink:0}
+.addNoteToggle.open{transform:rotate(90deg)}
+.addNoteTitle{flex:1;font-weight:900;font-size:13px;color:#39291b;background:none;border:none;outline:none;font-family:inherit;cursor:text}
+.addNoteTitle:focus{color:#7c3f00}
+.addNoteBody{padding:10px 14px;display:none}
+.addNoteBody.open{display:block}
 .blockHandle{position:absolute;left:-28px;top:0;width:22px;height:22px;border-radius:6px;display:none;align-items:center;justify-content:center;cursor:pointer;color:#b1843f;font-size:13px;background:#fffdf9;border:1px solid rgba(151,111,47,.2);box-shadow:0 2px 8px rgba(102,72,31,.1);z-index:10;transition:.12s background;user-select:none;letter-spacing:-1px}
 .blockHandle:hover{background:#fde9b0;border-color:#b1843f}
 .blockMenuPopover{position:fixed;z-index:200;background:#fffdf9;border:1px solid rgba(177,132,63,.3);border-radius:14px;box-shadow:0 16px 40px rgba(74,50,19,.2);padding:6px;min-width:180px;display:none;flex-direction:column;gap:2px;animation:popoverIn .1s ease}
@@ -3207,9 +3239,212 @@ function hideResearchFolders(){ researchFoldersHidden=true; renderResearch(); }
 function showResearchFolders(){ researchFoldersHidden=false; renderResearch(); }
 function selectResearchFolder(id){ research.activeId=id; researchFoldersHidden=true; persistResearch(); renderResearch(); }
 function saveResearchTitle(value){ const f=activeResearchFolder(); if(!f) return; f.name=normalize(value)||'Untitled Research Folder'; f.updatedAt=new Date().toISOString(); persistResearch(); renderResearchFolderListOnly(); updateHeaderCards(); }
+function renderAdditionalNotesHtml(f){
+  const notes = f.additionalNotes||[];
+  if(!notes.length) return '<div class="miniMeta" style="padding:8px 0;color:#9b7e56">No additional notes yet. Click "+ Add Note" to create one.</div>';
+  return notes.map(n=>`<div class="addNoteCard" id="anc-${n.id}">
+    <div class="addNoteHeader" onclick="toggleAdditionalNote('${n.id}')">
+      <span class="addNoteToggle${n.open!==false?' open':''}">▶</span>
+      <input class="addNoteTitle" value="${escapeHtml(n.title||'Untitled Note')}" placeholder="Note title..." onclick="event.stopPropagation()" onblur="saveAdditionalNoteTitle('${n.id}',this.value)" onkeydown="if(event.key==='Enter')this.blur()" />
+      <button class="iconBtn" style="flex-shrink:0" onclick="event.stopPropagation();deleteAdditionalNote('${n.id}',this)" title="Delete note">✕</button>
+    </div>
+    <div class="addNoteBody${n.open!==false?' open':''}" id="anb-${n.id}">
+      <div class="field researchRichNotes" contenteditable="true" style="min-height:80px" data-placeholder="Write your note here..." oninput="saveAdditionalNoteContent('${n.id}',this)" onblur="saveAdditionalNoteContent('${n.id}',this)">${sanitizeResearchHtml(n.content||'')}</div>
+    </div>
+  </div>`).join('');
+}
+function addAdditionalNote(){
+  const f=activeResearchFolder(); if(!f) return;
+  if(!f.additionalNotes) f.additionalNotes=[];
+  const id='note-'+Date.now();
+  f.additionalNotes.push({id, title:'Untitled Note', content:'', open:true});
+  f.updatedAt=new Date().toISOString();
+  persistResearch();
+  const el=document.getElementById('additionalNotesList');
+  if(el) el.innerHTML=renderAdditionalNotesHtml(f);
+  // Focus the new note title
+  requestAnimationFrame(()=>{ const card=document.getElementById('anc-'+id); if(card) card.querySelector('.addNoteTitle')?.select(); });
+}
+function toggleAdditionalNote(id){
+  const f=activeResearchFolder(); if(!f) return;
+  const n=(f.additionalNotes||[]).find(x=>x.id===id); if(!n) return;
+  n.open=!(n.open!==false);
+  persistResearch();
+  const body=document.getElementById('anb-'+id);
+  const toggle=document.querySelector(`#anc-${id} .addNoteToggle`);
+  if(body) body.classList.toggle('open',n.open);
+  if(toggle) toggle.classList.toggle('open',n.open);
+}
+function saveAdditionalNoteTitle(id, value){
+  const f=activeResearchFolder(); if(!f) return;
+  const n=(f.additionalNotes||[]).find(x=>x.id===id); if(!n) return;
+  n.title=normalize(value)||'Untitled Note';
+  f.updatedAt=new Date().toISOString();
+  persistResearch();
+}
+function saveAdditionalNoteContent(id, el){
+  const f=activeResearchFolder(); if(!f) return;
+  const n=(f.additionalNotes||[]).find(x=>x.id===id); if(!n) return;
+  n.content=el.innerHTML||'';
+  f.updatedAt=new Date().toISOString();
+  persistResearch();
+}
+function deleteAdditionalNote(id, btn){
+  if(!armInlineAction(btn,'Confirm Delete','Delete')) return;
+  const f=activeResearchFolder(); if(!f) return;
+  f.additionalNotes=(f.additionalNotes||[]).filter(n=>n.id!==id);
+  f.updatedAt=new Date().toISOString();
+  persistResearch();
+  const card=document.getElementById('anc-'+id);
+  if(card) card.remove();
+}
+function activeNotePageContent(f){
+  if(!f) return '';
+  const pages = f.notePages||[];
+  if(!pages.length) return f.notes||'';
+  const active = pages.find(p=>p.id===f.activePageId)||pages[0];
+  return active ? active.content||'' : '';
+}
+function initNotePages(f){
+  if(!f.notePages||!f.notePages.length){
+    f.notePages=[{id:'page-default',title:'Page 1',content:f.notes||''}];
+    f.activePageId='page-default';
+    f.notes='';
+  }
+  if(!f.activePageId) f.activePageId=f.notePages[0].id;
+}
+function renderNotePageTabsHtml(f){
+  if(!f) return '';
+  initNotePages(f);
+  const active=f.notePages.find(p=>p.id===f.activePageId)||f.notePages[0];
+  const icons=['📄','📝','📋','📓','📒','📔'];
+  const items=f.notePages.map((p,i)=>{
+    const isActive=p.id===f.activePageId;
+    const icon=icons[i%icons.length];
+    const del=f.notePages.length>1?'<span class="npItemDel" data-delpage="'+escapeHtml(p.id)+'">&#x2715;</span>':'';
+    return '<div class="notePageDropItem'+(isActive?' active':'')+'" data-switchpage="'+escapeHtml(p.id)+'">'+
+      '<span class="npItemIcon">'+icon+'</span>'+
+      '<span class="npItemName">'+escapeHtml(p.title||'Page '+(i+1))+'</span>'+
+      del+'</div>';
+  }).join('');
+  const activeIcon=icons[(f.notePages.indexOf(active))%icons.length];
+  return '<div class="notePageDropBtn" id="notePageDropBtn" onclick="toggleNotePageMenu(event)">'+
+    '<span class="npPageIcon">'+activeIcon+'</span>'+
+    '<span class="npPageName">'+escapeHtml(active.title||'Page 1')+'</span>'+
+    '<span class="npChevron">&#x25BC;</span>'+
+    '</div>'+
+    '<div class="notePageDropMenu" id="notePageDropMenu">'+
+      items+
+      '<div class="notePageDropDivider"></div>'+
+      '<div class="notePageAddBtn" onclick="addNotePage()">&#x2795; New Page</div>'+
+    '</div>';
+}
+function toggleNotePageMenu(e){
+  e.stopPropagation();
+  const btn=document.getElementById('notePageDropBtn');
+  const menu=document.getElementById('notePageDropMenu');
+  if(!menu) return;
+  const open=menu.classList.contains('open');
+  menu.classList.toggle('open',!open);
+  if(btn) btn.classList.toggle('open',!open);
+}
+document.addEventListener('click',function(e){
+  // Delete page — must check FIRST before outside-close logic
+  const delEl=e.target.closest('[data-delpage]');
+  if(delEl){
+    e.stopPropagation();
+    e.preventDefault();
+    const pid=delEl.dataset.delpage;
+    deleteNotePage(pid);
+    return;
+  }
+  // Switch page
+  const switchEl=e.target.closest('[data-switchpage]');
+  if(switchEl && !switchEl.querySelector('[data-delpage]')?.contains(e.target)){
+    switchNotePage(switchEl.dataset.switchpage);
+    document.getElementById('notePageDropMenu')?.classList.remove('open');
+    document.getElementById('notePageDropBtn')?.classList.remove('open');
+    return;
+  }
+  // Close menu on outside click
+  const menu=document.getElementById('notePageDropMenu');
+  const btn=document.getElementById('notePageDropBtn');
+  if(menu&&menu.classList.contains('open')&&!menu.contains(e.target)&&!btn?.contains(e.target)){
+    menu.classList.remove('open');
+    btn?.classList.remove('open');
+  }
+});
+function switchNotePage(pageId){
+  saveResearchNotes();
+  const f=activeResearchFolder(); if(!f) return;
+  f.activePageId=pageId;
+  persistResearch();
+  const el=document.getElementById('researchNotes');
+  const tabs=document.getElementById('notePagesTabs');
+  if(el){
+    const page=(f.notePages||[]).find(p=>p.id===pageId);
+    el.innerHTML=sanitizeResearchHtml(page?page.content||'':'');
+  }
+  if(tabs){ const sel=tabs.querySelector('.notePageSelector'); if(sel) sel.innerHTML=renderNotePageTabsHtml(f); }
+}
+function addNotePage(){
+  saveResearchNotes();
+  const f=activeResearchFolder(); if(!f) return;
+  if(!f.notePages||!f.notePages.length) f.notePages=[{id:'page-default',title:'Page 1',content:f.notes||''}];
+  const num=f.notePages.length+1;
+  const id='page-'+Date.now();
+  f.notePages.push({id,title:'Page '+num,content:''});
+  f.activePageId=id;
+  persistResearch();
+  const el=document.getElementById('researchNotes');
+  if(el) el.innerHTML='';
+  const tabs=document.getElementById('notePagesTabs');
+  if(tabs){ const sel=tabs.querySelector('.notePageSelector'); if(sel) sel.innerHTML=renderNotePageTabsHtml(f); }
+  if(el) el.focus();
+}
+function promptRenameCurrentPage(){
+  const f=activeResearchFolder(); if(!f) return;
+  initNotePages(f);
+  const page=f.notePages.find(p=>p.id===f.activePageId)||f.notePages[0];
+  if(!page) return;
+  const name=prompt('Rename page:',page.title||'Page');
+  if(name===null) return;
+  page.title=normalize(name)||page.title;
+  persistResearch();
+  const tabs=document.getElementById('notePagesTabs');
+  if(tabs){ const sel=tabs.querySelector('.notePageSelector'); if(sel) sel.innerHTML=renderNotePageTabsHtml(f); }
+}
+function renameNotePage(pageId, title){
+  const f=activeResearchFolder(); if(!f) return;
+  const page=(f.notePages||[]).find(p=>p.id===pageId); if(!page) return;
+  page.title=title||'Page';
+  persistResearch();
+}
+function deleteNotePage(pageId){
+  const f=activeResearchFolder(); if(!f) return;
+  if((f.notePages||[]).length<=1) return;
+  saveResearchNotes();
+  f.notePages=f.notePages.filter(p=>p.id!==pageId);
+  if(f.activePageId===pageId) f.activePageId=f.notePages[0].id;
+  persistResearch();
+  const el=document.getElementById('researchNotes');
+  const tabs=document.getElementById('notePagesTabs');
+  const activePage=f.notePages.find(p=>p.id===f.activePageId);
+  if(el) el.innerHTML=sanitizeResearchHtml(activePage?activePage.content||'':'');
+  if(tabs){ const sel=tabs.querySelector('.notePageSelector'); if(sel) sel.innerHTML=renderNotePageTabsHtml(f); }
+  document.getElementById('notePageDropMenu')?.classList.remove('open');
+  document.getElementById('notePageDropBtn')?.classList.remove('open');
+  toast('Page deleted.');
+}
 function saveResearchNotes(){
   const f=activeResearchFolder(); const el=document.getElementById('researchNotes'); if(!f||!el) return;
-  f.notes = el.isContentEditable ? el.innerHTML : el.value;
+  const html=el.isContentEditable?el.innerHTML:el.value;
+  if(f.notePages&&f.notePages.length){
+    const page=f.notePages.find(p=>p.id===f.activePageId)||f.notePages[0];
+    if(page) page.content=html;
+  } else {
+    f.notes=html;
+  }
   f.updatedAt=new Date().toISOString();
   persistResearch();
   renderResearchFolderListOnly();
@@ -3427,26 +3662,25 @@ function renderResearch(){
           <div class="researchFileList" id="researchFileList">${renderResearchFilesHtml(f)}</div>
         </div>
       </section>
-      <section class="researchCard">
-        <div class="researchCardHead" style="display:none"></div>
-        <div class="researchNotebookToolbar" aria-label="Notebook formatting tools" style="display:none"></div>
-        <div class="researchNotesWrap">
+      <section class="researchCard" style="padding:0;overflow:hidden">
+        <div class="notePageBar" id="notePagesTabs"><div class="notePageSelector">${renderNotePageTabsHtml(f)}</div><button class="notePageRenameBtn" onclick="promptRenameCurrentPage()" title="Rename this page">&#x270F;</button></div>
+        <div class="researchNotesWrap" style="padding:10px 14px">
           <div id="blockHandle" class="blockHandle" onmousedown="openBlockMenu(event)">⋮⋮</div>
-          <div id="researchNotes" class="field researchNotes researchRichNotes" contenteditable="true" data-placeholder="Book notes, passages, questions, chapter summaries, idea fragments..." oninput="saveResearchNotes()" onblur="saveResearchNotes()" onclick="positionBlockHandle()" onkeyup="positionBlockHandle()">${sanitizeResearchHtml(f.notes||'')}</div>
+          <div id="researchNotes" class="field researchNotes researchRichNotes" contenteditable="true" data-placeholder="Write your notes here..." oninput="saveResearchNotes()" onblur="saveResearchNotes()" onclick="positionBlockHandle()" onkeyup="positionBlockHandle()">${sanitizeResearchHtml(activeNotePageContent(f))}</div>
         </div>
         <div id="blockMenuPopover" class="blockMenuPopover">
           <button class="blockMenuBtn" onclick="blockMenuAction('bold')"><strong>B</strong> Bold</button>
           <button class="blockMenuBtn" onclick="blockMenuAction('italic')"><em>I</em> Italic</button>
           <button class="blockMenuBtn" onclick="blockMenuAction('underline')"><u>U</u> Underline</button>
-          <button class="blockMenuBtn" onclick="blockMenuAction('highlight')">🟡 Highlight</button>
+          <button class="blockMenuBtn" onclick="blockMenuAction('highlight')">&#x1F7E1; Highlight</button>
           <div class="blockMenuDivider"></div>
           <button class="blockMenuBtn" onclick="blockMenuAction('h1')">H1 Big Header</button>
           <button class="blockMenuBtn" onclick="blockMenuAction('h2')">H2 Section</button>
           <button class="blockMenuBtn" onclick="blockMenuAction('h3')">H3 Small</button>
-          <button class="blockMenuBtn" onclick="blockMenuAction('p')">¶ Normal text</button>
+          <button class="blockMenuBtn" onclick="blockMenuAction('p')">&#x00B6; Normal text</button>
           <div class="blockMenuDivider"></div>
-          <button class="blockMenuBtn" onclick="blockMenuAction('callout')">📌 Add Callout</button>
-          <button class="blockMenuBtn" onclick="blockMenuAction('toggle')">▶ Add Toggle</button>
+          <button class="blockMenuBtn" onclick="blockMenuAction('callout')">&#x1F4CC; Add Callout</button>
+          <button class="blockMenuBtn" onclick="blockMenuAction('toggle')">&#x25B6; Add Toggle</button>
         </div>
       </section>
       <section class="researchInlinePdf" id="researchInlinePdf">
@@ -3456,6 +3690,13 @@ function renderResearch(){
         </div>
         <div class="researchInlinePdfBody" id="researchInlinePdfBody"></div>
       </section>
+    </div>
+    <div id="additionalNotesSection" style="margin-top:14px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <strong style="font-size:14px;color:#39291b">Additional Notes</strong>
+        <button class="btn" onclick="addAdditionalNote()" style="font-weight:900">+ Add Note</button>
+      </div>
+      <div id="additionalNotesList">${renderAdditionalNotesHtml(f)}</div>
     </div>`;
   updateHeaderCards();
 }
