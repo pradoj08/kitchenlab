@@ -20,9 +20,9 @@ button,input,select,textarea{font:inherit}
 h1{margin:0;font-size:clamp(26px,3vw,42px);letter-spacing:-.04em}
 .sub{color:var(--muted);font-size:14px;margin-top:3px}
 .actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
-.headerShell{display:flex;align-items:center;gap:0;margin-bottom:14px;background:linear-gradient(135deg,#fffefb,#f5ead2);border:1px solid rgba(151,111,47,.18);border-radius:20px;padding:8px 12px 8px 16px;box-shadow:0 4px 18px rgba(102,72,31,.09)}
-.header{margin-bottom:0;flex-shrink:0;margin-right:16px;border-right:1px solid rgba(151,111,47,.18);padding-right:16px}
-.navCards{display:flex;gap:6px;align-items:center;flex:1;flex-wrap:nowrap;padding:0;border:none;background:none;box-shadow:none;border-radius:0}
+.headerShell{display:flex;align-items:center;margin-bottom:14px;background:linear-gradient(135deg,#fffefb,#f5ead2);border:1px solid rgba(151,111,47,.15);border-radius:20px;padding:6px 8px;box-shadow:0 2px 12px rgba(102,72,31,.07);gap:4px}
+.header{display:none}
+.navCards{display:flex;gap:4px;align-items:center;flex:1;width:100%;flex-wrap:nowrap;padding:0;border:none;background:none;box-shadow:none;border-radius:0}
 .metricsToggle{width:50px;border:1px solid rgba(164,120,52,.22);border-radius:18px;background:linear-gradient(145deg,#fffefb,#f7f0e4);color:#755426;cursor:pointer;display:grid;place-items:center;font-size:20px;box-shadow:inset 0 1px 0 #fff,0 9px 18px rgba(102,72,31,.08);transition:.16s transform,.16s border-color,.16s background}
 .metricsToggle:hover{transform:translateY(-3px);border-color:#c39a55;background:#fffaf0}
 .metricsToggle.off{background:#f3eee6;color:#9b8a72}
@@ -32,7 +32,7 @@ h1{margin:0;font-size:clamp(26px,3vw,42px);letter-spacing:-.04em}
 .metricsTinyToggle:hover{border-color:#b1843f;background:#f9eedc}
 .metricsTinyToggle.off{background:#f3eee6;color:#9b8a72}
 .pantryMetricsGrid{margin-top:0;margin-bottom:16px}
-.navCard{--nav-accent:#b1843f;border:1.5px solid rgba(151,111,47,.2);background:#fffdf9;color:#39291b;border-radius:14px;padding:8px 14px;cursor:pointer;text-align:left;min-height:0;display:flex;flex-direction:row;align-items:center;gap:6px;transition:.15s border-color,.15s background,.15s box-shadow;flex:1;white-space:nowrap;box-shadow:0 2px 8px rgba(102,72,31,.06)}
+.navCard{--nav-accent:#b1843f;border:1.5px solid transparent;background:transparent;color:#7a5a2a;border-radius:14px;padding:8px 16px;cursor:pointer;text-align:left;min-height:0;display:flex;flex-direction:row;align-items:center;gap:8px;transition:.15s;flex:1;white-space:nowrap;font-weight:800;font-size:13px}
 .navCard:hover{transform:translateY(-3px);border-color:var(--nav-accent);box-shadow:inset 0 1px 0 rgba(255,255,255,.11),0 16px 28px rgba(0,0,0,.3)}
 .navCard.active{border-color:var(--nav-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--nav-accent) 22%,transparent),0 18px 34px rgba(0,0,0,.34);background:linear-gradient(145deg,color-mix(in srgb,var(--nav-accent) 31%,transparent),rgba(255,255,255,.045))}
 #nav-pantry{--nav-accent:#f59e0b;--nav-glow:rgba(245,158,11,.19)}
@@ -151,12 +151,12 @@ tr:hover td{background:rgba(255,255,255,.035)}
 @media(max-width:1100px){.headerShell{grid-template-columns:1fr}.navCards{grid-template-columns:repeat(4,1fr)}.grid{grid-template-columns:repeat(3,1fr)}.main{grid-template-columns:1fr}.toolbar{grid-template-columns:1fr 1fr}.side{grid-template-columns:1fr}}
 .desktopOnly{display:block}
 .mobileOnly{display:none!important}
-.mobileMoreCard{position:relative}
-.mobileMoreMenu{display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;background:#fffdf9;border:1.5px solid rgba(151,111,47,.25);border-radius:14px;box-shadow:0 16px 40px rgba(74,50,19,.2);z-index:100;overflow:hidden;min-width:160px}
-.mobileMoreMenu.open{display:block}
-.mobileMoreMenu button{display:flex;align-items:center;gap:8px;padding:12px 14px;width:100%;text-align:left;background:none;border:none;border-bottom:1px solid rgba(151,111,47,.1);font-size:14px;font-weight:800;color:#39291b;cursor:pointer}
+.mobileMoreCard{position:relative;overflow:visible!important}
+.mobileMoreMenu{display:none;position:fixed;background:#fffdf9;border:1.5px solid rgba(151,111,47,.25);border-radius:14px;box-shadow:0 16px 40px rgba(74,50,19,.25);z-index:9999;overflow:hidden;min-width:200px;opacity:1!important}
+.mobileMoreMenu button{display:flex;align-items:center;gap:8px;padding:12px 14px;width:100%;text-align:left;background:none;border:none;border-bottom:1px solid rgba(151,111,47,.1);font-size:14px;font-weight:800;color:#39291b;cursor:pointer;opacity:1!important;transition:background .1s}
+.mobileMoreMenu{opacity:1!important}
 .mobileMoreMenu button:last-child{border-bottom:none}
-.mobileMoreMenu button:hover{background:#fde9b0}
+.mobileMoreMenu button:hover{background:#fde9b0;opacity:1}
 @media(max-width:620px){
   .desktopOnly{display:none!important}
   .mobileOnly{display:flex!important}
@@ -1393,30 +1393,109 @@ html.force-mobile .navCard .navIcon{font-size:22px!important}
 html.force-mobile .header{display:none!important}
 html.force-mobile .headerShell{padding:6px!important}
 html.force-mobile .navCards{justify-content:center!important}
+
+.viewSwitchFooter{display:flex;justify-content:center;padding:16px 0 20px;margin-top:8px}
+.viewSwitchBtn{display:flex;align-items:center;gap:8px;padding:10px 20px;border-radius:20px;border:1.5px solid rgba(151,111,47,.25);background:#fffdf9;color:#7a5a2a;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 2px 10px rgba(102,72,31,.08);transition:.15s}
+.viewSwitchBtn:hover{border-color:#b1843f;background:#fef5e4;box-shadow:0 4px 14px rgba(102,72,31,.14)}
+html.force-mobile .viewSwitchBtn{background:linear-gradient(135deg,#fde9b0,#f5d887);border-color:#b1843f;color:#5a3a10}
+
+.headerShell{align-items:center!important}
+.headerShell .navCards{align-items:center!important}
+.headerShell .navCard{height:44px!important;min-height:0!important;max-height:44px!important;box-sizing:border-box;flex-shrink:0}
+.headerShell .navCard.active{height:44px!important}
+.headerShell .navIcon{display:none!important}
+
+.headerShell .navCount{font-size:11px;font-weight:900;color:#b1843f;background:rgba(177,132,63,.12);border-radius:6px;padding:2px 6px;margin-left:auto}
+.headerShell .navCard.active .navCount{color:#7c4f1a;background:rgba(151,111,47,.15)}
+.headerShell .navCard{height:40px!important;max-height:40px!important}
+
+@media(max-width:620px){
+  .navCard .navCount{display:none!important}
+}
+html.force-mobile .navCard .navCount{display:none!important}
+
+@media(max-width:620px){
+  .recipeIngredientRow{grid-template-columns:1fr!important;gap:6px!important;padding:8px 10px!important}
+  .recipeIngredientName{font-size:13px}
+  .gatheredLabel{justify-content:flex-start}
+  .recipeBox{max-width:100%!important}
+  .recipeIngredientRows{gap:6px}
+}
+html.force-mobile .recipeIngredientRow{grid-template-columns:1fr!important;gap:6px!important;padding:8px 10px!important}
+html.force-mobile .recipeIngredientName{font-size:13px}
+html.force-mobile .gatheredLabel{justify-content:flex-start}
+html.force-mobile .recipeBox{max-width:100%!important}
+
+@media(max-width:620px){
+  .navTabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+  .navTab{padding:10px 8px!important;font-size:12px!important;text-align:center;border-radius:12px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .navTabs .recipeBackBtn{grid-column:1/-1;margin-left:0!important;width:100%}
+}
+html.force-mobile .navTabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+html.force-mobile .navTab{padding:10px 8px!important;font-size:12px!important;text-align:center;border-radius:12px!important}
+html.force-mobile .navTabs .recipeBackBtn{grid-column:1/-1;margin-left:0!important;width:100%}
+
+@media(max-width:620px){
+  .recipeIngredientRow{
+    grid-template-columns:1fr auto auto!important;
+    grid-template-rows:auto!important;
+    gap:4px 8px!important;
+    padding:7px 10px!important;
+    border-radius:10px!important;
+  }
+  .recipeIngredientName{grid-column:1;font-size:13px!important}
+  .recipeIngredientMeta{display:block;font-size:11px;color:#9b7e56;font-weight:700}
+  .gatheredLabel{grid-column:2;justify-content:center}
+  .gatheredLabel input[type="checkbox"]{width:18px!important;height:18px!important}
+  .recipeIngredientRow .btn{grid-column:3;padding:4px 8px!important;font-size:11px!important}
+  .recipeIngredientRow .field{grid-column:1/-1;font-size:12px!important;padding:6px 8px!important}
+  .recipeIngredientRows{gap:4px!important}
+}
+html.force-mobile .recipeIngredientRow{
+  grid-template-columns:1fr auto auto!important;
+  gap:4px 8px!important;
+  padding:7px 10px!important;
+  border-radius:10px!important;
+}
+html.force-mobile .recipeIngredientMeta{display:block;font-size:11px;color:#9b7e56;font-weight:700}
+html.force-mobile .recipeIngredientRows{gap:4px!important}
+html.force-mobile .gatheredLabel input[type="checkbox"]{width:18px!important;height:18px!important}
+
+@media(max-width:620px){
+  .gtPickup{display:none!important}
+  .groceryTable th:first-child{display:none!important}
+  .groceryTable .gtName,.groceryTable .gtEmoji{cursor:pointer}
+  .groceryTable tbody tr{cursor:pointer}
+}
+html.force-mobile .gtPickup{display:none!important}
+html.force-mobile .groceryTable th:first-child{display:none!important}
+html.force-mobile .groceryTable tbody tr{cursor:pointer}
+
+@media(max-width:620px){
+  .groceryTable .gtPrice, .groceryTable th:last-child{display:none!important}
+}
+html.force-mobile .groceryTable .gtPrice,
+html.force-mobile .groceryTable th:last-child{display:none!important}
 </style>
 </head>
 <body>
 <div class="app">
   <section class="headerShell">
-    <header class="header">
-      <div class="brand"><div><h1 class="desktopOnly">Chopping Block</h1></div></div>
-      <button id="viewToggleBtn" onclick="toggleViewMode()" title="Switch mobile/desktop view" style="position:fixed;bottom:16px;right:16px;z-index:9999;width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(151,111,47,.3);background:#fffdf9;box-shadow:0 4px 16px rgba(102,72,31,.2);font-size:18px;cursor:pointer;display:grid;place-items:center;transition:.15s">📱</button>
-    </header>
     <nav class="navCards" aria-label="Kitchen sections">
-      <button class="navCard active" id="nav-pantry" onclick="switchPage('pantry')"><span class="navIcon">🥫</span><span class="navTitle">Pantry</span><span class="navCount" id="navPantryCount">0</span></button>
-      <button class="navCard desktopOnly" id="nav-stopwatch" onclick="switchPage('stopwatch')"><span class="navIcon">🕐</span><span class="navTitle">Clock</span><span class="navCount" id="navStopwatchCount">0</span></button>
-      <button class="navCard desktopOnly" id="nav-recipes" onclick="switchPage('recipes')"><span class="navIcon">📖</span><span class="navTitle">Recipes</span><span class="navCount" id="navRecipeCount">Ready</span></button>
-      <button class="navCard desktopOnly" id="nav-research" onclick="switchPage('research')"><span class="navIcon">🧠</span><span class="navTitle">Research</span><span class="navCount" id="navResearchCount">0</span></button>
-      <button class="navCard desktopOnly" id="nav-grocery" onclick="switchPage('grocery')"><span class="navIcon">🛒</span><span class="navTitle">Grocery List</span><span class="navCount" id="navGroceryCount">0</span></button>
+      <button class="navCard active" id="nav-pantry" onclick="switchPage('pantry')"><span class="navTitle">Pantry</span><span class="navCount" id="navPantryCount">0</span></button>
+      <button class="navCard desktopOnly" id="nav-stopwatch" onclick="switchPage('stopwatch')"><span class="navTitle">Clock</span><span class="navCount" id="navStopwatchCount">0</span></button>
+      <button class="navCard desktopOnly" id="nav-recipes" onclick="switchPage('recipes')"><span class="navTitle">Recipes</span><span class="navCount" id="navRecipeCount">Ready</span></button>
+      <button class="navCard desktopOnly" id="nav-research" onclick="switchPage('research')"><span class="navTitle">Research</span><span class="navCount" id="navResearchCount">0</span></button>
+      <button class="navCard desktopOnly" id="nav-grocery" onclick="switchPage('grocery')"><span class="navTitle">Grocery List</span><span class="navCount" id="navGroceryCount">0</span></button>
       <!-- Mobile-only: 3 cards + More dropdown -->
-      <button class="navCard mobileOnly" id="nav-recipes-m" onclick="switchPage('recipes')"><span class="navIcon">📖</span><span class="navTitle">Recipes</span><span class="navCount" id="navRecipeCountM">Ready</span></button>
-      <button class="navCard mobileOnly" id="nav-grocery-m" onclick="switchPage('grocery')"><span class="navIcon">🛒</span><span class="navTitle">Grocery</span><span class="navCount" id="navGroceryCountM">0</span></button>
-      <div class="navCard mobileOnly mobileMoreCard" id="nav-more" onclick="toggleMobileMore(event)">
-        <span class="navIcon">⋯</span><span class="navTitle">More</span>
-        <div class="mobileMoreMenu" id="mobileMoreMenu">
-          <button onclick="event.stopPropagation();switchPage('stopwatch');closeMobileMore()">🕐 Clock</button>
-          <button onclick="event.stopPropagation();switchPage('research');closeMobileMore()">🧠 Research</button>
-        </div>
+      <button class="navCard mobileOnly" id="nav-recipes-m" onclick="switchPage('recipes')"><span class="navTitle">Recipes</span><span class="navCount" id="navRecipeCountM">Ready</span></button>
+      <button class="navCard mobileOnly" id="nav-grocery-m" onclick="switchPage('grocery')"><span class="navTitle">Grocery</span><span class="navCount" id="navGroceryCountM">0</span></button>
+      <div class="navCard mobileOnly" id="nav-more" onclick="toggleMobileMore(event)">
+        <span class="navTitle">More</span>
+      </div>
+      <div id="mobileMoreMenu" style="display:none;position:fixed;z-index:9999;background:#fffdf9;border:1.5px solid rgba(151,111,47,.25);border-radius:14px;box-shadow:0 16px 40px rgba(74,50,19,.25);overflow:hidden;min-width:180px">
+        <button style="display:flex;align-items:center;gap:10px;padding:14px 16px;width:100%;text-align:left;background:none;border:none;border-bottom:1px solid rgba(151,111,47,.1);font-size:15px;font-weight:800;color:#39291b;cursor:pointer" onclick="switchPage('stopwatch');closeMobileMore()">🕐 Clock</button>
+        <button style="display:flex;align-items:center;gap:10px;padding:14px 16px;width:100%;text-align:left;background:none;border:none;font-size:15px;font-weight:800;color:#39291b;cursor:pointer" onclick="switchPage('research');closeMobileMore()">🧠 Research</button>
       </div>
     </nav>
   </section>
@@ -1446,7 +1525,7 @@ html.force-mobile .navCards{justify-content:center!important}
         <div class="mobileSearchSuggestions" id="mobileSearchSuggestions"></div>
       </div>
       <section class="panel">
-        <div class="panelHead"><div><div class="panelTitle">Pantry</div><div class="muted" id="resultCount"></div></div><div class="actions"><button class="metricsTinyToggle panelMetricsToggle" id="metricsToggle" onclick="toggleMetrics()" aria-label="Hide pantry metrics" title="Hide pantry metrics">Metrics −</button><button class="btn resolveBtn" id="resolveBtn" onclick="openResolvePopup()">Resolve Missing Values</button><button class="btn primary" onclick="openEditor()">+ Add</button></div></div>
+        <div class="panelHead"><div><div class="panelTitle">Pantry</div><div class="muted" id="resultCount"></div></div><div class="actions"><button class="metricsTinyToggle panelMetricsToggle" id="metricsToggle" onclick="toggleMetrics()" aria-label="Hide pantry metrics" title="Hide pantry metrics">Summary −</button><button class="btn resolveBtn" id="resolveBtn" onclick="openResolvePopup()">Resolve Missing Values</button><button class="btn primary" onclick="openEditor()">+ Add</button></div></div>
         <div class="tableWrap"><table class="inventoryTable"><thead><tr><th onclick="setSort('name')">Item</th><th onclick="setSort('status')">Stock</th><th onclick="setSort('category')">Category</th><th onclick="setSort('storage')">Storage</th><th onclick="setSort('storeLocation')">Store Location</th><th onclick="setSort('price')">Price</th><th>Picture</th><th>Pickup</th><th></th></tr></thead><tbody id="tbody"></tbody></table></div>
       </section>
     </main>
@@ -1454,11 +1533,11 @@ html.force-mobile .navCards{justify-content:center!important}
 
   <section class="pageView" id="page-recipes">
     <section class="panel fullPanel">
-      <div class="panelHead"><div><div class="panelTitle">Recipes + Chopping Block</div><div class="muted">Recipe library, pantry checks, test scenarios, comparison, and previous entries.</div></div><button class="btn primary" id="addRecipeBtn" onclick="focusRecipeForm()">+ Add Recipe</button></div>
       <div class="navTabs" aria-label="Recipe tools">
         <button class="navTab active" id="labtab-library" onclick="switchLab('library')">Recipe Library</button>
-        <button class="navTab" id="labtab-test" onclick="switchLab('test')">Chopping Block</button>
+        <button class="navTab" id="labtab-test" onclick="switchLab('test')">Pantry Check</button>
         <button class="navTab" id="labtab-compare" onclick="switchLab('compare')">Compare 3–4</button>
+        <button class="btn primary" id="addRecipeBtn" onclick="focusRecipeForm()" style="margin-left:auto">+ Add Recipe</button>
       </div>
 
       <div class="labPanel active" id="lab-library">
@@ -1562,7 +1641,18 @@ html.force-mobile .navCards{justify-content:center!important}
     <section class="pageView" id="page-grocery">
     <section class="panel fullPanel">
       <div style="display:none" id="groceryMiniListCard"></div>
-      <div class="groceryTools"><div class="grocerySummary" id="grocerySummary"></div><div class="groceryControls"><button class="btn" id="groceryViewToggle" onclick="toggleGroceryView()" title="Switch view">⊞ Table</button><select id="groceryScope" class="field groceryScope" onchange="renderPickup()"><option value="all">All Items Needed</option><option value="recipes">Recipe Only</option><option value="essentials">Just Essentials</option></select><select id="grocerySort" class="field grocerySort" onchange="renderPickup()"><option value="storeLocation">Sort: Store Location</option><option value="name">Sort: Item Name</option><option value="priceDesc">Sort: Price High to Low</option><option value="priceAsc">Sort: Price Low to High</option><option value="status">Sort: Stock Status</option></select><button class="btn" onclick="markPickupInStock()">Mark Pickup Done</button></div></div>
+      <div class="groceryTools"><div class="grocerySummary" id="grocerySummary"></div><div class="groceryControls"><button class="btn" id="groceryViewToggle" onclick="toggleGroceryView()" title="Switch view">⊞ Table</button><select id="groceryScope" class="field groceryScope" onchange="renderPickup()">
+  <option value="all" data-short="All" data-long="All Items Needed">All Items Needed</option>
+  <option value="recipes" data-short="Recipes" data-long="Recipe Only">Recipe Only</option>
+  <option value="essentials" data-short="Essentials" data-long="Just Essentials">Just Essentials</option>
+</select>
+<select id="grocerySort" class="field grocerySort" onchange="renderPickup()">
+  <option value="storeLocation" data-short="Location" data-long="Sort: Store Location">Sort: Store Location</option>
+  <option value="name" data-short="Name" data-long="Sort: Item Name">Sort: Item Name</option>
+  <option value="priceDesc" data-short="Price ↓" data-long="Sort: Price High to Low">Sort: Price High to Low</option>
+  <option value="priceAsc" data-short="Price ↑" data-long="Sort: Price Low to High">Sort: Price Low to High</option>
+  <option value="status" data-short="Status" data-long="Sort: Stock Status">Sort: Stock Status</option>
+</select></div></div>
       <div class="pickupList" id="pickupList"></div>
       <div id="recentlyCheckedBank" class="recentlyCheckedBank" style="display:none"></div>
     </section>
@@ -1763,7 +1853,7 @@ function fillSelect(id, vals, allLabel){
 }
 function renderMetrics(){
   const low=items.filter(i=>i.status==='Running Low').length, out=items.filter(i=>i.status==='Out of Stock').length, pickup=items.filter(pickupNeeded).length;
-  const cards=[['Running Low',low,'Needs attention'],['Out of Stock',out,'Missing items'],['Pickup Needed',pickup,'Auto-generated']];
+  const cards=[['Running Low',low,'Attention'],['Out of Stock',out,'Missing items'],['Pickup Needed',pickup,'Auto-generated']];
   const _m=document.getElementById('metrics'); if(_m) _m.innerHTML=cards.map(c=>{ const action=c[0]==='Pickup Needed'?"showPickupNeeded()":c[0]==='Out of Stock'?"showPantryStatus('Out of Stock')":c[0]==='Running Low'?"showPantryStatus('Running Low')":''; return `<div class="card metric ${action?'metricLink':''}" ${action?`onclick="${action}" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${action}}"`:''}><div class="label">${c[0]}</div><div class="value">${c[1]}</div><div class="hint">${c[2]}</div></div>`; }).join('');
 }
 function resetPantryFilters(){
@@ -1894,7 +1984,7 @@ function toggleGroceryView(){
   if(list) list.classList.toggle('tableView', groceryViewMode === 'table');
   renderPickup();
 }
-function renderPickup(){
+function renderPickup(){ applyMobileDropdownLabels();
   const sort=document.getElementById('grocerySort').value || 'storeLocation';
   const scope=document.getElementById('groceryScope').value || 'all';
   const baseList=items.filter(pickupNeeded).filter(it=>scope==='recipes'?it.category==='RECIPES':scope==='essentials'?it.category==='STAPLES':true);
@@ -1923,18 +2013,15 @@ function renderPickup(){
     const rows = list.map(it=>{
       const price=priceValue(it.price);
       const emoji=it.photo?`<img src="${it.photo}" style="width:28px;height:28px;border-radius:6px;object-fit:cover">`:`<span>${getItemEmoji(it)}</span>`;
-      return `<tr>
-        <td class="gtPickup"><div class="gtCheckbox" onclick="confirmPickup('${it.id}')" title="Mark as picked up"><svg viewBox="0 0 16 16" style="opacity:0"><polyline points="2.5,8 6.5,12 13.5,4"/></svg></div></td>
-        <td class="gtEmoji">${emoji}</td>
-        <td class="gtName">${escapeHtml(it.name)}</td>
-        <td class="gtStatus">${stockBadge(it.status)}</td>
-        <td class="gtCat">${escapeHtml(it.category||'—')}</td>
+      const isMobileView=_forceMobile||window.innerWidth<=620;
+      return `<tr ${isMobileView?`onclick="openGroceryPickupSheet('${it.id}','${escapeHtml(it.name)}')"`:''}>
+        <td class="gtPickup"><div class="gtCheckbox" onclick="event.stopPropagation();confirmPickup('${it.id}')" title="Mark as picked up"><svg viewBox="0 0 16 16" style="opacity:0"><polyline points="2.5,8 6.5,12 13.5,4"/></svg></div></td>
+        <td class="gtName">${emoji} ${escapeHtml(it.name)}</td>
         <td class="gtLoc">${escapeHtml(it.storeLocation||'Unassigned')}</td>
-        <td class="gtStorage">${escapeHtml(it.storage||'—')}</td>
         <td class="gtPrice">${price!==null?'$'+price.toFixed(2):'—'}</td>
       </tr>`;
     }).join('');
-    el.innerHTML=`<div class="groceryTableWrap"><table class="groceryTable"><thead><tr><th style="width:52px"></th><th style="width:44px"></th><th>Item</th><th>Status</th><th>Category</th><th>Store Location</th><th>Storage</th><th style="text-align:right;width:80px">Price</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+    el.innerHTML=`<div class="groceryTableWrap"><table class="groceryTable"><thead><tr><th style="width:52px"></th><th>Item</th><th>Store Location</th><th style="text-align:right;width:80px">Price</th></tr></thead><tbody>${rows}</tbody></table></div>`;
     return;
   }
   if(sort!=='storeLocation'){ el.innerHTML=list.map(itemHtml).join(''); return; }
@@ -1948,7 +2035,7 @@ function toggleMetrics(){
   if(!metrics || !button) return;
   const hidden=metrics.style.display==='none';
   metrics.style.display=hidden?'grid':'none';
-  button.textContent=hidden?'Metrics −':'Metrics +';
+  button.textContent=hidden?'Summary −':'Summary +';
   button.classList.toggle('off',!hidden);
   button.setAttribute('aria-label',hidden?'Hide pantry metrics':'Show pantry metrics');
   button.title=hidden?'Hide pantry metrics':'Show pantry metrics';
@@ -2437,32 +2524,53 @@ function closeProfilePopup(){ document.getElementById('bottom-profile')?.classLi
 let _forceMobile = false;
 function toggleViewMode(){
   _forceMobile = !_forceMobile;
-  const btn = document.getElementById('viewToggleBtn');
+  const icon = document.getElementById('viewToggleIcon');
+  const label = document.getElementById('viewToggleLabel');
   if(_forceMobile){
     document.documentElement.classList.add('force-mobile');
-    if(btn) btn.textContent = '🖥️';
-    if(btn) btn.title = 'Switch to desktop view';
+    if(icon) icon.textContent = '🖥️';
+    if(label) label.textContent = 'Desktop View';
   } else {
     document.documentElement.classList.remove('force-mobile');
-    if(btn) btn.textContent = '📱';
-    if(btn) btn.title = 'Switch to mobile view';
+    if(icon) icon.textContent = '📱';
+    if(label) label.textContent = 'Mobile View';
   }
+  renderRecipeIngredientRows(); applyMobileDropdownLabels();
 }
 function toggleMobileMore(e){
   e.stopPropagation();
-  const menu=document.getElementById('mobileMoreMenu');
-  if(!menu) return;
-  menu.classList.toggle('open');
-  if(menu.classList.contains('open')){
-    setTimeout(()=>document.addEventListener('click',function _close(){
-      menu.classList.remove('open');
-      document.removeEventListener('click',_close);
-    }),0);
+  const menu = document.getElementById('mobileMoreMenu');
+  const btn = document.getElementById('nav-more');
+  if(!menu || !btn) return;
+  if(menu.style.display === 'block'){
+    menu.style.display = 'none';
+    return;
   }
+  const r = btn.getBoundingClientRect();
+  menu.style.top = (r.bottom + 6) + 'px';
+  menu.style.left = Math.max(8, r.left) + 'px';
+  menu.style.display = 'block';
 }
 function closeMobileMore(){
-  document.getElementById('mobileMoreMenu')?.classList.remove('open');
+  const menu = document.getElementById('mobileMoreMenu');
+  if(menu) menu.style.display = 'none';
 }
+document.addEventListener('touchstart', function(e){
+  const menu = document.getElementById('mobileMoreMenu');
+  const btn = document.getElementById('nav-more');
+  if(!menu || menu.style.display !== 'block') return;
+  if(!menu.contains(e.target) && !btn.contains(e.target)){
+    menu.style.display = 'none';
+  }
+}, {passive:true});
+document.addEventListener('click', function(e){
+  const menu = document.getElementById('mobileMoreMenu');
+  const btn = document.getElementById('nav-more');
+  if(!menu || menu.style.display !== 'block') return;
+  if(!menu.contains(e.target) && !btn.contains(e.target)){
+    menu.style.display = 'none';
+  }
+});
 function updateHeaderCards(){
   const pantry=document.getElementById('navPantryCount'), grocery=document.getElementById('navGroceryCount'), recipe=document.getElementById('navRecipeCount'), stopwatch=document.getElementById('navStopwatchCount'), researchCount=document.getElementById('navResearchCount');
   if(pantry) pantry.textContent=items.length;
@@ -2585,7 +2693,7 @@ function renderIngredientSuggestions(){ const q=normalize(document.getElementByI
 function addRecipeIngredient(id){ const item=items.find(i=>i.id===id); if(!item||recipeDraftIngredients.some(entry=>entry.pantryId===id)) return; recipeDraftIngredients.push({pantryId:item.id,name:item.name,amount:'',gathered:false}); document.getElementById('recipeIngredientSearch').value=''; document.getElementById('ingredientSuggestions').classList.remove('show'); renderRecipeIngredientRows(); }
 function updateRecipeIngredient(index,key,value,shouldRender=true){ recipeDraftIngredients[index][key]=key==='gathered'?!!value:value; if(shouldRender) renderRecipeIngredientRows(); }
 function removeRecipeIngredient(index){ recipeDraftIngredients.splice(index,1); renderRecipeIngredientRows(); }
-function renderRecipeIngredientRows(){ const el=document.getElementById('recipeIngredientRows'); if(!el) return; el.innerHTML=recipeDraftIngredients.length?recipeDraftIngredients.map((entry,index)=>{ const pantry=ingredientPantryItem(entry)||{}, status=pantry.status||'Not in pantry', statusClass=ingredientStatusClass(entry); return `<div class="recipeIngredientRow"><div><div class="recipeIngredientName"><span class="ingredientStatus ${statusClass}"></span>${escapeHtml(entry.name)}</div><div class="recipeIngredientMeta">${escapeHtml(status)}${recipeScale!==1&&scaledAmount(entry.amount)?` • scaled: ${escapeHtml(scaledAmount(entry.amount))}`:''}</div></div><input class="field" value="${escapeHtml(entry.amount)}" placeholder="Amount used" oninput="updateRecipeIngredient(${index},'amount',this.value,false)" /><label class="gatheredLabel"><input type="checkbox" ${entry.gathered?'checked':''} onchange="updateRecipeIngredient(${index},'gathered',this.checked)" /></label><button class="iconBtn" onclick="removeRecipeIngredient(${index})">✕</button></div>`; }).join(''):'<div class="sideNote">Type above to add ingredients from your pantry.</div>'; }
+function renderRecipeIngredientRows(){ const el=document.getElementById('recipeIngredientRows'); if(!el) return; const isMobile=_forceMobile||window.innerWidth<=620; el.innerHTML=recipeDraftIngredients.length?recipeDraftIngredients.map((entry,index)=>{ const pantry=ingredientPantryItem(entry)||{}, status=pantry.status||'Not in pantry', statusClass=ingredientStatusClass(entry); if(isMobile){ return `<div class="recipeIngredientRow" onclick="openIngredientEditSheet(${index})" style="cursor:pointer;${entry.gathered?'opacity:.5;text-decoration:line-through':''}"><div><div class="recipeIngredientName"><span class="ingredientStatus ${statusClass}"></span>${escapeHtml(entry.name)}</div>${entry.amount?'<div class="recipeIngredientMeta">'+escapeHtml(entry.amount)+'</div>':''}</div><label class="gatheredLabel" onclick="event.stopPropagation()"><input type="checkbox" ${entry.gathered?'checked':''} onchange="updateRecipeIngredient(${index},'gathered',this.checked)" /></label></div>`; } return `<div class="recipeIngredientRow" style="${entry.gathered?'opacity:.5':''}""><div><div class="recipeIngredientName"><span class="ingredientStatus ${statusClass}"></span>${escapeHtml(entry.name)}</div><div class="recipeIngredientMeta">${escapeHtml(status)}${recipeScale!==1&&scaledAmount(entry.amount)?` • scaled: ${escapeHtml(scaledAmount(entry.amount))}`:''}</div></div><input class="field" value="${escapeHtml(entry.amount)}" placeholder="Amount used" oninput="updateRecipeIngredient(${index},'amount',this.value,false)" /><label class="gatheredLabel"><input type="checkbox" ${entry.gathered?'checked':''} onchange="updateRecipeIngredient(${index},'gathered',this.checked)" /></label><button class="iconBtn" onclick="removeRecipeIngredient(${index})">✕</button></div>`; }).join(''):'<div class="sideNote">Type above to add ingredients from your pantry.</div>'; }
 function renderRecipePreparationPreview(){
   const el=document.getElementById('recipePreparationPreview'); if(!el) return;
   const ctx=currentRecipeTimerContext();
@@ -4137,6 +4245,68 @@ function clearMobileSearch(){
   const desktop = document.getElementById('search');
   if(desktop){ desktop.value=''; render(); }
 }
+
+let _ingEditIndex = null;
+function openIngredientEditSheet(index){
+  _ingEditIndex = index;
+  const entry = recipeDraftIngredients[index]; if(!entry) return;
+  document.getElementById('ingEditName').textContent = entry.name;
+  document.getElementById('ingEditAmount').value = entry.amount||'';
+  const pantry = items.find(i=>i.id===entry.pantryId);
+  const statusEl = document.getElementById('ingEditStatus');
+  if(statusEl) statusEl.textContent = pantry ? (pantry.status||'In pantry') : 'Not in pantry';
+  const sheet = document.getElementById('ingEditSheet');
+  const panel = document.getElementById('ingEditPanel');
+  sheet.style.display = 'block';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{ panel.style.transform='translateY(0)'; }));
+}
+function closeIngEditSheet(){
+  const panel = document.getElementById('ingEditPanel');
+  panel.style.transform = 'translateY(100%)';
+  setTimeout(()=>{ document.getElementById('ingEditSheet').style.display='none'; _ingEditIndex=null; }, 300);
+}
+function saveIngEdit(){
+  if(_ingEditIndex===null) return;
+  const amount = document.getElementById('ingEditAmount').value;
+  updateRecipeIngredient(_ingEditIndex,'amount',amount);
+  closeIngEditSheet();
+}
+function removeIngFromSheet(){
+  if(_ingEditIndex===null) return;
+  removeRecipeIngredient(_ingEditIndex);
+  closeIngEditSheet();
+}
+
+let _groceryPickupId = null;
+function openGroceryPickupSheet(id, name){
+  _groceryPickupId = id;
+  document.getElementById('groceryPickupName').textContent = name;
+  const sheet = document.getElementById('groceryPickupSheet');
+  const panel = document.getElementById('groceryPickupPanel');
+  sheet.style.display = 'block';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{ panel.style.transform='translateY(0)'; }));
+}
+function closeGroceryPickupSheet(){
+  const panel = document.getElementById('groceryPickupPanel');
+  panel.style.transform = 'translateY(100%)';
+  setTimeout(()=>{ document.getElementById('groceryPickupSheet').style.display='none'; _groceryPickupId=null; }, 300);
+}
+function confirmGroceryPickup(){
+  if(!_groceryPickupId) return;
+  setItemStock(_groceryPickupId,'In Stock');
+  closeGroceryPickupSheet();
+}
+
+function applyMobileDropdownLabels(){
+  const isMob = _forceMobile || window.innerWidth <= 620;
+  ['groceryScope','grocerySort'].forEach(id=>{
+    const sel = document.getElementById(id); if(!sel) return;
+    Array.from(sel.options).forEach(opt=>{
+      if(isMob && opt.dataset.short) opt.textContent = opt.dataset.short;
+      else if(!isMob && opt.dataset.long) opt.textContent = opt.dataset.long;
+    });
+  });
+}
 </script>
 <div class="modalBackdrop" id="testArchiveBackdrop" onclick="if(event.target.id==='testArchiveBackdrop')closeTestArchive()">
   <div class="modal" style="max-width:740px;width:95vw;max-height:88vh;display:flex;flex-direction:column">
@@ -4217,6 +4387,49 @@ function clearMobileSearch(){
       <div style="display:flex;gap:8px;padding-top:4px">
         <button class="btn primary" style="flex:1;font-size:14px;padding:12px" onclick="mobileEditFull()">✎ Full Edit</button>
         <button class="btn" style="font-size:14px;padding:12px 16px" onclick="closeMobileEditSheet()">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="viewSwitchFooter" id="viewSwitchFooter">
+  <button class="viewSwitchBtn" id="viewToggleBtn" onclick="toggleViewMode()">
+    <span id="viewToggleIcon">📱</span>
+    <span id="viewToggleLabel">Mobile View</span>
+  </button>
+</footer>
+<div id="ingEditSheet" style="display:none;position:fixed;inset:0;z-index:6000">
+  <div onclick="closeIngEditSheet()" style="position:absolute;inset:0;background:rgba(0,0,0,.5)"></div>
+  <div id="ingEditPanel" style="position:absolute;bottom:0;left:0;right:0;background:#fffdf9;border-radius:28px 28px 0 0;padding-bottom:env(safe-area-inset-bottom,16px);box-shadow:0 -12px 50px rgba(74,50,19,.28);transform:translateY(100%);transition:transform .3s cubic-bezier(.22,.68,0,1.2)">
+    <!-- Handle bar -->
+    <div style="display:flex;justify-content:center;padding:12px 0 4px"><div style="width:40px;height:4px;border-radius:4px;background:rgba(151,111,47,.25)"></div></div>
+    <!-- Header -->
+    <div style="padding:0 20px 14px;border-bottom:1px solid rgba(151,111,47,.12)">
+      <div id="ingEditName" style="font-size:20px;font-weight:950;color:#2d1f0e;letter-spacing:-.02em"></div>
+      <div id="ingEditStatus" style="font-size:12px;color:#9b7e56;font-weight:700;margin-top:2px"></div>
+    </div>
+    <!-- Amount field -->
+    <div style="padding:16px 20px">
+      <label style="font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:#9b7e56;display:block;margin-bottom:8px">Amount</label>
+      <input id="ingEditAmount" class="field" style="font-size:18px;padding:14px 16px;border-radius:16px;font-weight:700" placeholder="e.g. 2 cups, 1 tbsp..." />
+    </div>
+    <!-- Actions -->
+    <div style="padding:0 20px 20px;display:grid;gap:10px">
+      <button class="btn primary" style="width:100%;padding:16px;font-size:16px;font-weight:900;border-radius:16px" onclick="saveIngEdit()">Save</button>
+      <button class="btn danger" style="width:100%;padding:14px;font-size:15px;font-weight:800;border-radius:16px" onclick="removeIngFromSheet()">Remove Ingredient</button>
+      <button class="btn" style="width:100%;padding:12px;font-size:14px;border-radius:14px" onclick="closeIngEditSheet()">Cancel</button>
+    </div>
+  </div>
+</div>
+<div id="groceryPickupSheet" style="display:none;position:fixed;inset:0;z-index:7000">
+  <div onclick="closeGroceryPickupSheet()" style="position:absolute;inset:0;background:rgba(0,0,0,.5)"></div>
+  <div id="groceryPickupPanel" style="position:absolute;bottom:0;left:0;right:0;background:#fffdf9;border-radius:28px 28px 0 0;padding-bottom:env(safe-area-inset-bottom,20px);box-shadow:0 -12px 50px rgba(74,50,19,.28);transform:translateY(100%);transition:transform .3s cubic-bezier(.22,.68,0,1.2)">
+    <div style="display:flex;justify-content:center;padding:12px 0 4px"><div style="width:40px;height:4px;border-radius:4px;background:rgba(151,111,47,.25)"></div></div>
+    <div style="text-align:center;padding:16px 20px 20px">
+      <div style="font-size:13px;font-weight:700;color:#9b7e56;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Picked up?</div>
+      <div id="groceryPickupName" style="font-size:22px;font-weight:950;color:#2d1f0e;letter-spacing:-.02em;margin-bottom:24px"></div>
+      <div style="display:flex;gap:12px;justify-content:center">
+        <button onclick="confirmGroceryPickup()" style="width:80px;height:80px;border-radius:50%;border:none;background:linear-gradient(135deg,#6f9769,#4a7a44);color:#fff;font-size:36px;cursor:pointer;box-shadow:0 6px 20px rgba(74,120,68,.35);transition:.15s transform" onmousedown="this.style.transform='scale(.92)'" onmouseup="this.style.transform='scale(1)'">✓</button>
+        <button onclick="closeGroceryPickupSheet()" style="width:80px;height:80px;border-radius:50%;border:1.5px solid rgba(151,111,47,.25);background:#f5ead2;color:#7a5a2a;font-size:32px;cursor:pointer;box-shadow:0 4px 14px rgba(102,72,31,.1);transition:.15s transform" onmousedown="this.style.transform='scale(.92)'" onmouseup="this.style.transform='scale(1)'">✕</button>
       </div>
     </div>
   </div>
