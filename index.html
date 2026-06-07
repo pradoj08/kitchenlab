@@ -180,9 +180,9 @@ option{background:#101722;color:#fff}
 .empty{color:#fff;background:rgba(255,255,255,.06);border-radius:14px}
 
 /* Kitchen Lab v2 */
-.navTabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.navTabs .recipeBackBtn{margin-left:auto;font-weight:900}
-.navTab{border:1px solid var(--line);background:rgba(255,255,255,.055);color:#fff;border-radius:999px;padding:10px 14px;font-weight:900;cursor:pointer}
-.navTab.active{background:linear-gradient(135deg,rgba(245,158,11,.28),rgba(167,139,250,.2));border-color:rgba(245,158,11,.55);box-shadow:0 10px 24px rgba(0,0,0,.25)}
+.navTabs{display:flex;align-items:center;gap:0;margin-bottom:0;padding:8px 10px;background:linear-gradient(135deg,#f5ead2,#ede0c4);border-bottom:1px solid rgba(151,111,47,.15);flex-wrap:nowrap;width:100%;box-sizing:border-box}.navTabs .recipeBackBtn{margin-left:auto;font-weight:900;font-size:12px;padding:6px 12px}
+.navTab{border:none;background:transparent;color:#9b7e56;border-radius:10px;padding:8px 18px;font-weight:800;font-size:13px;cursor:pointer;transition:.15s;position:relative}
+.navTab.active{background:#fffdf9;color:#39291b;box-shadow:0 2px 8px rgba(102,72,31,.12)}
 .labGrid{display:grid;grid-template-columns:minmax(320px,.9fr) minmax(420px,1.1fr);gap:14px;align-items:start}
 .labGrid.three{grid-template-columns:repeat(3,1fr)}
 .labPanel{display:none}.labPanel.active{display:block}
@@ -305,11 +305,11 @@ option{background:#fffdf9;color:#312418}
 .modalBackdrop{background:rgba(55,40,22,.42);backdrop-filter:blur(5px)}.modal{background:#fffdf9;border-color:rgba(151,111,47,.25);box-shadow:0 30px 75px rgba(74,50,19,.2)}
 .modalHead{background:#fcf5e9;border-bottom-color:rgba(151,111,47,.17)}.field.missingValue{border-color:#d1a243;background:#fff8db;box-shadow:0 0 0 3px rgba(209,162,67,.18),0 0 18px rgba(209,162,67,.1)}
 .resolveField,.tinyChip{background:#fff4d8;color:#7c5720;border-color:#d1aa65}.resolveItem strong,.pickupItem strong,.cardTitleLine strong{color:#39291b}
-.navTab{background:#fffaf1;color:#604822;border-color:rgba(151,111,47,.22)}.navTab.active{background:linear-gradient(145deg,#f2dfb8,#d9b675);border-color:#b1843f;box-shadow:0 9px 18px rgba(119,83,30,.13)}
+.navTab{background:transparent;color:#9b7e56;border:none}.navTab.active{background:#fffdf9;color:#39291b;box-shadow:0 2px 8px rgba(102,72,31,.12);border:none}
 .recipeResult{background:#fffaf2;border-color:rgba(151,111,47,.18);color:#493721}.sideNote{background:#fcf6ec;border-color:rgba(151,111,47,.3)}
 .compareTable th{background:#f3e6ce;color:#694b25}.compareTable td,.compareTable th{border-bottom-color:rgba(151,111,47,.15)}
 .footerNote{color:#968267}
-.recipeScaleBar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px;border:1px solid rgba(151,111,47,.17);border-radius:14px;background:#fcf6ec}.recipeScaleBar strong{margin-right:auto}.scaleBtn.active{background:linear-gradient(145deg,#d7ad62,#a8732f);border-color:#a8732f;color:#fffdf8}
+.recipeScaleBar{display:flex;gap:6px;align-items:center;flex-wrap:nowrap;padding:6px 10px;border:1px solid rgba(151,111,47,.17);border-radius:12px;background:#fcf6ec;width:fit-content}.recipeScaleBar strong{margin-right:auto}.scaleBtn{padding:5px 10px!important;font-size:12px!important;min-height:0!important}.scaleBtn.active{background:linear-gradient(145deg,#d7ad62,#a8732f);border-color:#a8732f;color:#fffdf8}
 .ingredientPicker{position:relative}.ingredientSuggestions{display:none;position:absolute;left:0;right:0;top:calc(100% + 5px);z-index:6;padding:6px;border:1px solid rgba(151,111,47,.24);border-radius:14px;background:#fffdf9;box-shadow:0 16px 34px rgba(74,50,19,.16)}.ingredientSuggestions.show{display:grid;gap:4px}.ingredientSuggestion{padding:9px 10px;border:0;border-radius:10px;background:transparent;color:#493721;text-align:left;cursor:pointer}.ingredientSuggestion:hover{background:#f5e8cf}
 .recipeIngredientRows{display:grid;gap:8px}.recipeIngredientRow{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,300px) auto auto;gap:8px;align-items:center;padding:10px;border:1px solid rgba(151,111,47,.17);border-radius:14px;background:#fffdf9}.recipeIngredientName{font-weight:900;color:#39291b}.recipeIngredientMeta{font-size:11px;color:#806f5d;margin-top:3px}.ingredientStatus{width:9px;height:9px;border-radius:999px;display:inline-block;margin-right:6px}.ingredientStatus.stock{background:#6f9769}.ingredientStatus.low{background:#d3a344}.ingredientStatus.out{background:#ba6259}.ingredientStatus.unknown{background:#a69a89}.gatheredLabel{display:flex;align-items:center}.gatheredLabel input[type="checkbox"]{width:22px;height:22px;cursor:pointer;accent-color:#b1843f;border-radius:6px;flex-shrink:0}.prepSteps{display:grid;gap:8px}.prepStep{display:grid;grid-template-columns:34px 1fr auto;gap:8px;align-items:center}.prepStepNumber{width:30px;height:30px;display:grid;place-items:center;border-radius:999px;background:#f2dfb8;color:#755426;font-weight:900}
 @media(max-width:720px){.recipeIngredientRow,.testIngredientRow{grid-template-columns:1fr}.testIngredientRow>.field{grid-column:auto}.testAmountPair{grid-template-columns:1fr 1fr}.prepStep{grid-template-columns:30px 1fr}.prepStep .btn{grid-column:2}}
@@ -902,17 +902,40 @@ body{padding-bottom:112px}
 
 /* Metrics button moved into Pantry panel controls */
 #page-pantry .panelMetricsToggle{
-  min-height:42px;
-  padding:10px 13px;
-  border-radius:13px;
+  min-height:38px;
+  padding:8px 14px;
+  border-radius:12px;
   width:auto;
   display:inline-flex;
   align-items:center;
   justify-content:center;
   font-size:13px;
-  font-weight:950;
+  font-weight:800;
   letter-spacing:.01em;
   white-space:nowrap;
+  border:1.5px solid rgba(151,111,47,.25);
+  background:#fffdf9;
+  color:#7a5a2a;
+}
+#page-pantry .resolveBtn{
+  font-size:13px!important;
+  font-weight:800!important;
+  min-height:38px!important;
+  padding:8px 14px!important;
+  border-radius:12px!important;
+  background:#fff8e1!important;
+  border-color:#d4a84b!important;
+  color:#7a5218!important;
+}
+#page-pantry #addRecipeBtn, #page-pantry .btn.primary[onclick="openEditor()"]{
+  font-size:13px!important;
+  font-weight:800!important;
+  min-height:38px!important;
+  padding:8px 14px!important;
+  border-radius:12px!important;
+  background:#eef6ec!important;
+  border-color:#7db87a!important;
+  color:#2e6b2b!important;
 }
 #page-pantry .pantryMetricsControls{display:none!important}
 @media(max-width:720px){
@@ -1561,6 +1584,240 @@ html.force-mobile .timerCard{min-height:0!important;padding:12px!important}
 html.force-mobile .timerBig{font-size:32px!important}
 html.force-mobile .clockRingSvg{width:80px!important;height:80px!important}
 html.force-mobile #page-stopwatch .panel{overflow-x:hidden!important}
+
+@media(max-width:620px){ .grocerySummary{display:none!important} }
+html.force-mobile .grocerySummary{display:none!important}
+
+.mobileScaleInline{display:none}
+@media(max-width:620px){
+  .mobileScaleInline{display:flex!important}
+  .recipeScaleBar:not(.mobileScaleInline){display:none!important}
+}
+html.force-mobile .mobileScaleInline{display:flex!important}
+html.force-mobile .recipeScaleBar:not(.mobileScaleInline){display:none!important}
+
+.mobileScaleInline span[style*="Scale"]{display:none}
+html.force-mobile .mobileScaleInline span[style*="Scale"]{display:none}
+
+.analogClockCard{border-radius:20px!important;overflow:hidden}
+.analogClockCard .timerActions{margin-top:4px}
+.analogClockCard .timerActions .btn{flex:1}
+
+/* Remove gap between columns on mobile pantry */
+@media(max-width:620px){
+  #page-pantry .inventoryTable{border-spacing:0;border-collapse:collapse}
+  #page-pantry .inventoryTable td:first-child{padding-right:0!important}
+  #page-pantry .inventoryTable td:nth-child(2){padding-left:4px!important}
+  #page-pantry .inventoryTable .nameCell{gap:4px}
+  #page-pantry .inventoryTable tbody tr:hover td,
+  #page-pantry .inventoryTable tbody tr:active td{background:rgba(213,174,104,.15)!important}
+}
+html.force-mobile #page-pantry .inventoryTable{border-spacing:0;border-collapse:collapse}
+html.force-mobile #page-pantry .inventoryTable td:first-child{padding-right:0!important}
+html.force-mobile #page-pantry .inventoryTable td:nth-child(2){padding-left:4px!important}
+
+@media(max-width:620px){
+  #page-pantry .inventoryTable{table-layout:auto!important}
+  #page-pantry .inventoryTable td:first-child{width:auto!important;padding-right:4px!important}
+  #page-pantry .inventoryTable td:nth-child(2){width:1%!important;white-space:nowrap;padding-left:0!important}
+}
+html.force-mobile #page-pantry .inventoryTable{table-layout:auto!important}
+html.force-mobile #page-pantry .inventoryTable td:first-child{width:auto!important;padding-right:4px!important}
+html.force-mobile #page-pantry .inventoryTable td:nth-child(2){width:1%!important;white-space:nowrap;padding-left:0!important}
+
+/* Force desktop on mobile device */
+html.force-desktop .mobileOnly{display:none!important}
+html.force-desktop .desktopOnly{display:flex!important}
+html.force-desktop .navCards{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+html.force-desktop .app{max-width:1480px!important}
+html.force-desktop #page-pantry .toolbar{display:flex!important}
+html.force-desktop #page-pantry .inventoryTable th:nth-child(n+3),
+html.force-desktop #page-pantry .inventoryTable td:nth-child(n+3){display:table-cell!important;visibility:visible!important;width:auto!important;padding:13px 10px!important;border:revert!important}
+html.force-desktop #page-pantry .inventoryTable{table-layout:auto!important}
+html.force-desktop .mobileSearchBar{display:none!important}
+html.force-desktop .grocerySummary{display:flex!important}
+html.force-desktop .cleanTimerGrid{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))!important}
+html.force-desktop .navCard{flex-direction:row!important;height:40px!important}
+html.force-desktop .navCard .navCount{display:flex!important}
+
+@media(max-width:620px){ #groceryViewToggle{display:none!important} }
+html.force-desktop #groceryViewToggle{display:inline-flex!important}
+html.force-mobile #groceryViewToggle{display:none!important}
+
+@media(max-width:620px){
+  .stopwatchSimple{padding:8px;gap:6px}
+  .stopwatchTopControls{grid-template-columns:1fr 1fr 1fr!important;gap:5px!important;padding:8px!important;border-radius:12px!important}
+  .timerDurationInline{grid-template-columns:repeat(3,1fr)!important;gap:5px!important;grid-column:1/-1}
+  /* Mode selector spans full width */
+  .stopwatchTopControls select{grid-column:1/-1}
+  /* Hr/Min/Sec inputs compact */
+  .stopwatchTopControls .field{padding:8px 6px!important;font-size:13px!important;text-align:center}
+  /* Add button full width */
+  .stopwatchTopControls .btn.primary{grid-column:1/-1;padding:10px!important}
+  /* Save, Older, Clear Done, Clear All in 2-col grid */
+  .stopwatchTopControls .btn:not(.primary){padding:8px!important;font-size:12px!important}
+  .stopwatchHint{display:none}
+  .stopwatchHistoryItem{padding:7px 10px!important}
+  .olderTimersPanel{margin-top:0!important}
+}
+html.force-mobile .stopwatchSimple{padding:8px;gap:6px}
+html.force-mobile .stopwatchTopControls{grid-template-columns:1fr 1fr 1fr!important;gap:5px!important;padding:8px!important;border-radius:12px!important}
+html.force-mobile .timerDurationInline{grid-column:1/-1;gap:5px!important}
+html.force-mobile .stopwatchTopControls select{grid-column:1/-1}
+html.force-mobile .stopwatchTopControls .field{padding:8px 6px!important;font-size:13px!important;text-align:center}
+html.force-mobile .stopwatchTopControls .btn.primary{grid-column:1/-1;padding:10px!important}
+html.force-mobile .stopwatchHint{display:none}
+
+/* Timer filter tabs */
+.timerFilterBtn{padding:5px 14px;border-radius:9px;border:none;background:transparent;font-size:13px;font-weight:800;color:#7a5a2a;cursor:pointer;transition:.12s}
+.timerFilterBtn.active{background:#fffdf9;color:#39291b;box-shadow:0 2px 6px rgba(102,72,31,.12)}
+
+/* Redesigned timer card - list style */
+.timerCard{
+  border:none;border-bottom:1px solid rgba(151,111,47,.12);
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  padding:14px 4px!important;
+  display:grid;
+  grid-template-columns:1fr auto;
+  grid-template-rows:auto auto;
+  gap:2px 12px;
+  align-items:center;
+}
+.timerCard:first-child{border-top:1px solid rgba(151,111,47,.12)}
+.timerCard .cardTitleLine{
+  grid-column:1;grid-row:1;
+  display:flex;align-items:center;gap:8px;
+  margin:0;padding:0;
+}
+.timerCard .cardTitleLine strong{font-size:15px;font-weight:900;color:#39291b}
+.timerCard .timerBig{
+  grid-column:1;grid-row:2;
+  font-size:36px;font-weight:300;letter-spacing:.02em;
+  color:#39291b;margin:0;line-height:1.1;
+  font-family:system-ui,-apple-system,sans-serif;
+}
+.timerCard .timerActions{
+  grid-column:2;grid-row:1/3;
+  display:flex;flex-direction:row;align-items:center;gap:8px;
+  margin:0;flex-wrap:nowrap;
+}
+.timerCard .timerEditChip{display:none}
+.timerCard .timerEditActions{
+  grid-column:1/-1;grid-row:3;
+  display:none;gap:6px;flex-wrap:wrap;margin-top:4px;
+}
+/* Circular action buttons */
+.timerCircleBtn{
+  width:50px;height:50px;border-radius:50%;border:none;cursor:pointer;
+  display:grid;place-items:center;font-size:20px;flex-shrink:0;transition:.12s transform;
+}
+.timerCircleBtn:active{transform:scale(.92)}
+.timerCircleBtn.play{background:linear-gradient(135deg,#e8c97a,#b1843f);color:#fff}
+.timerCircleBtn.pause{background:linear-gradient(135deg,#e8c97a,#b1843f);color:#fff}
+.timerCircleBtn.del{background:rgba(151,111,47,.12);color:#7a5a2a}
+.timerMainActions{display:flex!important;flex-direction:row;align-items:center;gap:8px}
+.timerRunning .timerBig{color:#2e6b2b}
+.timerCard .miniMeta.timerProgressMeta{font-size:11px;color:#9b7e56;grid-column:1;grid-row:1;padding-left:0;display:inline;margin-left:6px}
+
+/* Fix timer card min-height and name input overflow */
+.cleanTimerGrid .timerCard{min-height:0!important}
+@media(max-width:620px){
+  .timerNameField{font-size:14px!important}
+  .timerModeField{font-size:14px!important}
+  #page-stopwatch .panelTitle{display:none}
+}
+html.force-mobile .timerNameField{font-size:14px!important}
+html.force-mobile .cleanTimerGrid .timerCard{min-height:0!important}
+
+/* Fix timer card name overflow */
+.timerCard .cardTitleLine strong{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  max-width:100%;
+  display:block;
+}
+.timerCard .cardTitleLine{
+  min-width:0;
+  overflow:hidden;
+}
+.timerCard{
+  min-width:0;
+}
+.timerCard > div{min-width:0}
+
+@media(max-width:620px){
+  /* Bigger name + mode inputs */
+  .timerNameField{font-size:16px!important;padding:12px 14px!important}
+  .timerModeField{font-size:15px!important;padding:12px 14px!important}
+  /* Smaller Hr/Min/Sec */
+  .timerDurationInline .field{padding:8px 4px!important;font-size:13px!important}
+  /* Add button normal size */
+  .stopwatchTopControls .btn.primary{padding:12px!important;font-size:15px!important}
+  /* Secondary buttons very compact */
+  .stopwatchTopControls .btn:not(.primary){
+    padding:6px 10px!important;
+    font-size:11px!important;
+    border-radius:10px!important;
+    min-height:0!important;
+  }
+}
+html.force-mobile .timerNameField{font-size:16px!important;padding:12px 14px!important}
+html.force-mobile .timerModeField{font-size:15px!important;padding:12px 14px!important}
+html.force-mobile .stopwatchTopControls .btn:not(.primary){padding:6px 10px!important;font-size:11px!important;min-height:0!important}
+
+@media(max-width:620px){
+  .timerNameField{width:100%!important;grid-column:1/-1!important;box-sizing:border-box}
+  .timerModeField{width:100%!important;grid-column:1/-1!important;box-sizing:border-box}
+}
+html.force-mobile .timerNameField{width:100%!important;grid-column:1/-1!important;box-sizing:border-box}
+html.force-mobile .timerModeField{width:100%!important;grid-column:1/-1!important;box-sizing:border-box}
+
+/* Ensure timer buttons are always tappable */
+.timerCard .timerActions{pointer-events:all;position:relative;z-index:2}
+.timerCard .timerCircleBtn{pointer-events:all;-webkit-tap-highlight-color:rgba(0,0,0,.1);touch-action:manipulation}
+.timerCard .timerBig{pointer-events:none}
+/* Fix grid so big time display doesn't overlap buttons */
+.timerCard{
+  display:grid!important;
+  grid-template-columns:1fr auto!important;
+  grid-template-rows:auto auto!important;
+  gap:2px 16px!important;
+  align-items:center!important;
+}
+.timerCard .cardTitleLine{grid-column:1!important;grid-row:1!important;min-width:0}
+.timerCard .timerBig{grid-column:1!important;grid-row:2!important;pointer-events:none}
+.timerCard .timerMainActions{grid-column:2!important;grid-row:1/3!important;display:flex!important;align-items:center;gap:8px;flex-wrap:nowrap}
+.timerCard .timerEditActions{grid-column:1/-1!important;grid-row:3!important}
+
+/* Tab bar add button */
+.navTabs .btn.primary#addRecipeBtn{
+  margin-left:auto;
+  padding:7px 14px!important;
+  font-size:12px!important;
+  font-weight:900!important;
+  border-radius:10px!important;
+  min-height:0!important;
+  background:linear-gradient(135deg,#e8c97a,#b1843f)!important;
+  border-color:#b1843f!important;
+  color:#fff!important;
+  box-shadow:0 3px 10px rgba(177,132,63,.3)!important;
+}
+/* Recipe panel — remove top padding since tab bar has its own */
+#page-recipes .panel{overflow:visible}
+.focusMode-active .navTabs .recipeBackBtn{display:inline-flex}
+
+@media(max-width:620px){
+  .navTab{padding:6px 12px!important;font-size:12px!important}
+  .navTabs .btn.primary#addRecipeBtn .addRecipeFull{display:none}
+  .navTabs .btn.primary#addRecipeBtn .addRecipeMobile{display:inline}
+  .navTabs .btn.primary#addRecipeBtn{padding:6px 10px!important;font-size:12px!important}
+}
+html.force-mobile .navTab{padding:6px 12px!important;font-size:12px!important}
+html.force-mobile .navTabs .btn.primary#addRecipeBtn{padding:6px 10px!important;font-size:12px!important}
+.addRecipeMobile{display:none}
 </style>
 </head>
 <body>
@@ -1614,22 +1871,22 @@ html.force-mobile #page-stopwatch .panel{overflow-x:hidden!important}
 
   <section class="pageView" id="page-recipes">
     <section class="panel fullPanel">
-      <div class="navTabs" aria-label="Recipe tools">
-        <button class="navTab active" id="labtab-library" onclick="switchLab('library')">Recipe Library</button>
-        <button class="navTab" id="labtab-test" onclick="switchLab('test')">Recipe Testing</button>
-        <button class="btn primary" id="addRecipeBtn" onclick="focusRecipeForm()" style="margin-left:auto">+ Add Recipe</button>
+      <div class="navTabs" aria-label="Recipe tools" style="display:flex;flex-wrap:nowrap;align-items:center;overflow:hidden">
+        <button class="navTab active" id="labtab-library" onclick="switchLab('library')" style="white-space:nowrap;flex-shrink:0">Recipe Library</button>
+        <button class="navTab" id="labtab-test" onclick="switchLab('test')" style="white-space:nowrap;flex-shrink:0">Recipe Testing</button>
+        <button class="btn primary" id="addRecipeBtn" onclick="focusRecipeForm()" style="margin-left:auto;flex-shrink:0;white-space:nowrap"><span class="addRecipeFull">+ Add Recipe</span><span class="addRecipeMobile">+ Add</span></button>
       </div>
 
       <div class="labPanel active" id="lab-library">
         <div class="labGrid recipeLibraryGrid" id="recipeLibraryGrid">
           <div class="recipeCards" id="recipeCards"></div>
           <div class="recipeCard" id="recipeFormCard">
-            <div class="cardTitleLine"><div><button class="btn recipeBackBtn" onclick="closeRecipeFocus()">← Back to Recipe Library</button><strong id="recipeFormTitle" style="display:block;margin-top:12px">Recipe Details</strong></div><span class="tinyChip">Pantry-linked</span></div>
+            <div class="cardTitleLine"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><button class="btn recipeBackBtn" onclick="closeRecipeFocus()">← Back to Recipes</button><div class="recipeScaleBar mobileScaleInline"><button class="btn scaleBtn" id="recipeHalfM" onclick="setRecipeScale(.5)">½</button><button class="btn scaleBtn" id="recipeDoubleM" onclick="setRecipeScale(2)">2×</button><span class="tinyChip" id="recipeScaleLabelM">Normal</span></div></div></div>
             <div class="formStack">
               <input type="hidden" id="recipeId" />
               <label>Recipe Name</label><input id="recipeName" class="field" placeholder="Example: Biscuits and Gravy" />
               <label>Category</label><select id="recipeCategory" class="field" onchange="handleRecipeCategoryChange()"></select>
-              <div class="recipeScaleBar"><strong>Recipe proportions</strong><button class="btn scaleBtn" id="recipeHalf" onclick="setRecipeScale(.5)">½ Half</button><button class="btn scaleBtn" id="recipeDouble" onclick="setRecipeScale(2)">2× Double</button><span class="tinyChip" id="recipeScaleLabel">Normal</span></div>
+              <div class="recipeScaleBar"><span style="font-size:12px;font-weight:800;color:#9b7e56;white-space:nowrap">Scale:</span><button class="btn scaleBtn" id="recipeHalf" onclick="setRecipeScale(.5)">½</button><button class="btn scaleBtn" id="recipeDouble" onclick="setRecipeScale(2)">2×</button><span class="tinyChip" id="recipeScaleLabel">Normal</span></div>
               <label>Add Pantry Ingredient</label><div class="ingredientPicker"><input id="recipeIngredientSearch" class="field" placeholder="Type an ingredient from your pantry..." oninput="renderIngredientSuggestions()" autocomplete="off" /><div class="ingredientSuggestions" id="ingredientSuggestions"></div></div>
               <div class="recipeIngredientRows" id="recipeIngredientRows"></div>
               <label>Preparation</label><div class="recipePreparationPreview" id="recipePreparationPreview"></div>
@@ -1670,8 +1927,8 @@ html.force-mobile #page-stopwatch .panel{overflow-x:hidden!important}
     <section class="panel fullPanel">
       <div class="stopwatchSimple">
         <div class="stopwatchTopControls">
-          <input id="timerName" class="field timerNameField" placeholder="Name: sauce, oven, rest, smoker..." />
-          <select id="timerMode" class="field timerModeField" onchange="handleTimerModeChange()"><option value="stopwatch">Stopwatch</option><option value="countdown">Timer</option><option value="clock">Clock Card</option></select>
+          <input id="timerName" class="field timerNameField" placeholder="Timer name..." />
+          <select id="timerMode" class="field timerModeField" onchange="handleTimerModeChange()"><option value="stopwatch">Stopwatch</option><option value="countdown">Timer</option></select>
           <div id="timerDurationFields" class="timerDurationInline" style="opacity:.45" title="Duration is ignored for stopwatch."><input id="timerHours" class="field" placeholder="Hr" type="number" min="0"/><input id="timerMinutes" class="field" placeholder="Min" type="number" min="0"/><input id="timerSeconds" class="field" placeholder="Sec" type="number" min="0"/></div>
           <button class="btn primary" onclick="addTimer()">Add</button>
           <button class="btn timerSavePlus" onclick="saveTimerPresetFromAdd(this)"><span class="timerSavePlusIcon">＋</span>Save</button>
@@ -1683,6 +1940,12 @@ html.force-mobile #page-stopwatch .panel{overflow-x:hidden!important}
         <div class="recipeCard olderTimersPanel" id="olderTimersPanel" hidden>
           <div class="cardTitleLine"><strong>Older Timers / Stopwatches</strong><span class="tinyChip">Last 10 used/deleted</span></div>
           <div class="stopwatchHistoryList" id="timerHistoryList"></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <div style="display:flex;gap:4px;background:rgba(151,111,47,.1);border-radius:12px;padding:3px">
+            <button id="timerFilterAll" class="timerFilterBtn active" onclick="setTimerFilter('all')">All</button>
+            <button id="timerFilterActive" class="timerFilterBtn" onclick="setTimerFilter('active')">Active <span id="timerActiveCount" style="background:rgba(177,132,63,.3);border-radius:8px;padding:1px 6px;font-size:10px">0</span></button>
+          </div>
         </div>
         <div class="timerGrid cleanTimerGrid" id="timerGrid"></div>
       </div>
@@ -2082,12 +2345,12 @@ function renderPickup(){ applyMobileDropdownLabels();
     const media=it.photo?`<img src="${it.photo}" alt="${escapeHtml(it.name)} photo">`:`<span class="productIcon">${getItemEmoji(it)}</span>`;
     return `<article class="pickupStamp productCard" title="${escapeHtml(it.name)}"><div class="productMedia">${media}</div><div class="productBody"><div class="productName">${escapeHtml(it.name)}</div><div class="productMeta">${escapeHtml(it.storeLocation||'Unassigned')}</div></div><div class="productFooter"><div class="productPrice"><strong>${price!==null?'$'+price.toFixed(2):'—'}</strong><span>${price!==null?'est.':'needed'}</span></div><button class="btn primary productAdd" title="Mark picked up" onclick="setItemStock('${it.id}','In Stock')">+</button></div></article>`;
   };
-  // Table view
-  if(groceryViewMode === 'table'){
+  // Table view (desktop only)
+  if(groceryViewMode === 'table' && !isMobileContext()){
     const rows = list.map(it=>{
       const price=priceValue(it.price);
       const emoji=it.photo?`<img src="${it.photo}" style="width:28px;height:28px;border-radius:6px;object-fit:cover">`:`<span>${getItemEmoji(it)}</span>`;
-      const isMobileView=_forceMobile||window.innerWidth<=620;
+      const isMobileView=isMobileContext();
       return `<tr ${isMobileView?`onclick="openGroceryPickupSheet('${it.id}','${escapeHtml(it.name)}')"`:''}>
         <td class="gtPickup"><div class="gtCheckbox" onclick="event.stopPropagation();confirmPickup('${it.id}')" title="Mark as picked up"><svg viewBox="0 0 16 16" style="opacity:0"><polyline points="2.5,8 6.5,12 13.5,4"/></svg></div></td>
         <td class="gtName">${emoji} ${escapeHtml(it.name)}</td>
@@ -2098,7 +2361,7 @@ function renderPickup(){ applyMobileDropdownLabels();
     el.innerHTML=`<div class="groceryTableWrap"><table class="groceryTable"><tbody>${rows}</tbody></table></div>`;
     return;
   }
-  const isMob=_forceMobile||window.innerWidth<=620;
+  const isMob=isMobileContext();
   if(isMob){
     // Mobile: aisle grouped list
     list.sort((a,b)=>(a.storeLocation||'Unassigned').localeCompare(b.storeLocation||'Unassigned',undefined,{numeric:true})||a.name.localeCompare(b.name));
@@ -2617,20 +2880,42 @@ function openProfilePopup(){
 }
 function closeProfilePopup(){ document.getElementById('bottom-profile')?.classList.remove('active'); document.getElementById('profileBackdrop')?.classList.remove('show'); updateBottomNav(document.querySelector('.pageView.active')?.id?.replace('page-','')||'mealplan'); }
 let _forceMobile = false;
+let _forceDesktop = false;
+function isMobileContext(){ return _forceMobile || (!_forceDesktop && window.innerWidth <= 620); }
 function toggleViewMode(){
-  _forceMobile = !_forceMobile;
+  const trulyMobile = window.innerWidth <= 620;
   const icon = document.getElementById('viewToggleIcon');
   const label = document.getElementById('viewToggleLabel');
-  if(_forceMobile){
-    document.documentElement.classList.add('force-mobile');
-    if(icon) icon.textContent = '🖥️';
-    if(label) label.textContent = 'Desktop View';
+  if(trulyMobile){
+    // Real mobile device — toggle desktop override
+    _forceDesktop = !_forceDesktop;
+    _forceMobile = false;
+    if(_forceDesktop){
+      document.documentElement.classList.add('force-desktop');
+      document.documentElement.classList.remove('force-mobile');
+      if(icon) icon.textContent = '📱';
+      if(label) label.textContent = 'Mobile View';
+    } else {
+      document.documentElement.classList.remove('force-desktop');
+      if(icon) icon.textContent = '🖥️';
+      if(label) label.textContent = 'Desktop View';
+    }
   } else {
-    document.documentElement.classList.remove('force-mobile');
-    if(icon) icon.textContent = '📱';
-    if(label) label.textContent = 'Mobile View';
+    // Desktop — toggle mobile preview
+    _forceMobile = !_forceMobile;
+    _forceDesktop = false;
+    if(_forceMobile){
+      document.documentElement.classList.add('force-mobile');
+      document.documentElement.classList.remove('force-desktop');
+      if(icon) icon.textContent = '🖥️';
+      if(label) label.textContent = 'Desktop View';
+    } else {
+      document.documentElement.classList.remove('force-mobile');
+      if(icon) icon.textContent = '📱';
+      if(label) label.textContent = 'Mobile View';
+    }
   }
-  renderRecipeIngredientRows(); applyMobileDropdownLabels();
+  renderRecipeIngredientRows(); applyMobileDropdownLabels(); renderPickup(); render();
 }
 function toggleMobileMore(e){
   e.stopPropagation();
@@ -2768,7 +3053,7 @@ function renderRecipeCards(){
   el.innerHTML=recipes.map(r=>{
     const m=pantryMatchForIngredients(r.ingredients||[]);
     const missing=m.missing.slice(0,5).map(x=>escapeHtml(x.line)).join(', ');
-    return `<div class="recipeCard recipeLibraryCard ${activeCooking.recipeIds.includes(r.id)?'cookingSelected':''}" role="button" tabindex="0" onclick="editRecipe('${r.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();editRecipe('${r.id}')}"><div class="cardTitleLine"><strong>${escapeHtml(r.name)}</strong><span class="tinyChip">${m.score}% pantry</span></div><div class="miniMeta">${escapeHtml(r.category||'Recipe')}</div><div class="scoreBar"><div class="scoreFill" style="width:${m.score}%"></div></div><div class="miniMeta">${m.missing.length?`Needs: ${missing}${m.missing.length>5?'…':''}`:'All listed ingredients ready.'}</div><div class="chipRow"><span class="tinyChip">${normalizeRecipeIngredients(r.ingredients).length} ingredients</span><span class="tinyChip">${testEntries.filter(t=>t.recipeId===r.id).length} tests</span>${activeCooking.recipeIds.includes(r.id)?'<span class="tinyChip">Cooking now</span>':''}</div><div class="inlineActions" onkeydown="event.stopPropagation()"><button class="btn primary" onclick="event.stopPropagation();toggleCookingRecipe('${r.id}')">${activeCooking.recipeIds.includes(r.id)?'Remove from Cook':'Cook'}</button><button class="btn" onclick="event.stopPropagation();editRecipe('${r.id}')">View Recipe</button><button class="btn" onclick="event.stopPropagation();openRecipePreparation('${r.id}')">Preparation</button><button class="btn" onclick="event.stopPropagation();duplicateRecipe('${r.id}')">Duplicate</button><button class="btn" onclick="event.stopPropagation();selectRecipeForTest('${r.id}')">Test</button></div></div>`;
+    return `<div class="recipeCard recipeLibraryCard ${activeCooking.recipeIds.includes(r.id)?'cookingSelected':''}" role="button" tabindex="0" onclick="editRecipe('${r.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();editRecipe('${r.id}')}"><div class="cardTitleLine"><strong>${escapeHtml(r.name)}</strong><span class="tinyChip">${m.score}% pantry</span></div><div class="miniMeta">${escapeHtml(r.category||'Recipe')}</div><div class="scoreBar"><div class="scoreFill" style="width:${m.score}%"></div></div><div class="miniMeta">${m.missing.length?`Needs: ${missing}${m.missing.length>5?'…':''}`:'All listed ingredients ready.'}</div><div class="chipRow"><span class="tinyChip">${normalizeRecipeIngredients(r.ingredients).length} ingredients</span><span class="tinyChip">${testEntries.filter(t=>t.recipeId===r.id).length} tests</span></div><div class="inlineActions" onkeydown="event.stopPropagation()"><button class="btn" onclick="event.stopPropagation();editRecipe('${r.id}')">View Recipe</button><button class="btn" onclick="event.stopPropagation();openRecipePreparation('${r.id}')">Preparation</button><button class="btn" onclick="event.stopPropagation();selectRecipeForTest('${r.id}')">Test</button></div></div>`;
   }).join('');
 }
 function renderRecipeFocus(){ document.getElementById('recipeLibraryGrid')?.classList.toggle('focusMode',recipeFocusMode); document.querySelector('.navTabs')?.classList.toggle('focusMode-active',recipeFocusMode); const add=document.getElementById('addRecipeBtn'); if(add) add.style.display=recipeFocusMode?'none':''; }
@@ -2782,13 +3067,22 @@ function clearRecipeForm(){ ['recipeId','recipeName','recipeIngredientSearch','r
 function ingredientPantryItem(entry){ return items.find(i=>i.id===entry.pantryId)||items.find(i=>i.name===entry.name); }
 function ingredientStatusClass(entry){ const status=(ingredientPantryItem(entry)||{}).status; return status==='In Stock'?'stock':status==='Running Low'?'low':status==='Out of Stock'?'out':'unknown'; }
 function scaledAmount(amount){ const text=normalize(amount); if(recipeScale===1||!text) return text; const match=text.match(/^([0-9.]+|[0-9]+\/[0-9]+)(.*)$/); if(!match) return text; const number=match[1].includes('/')?match[1].split('/').reduce((a,b)=>Number(a)/Number(b)):Number(match[1]); return `${Number((number*recipeScale).toFixed(3))}${match[2]}`; }
-function renderRecipeScale(){ document.getElementById('recipeHalf')?.classList.toggle('active',recipeScale===.5); document.getElementById('recipeDouble')?.classList.toggle('active',recipeScale===2); const label=document.getElementById('recipeScaleLabel'); if(label) label.textContent=recipeScale===.5?'Half recipe':recipeScale===2?'Double recipe':'Normal'; renderRecipeIngredientRows(); }
+function renderRecipeScale(){
+  document.getElementById('recipeHalf')?.classList.toggle('active',recipeScale===.5);
+  document.getElementById('recipeDouble')?.classList.toggle('active',recipeScale===2);
+  document.getElementById('recipeHalfM')?.classList.toggle('active',recipeScale===.5);
+  document.getElementById('recipeDoubleM')?.classList.toggle('active',recipeScale===2);
+  const lbl=recipeScale===.5?'½':recipeScale===2?'2×':'Normal';
+  const label=document.getElementById('recipeScaleLabel'); if(label) label.textContent=recipeScale===.5?'Half recipe':recipeScale===2?'Double recipe':'Normal';
+  const labelM=document.getElementById('recipeScaleLabelM'); if(labelM) labelM.textContent=lbl;
+  renderRecipeIngredientRows();
+}
 function setRecipeScale(scale){ recipeScale=recipeScale===scale?1:scale; renderRecipeScale(); }
 function renderIngredientSuggestions(){ const q=normalize(document.getElementById('recipeIngredientSearch').value).toLowerCase(), el=document.getElementById('ingredientSuggestions'); if(!q){ el.classList.remove('show'); el.innerHTML=''; return; } const matches=items.filter(item=>item.name.toLowerCase().includes(q)&&!recipeDraftIngredients.some(entry=>entry.pantryId===item.id)).slice(0,8); el.innerHTML=matches.map(item=>`<button class="ingredientSuggestion" onclick="addRecipeIngredient('${item.id}')">${escapeHtml(item.name)} <span class="muted">• ${escapeHtml(item.status)}</span></button>`).join('')||'<div class="muted" style="padding:8px">No pantry matches.</div>'; el.classList.add('show'); }
 function addRecipeIngredient(id){ const item=items.find(i=>i.id===id); if(!item||recipeDraftIngredients.some(entry=>entry.pantryId===id)) return; recipeDraftIngredients.push({pantryId:item.id,name:item.name,amount:'',gathered:false}); document.getElementById('recipeIngredientSearch').value=''; document.getElementById('ingredientSuggestions').classList.remove('show'); renderRecipeIngredientRows(); }
 function updateRecipeIngredient(index,key,value,shouldRender=true){ recipeDraftIngredients[index][key]=key==='gathered'?!!value:value; if(shouldRender) renderRecipeIngredientRows(); }
 function removeRecipeIngredient(index){ recipeDraftIngredients.splice(index,1); renderRecipeIngredientRows(); }
-function renderRecipeIngredientRows(){ const el=document.getElementById('recipeIngredientRows'); if(!el) return; const isMobile=_forceMobile||window.innerWidth<=620; el.innerHTML=recipeDraftIngredients.length?recipeDraftIngredients.map((entry,index)=>{ const pantry=ingredientPantryItem(entry)||{}, status=pantry.status||'Not in pantry', statusClass=ingredientStatusClass(entry); if(isMobile){ return `<div class="recipeIngredientRow" onclick="openIngredientEditSheet(${index})" style="cursor:pointer;${entry.gathered?'opacity:.5;text-decoration:line-through':''}"><div><div class="recipeIngredientName"><span class="ingredientStatus ${statusClass}"></span>${escapeHtml(entry.name)}</div>${entry.amount?'<div class="recipeIngredientMeta">'+escapeHtml(entry.amount)+'</div>':''}</div><label class="gatheredLabel" onclick="event.stopPropagation()"><input type="checkbox" ${entry.gathered?'checked':''} onchange="updateRecipeIngredient(${index},'gathered',this.checked)" /></label></div>`; } return `<div class="recipeIngredientRow" style="${entry.gathered?'opacity:.5':''}""><div><div class="recipeIngredientName"><span class="ingredientStatus ${statusClass}"></span>${escapeHtml(entry.name)}</div><div class="recipeIngredientMeta">${escapeHtml(status)}${recipeScale!==1&&scaledAmount(entry.amount)?` • scaled: ${escapeHtml(scaledAmount(entry.amount))}`:''}</div></div><input class="field" value="${escapeHtml(entry.amount)}" placeholder="Amount used" oninput="updateRecipeIngredient(${index},'amount',this.value,false)" /><label class="gatheredLabel"><input type="checkbox" ${entry.gathered?'checked':''} onchange="updateRecipeIngredient(${index},'gathered',this.checked)" /></label><button class="iconBtn" onclick="removeRecipeIngredient(${index})">✕</button></div>`; }).join(''):'<div class="sideNote">Type above to add ingredients from your pantry.</div>'; }
+function renderRecipeIngredientRows(){ const el=document.getElementById('recipeIngredientRows'); if(!el) return; const isMobile=isMobileContext(); el.innerHTML=recipeDraftIngredients.length?recipeDraftIngredients.map((entry,index)=>{ const pantry=ingredientPantryItem(entry)||{}, status=pantry.status||'Not in pantry', statusClass=ingredientStatusClass(entry); if(isMobile){ return `<div class="recipeIngredientRow" onclick="openIngredientEditSheet(${index})" style="cursor:pointer;${entry.gathered?'opacity:.5;text-decoration:line-through':''}"><div><div class="recipeIngredientName"><span class="ingredientStatus ${statusClass}"></span>${escapeHtml(entry.name)}</div>${entry.amount?'<div class="recipeIngredientMeta">'+(recipeScale!==1&&scaledAmount(entry.amount)?escapeHtml(scaledAmount(entry.amount))+' <span style="opacity:.5;font-size:10px">(scaled)</span>':escapeHtml(entry.amount))+'</div>':''}</div><label class="gatheredLabel" onclick="event.stopPropagation()"><input type="checkbox" ${entry.gathered?'checked':''} onchange="updateRecipeIngredient(${index},'gathered',this.checked)" /></label></div>`; } return `<div class="recipeIngredientRow" style="${entry.gathered?'opacity:.5':''}""><div><div class="recipeIngredientName"><span class="ingredientStatus ${statusClass}"></span>${escapeHtml(entry.name)}</div>${recipeScale!==1&&scaledAmount(entry.amount)?`<div class="recipeIngredientMeta" style="font-weight:900;color:#b1843f">→ ${escapeHtml(scaledAmount(entry.amount))}</div>`:''}</div><input class="field" value="${escapeHtml(entry.amount)}" placeholder="Amount used" oninput="updateRecipeIngredient(${index},'amount',this.value,false)" /><label class="gatheredLabel"><input type="checkbox" ${entry.gathered?'checked':''} onchange="updateRecipeIngredient(${index},'gathered',this.checked)" /></label><button class="iconBtn" onclick="removeRecipeIngredient(${index})">✕</button></div>`; }).join(''):'<div class="sideNote">Type above to add ingredients from your pantry.</div>'; }
 function renderRecipePreparationPreview(){
   const el=document.getElementById('recipePreparationPreview'); if(!el) return;
   const ctx=currentRecipeTimerContext();
@@ -3364,6 +3658,20 @@ function toggleTimerHistory(){
   if(btn) btn.classList.toggle('active', !panel.hidden);
   renderTimerHistory();
 }
+let _timerFilter='all';
+function setTimerFilter(f){
+  _timerFilter=f;
+  document.getElementById('timerFilterAll')?.classList.toggle('active',f==='all');
+  document.getElementById('timerFilterActive')?.classList.toggle('active',f==='active');
+  renderTimers();
+}
+function deleteTimerDirect(id){
+  const t=timers.find(x=>x.id===id); if(!t) return;
+  timerHistory.unshift({...t,lastUsed:new Date().toISOString()});
+  if(timerHistory.length>10) timerHistory.length=10;
+  timers=timers.filter(x=>x.id!==id);
+  persistTimers(); renderTimers();
+}
 function renderTimerCard(t){
   if(t.mode==='clock'){
     const ring=clockRingData(t);
@@ -3371,21 +3679,94 @@ function renderTimerCard(t){
     const fillClass=ring.urgent?' urgent':ring.warning?' warning':'';
     const statusLabel=ring.done?'Done':t.running?'':'Paused';
     const pct=Math.round(ring.fraction*100);
-    return `<div class="timerCard clockCard${doneClass}" data-timer-id="${t.id}">
-      <div class="cardTitleLine"><strong>${escapeHtml(t.name)}</strong><button class="tinyChip timerEditChip" onclick="toggleTimerEdit(this)" title="Edit timer options">Edit</button></div>
-      <div class="clockRingWrap">
-        <svg class="clockRingSvg" width="148" height="148" viewBox="0 0 148 148" aria-label="Countdown ring: ${pct}% remaining">
-          <circle class="clockRingTrack" cx="74" cy="74" r="54"/>
-          <circle class="clockRingFill${fillClass}" cx="74" cy="74" r="54"
-            stroke-dasharray="${ring.circ.toFixed(2)}"
-            stroke-dashoffset="${ring.offset.toFixed(2)}"/>
-          <text class="clockRingTime" x="74" y="70">${formatSeconds(ring.remaining)}</text>
-          <text class="clockRingLabel" x="74" y="92">${statusLabel}</text>
+    // Adaptive analog stopwatch face
+    const sec = ring.remaining;
+    const totalSecs = ring.total;
+    const cx=120, cy=120, r=100;
+    // Determine tick count and labels based on total duration
+    const totalMins = totalSecs / 60;
+    let majorCount, minorPerMajor, labelUnit, labelVals;
+    if(totalSecs <= 60){
+      // Up to 1 min: ticks every 5s, labels every 15s
+      majorCount=12; minorPerMajor=5; labelUnit='s';
+      labelVals=[15,30,45,60];
+    } else if(totalSecs <= 300){
+      // Up to 5 min: ticks every 30s, labels every min
+      majorCount=totalMins*2; minorPerMajor=2; labelUnit='m';
+      labelVals=Array.from({length:Math.floor(totalMins)},(_,i)=>i+1);
+    } else if(totalSecs <= 3600){
+      // Up to 60 min: major every 5 min, minor every 1 min
+      majorCount=Math.round(totalMins/5); minorPerMajor=5; labelUnit='m';
+      const step=totalMins<=15?5:totalMins<=30?5:10;
+      labelVals=[];for(let v=step;v<=totalMins;v+=step) labelVals.push(v);
+    } else {
+      // Hours: major every 30 min
+      const totalHrs=totalSecs/3600;
+      majorCount=Math.round(totalHrs*2); minorPerMajor=2; labelUnit='h';
+      labelVals=Array.from({length:Math.floor(totalHrs)},(_,i)=>i+1);
+    }
+    const totalTicks=majorCount*minorPerMajor;
+    let ticks='';
+    for(let i=0;i<totalTicks;i++){
+      const a=(i/totalTicks)*Math.PI*2-Math.PI/2;
+      const big=i%minorPerMajor===0;
+      const r1=big?r-14:r-8; const r2=r-2;
+      const x1=cx+Math.cos(a)*r1,y1=cy+Math.sin(a)*r1;
+      const x2=cx+Math.cos(a)*r2,y2=cy+Math.sin(a)*r2;
+      ticks+=`<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${big?'rgba(60,40,18,.8)':'rgba(60,40,18,.25)'}" stroke-width="${big?2:1}"/>`;
+    }
+    // Labels at meaningful intervals
+    let nums='';
+    labelVals.forEach(n=>{
+      const rawSec=labelUnit==='s'?n:labelUnit==='m'?n*60:n*3600;
+      const frac=rawSec/totalSecs;
+      const a=frac*Math.PI*2-Math.PI/2;
+      const lr=r-26;
+      const nx=cx+Math.cos(a)*lr,ny=cy+Math.sin(a)*lr;
+      const label=labelUnit==='s'?n+'s':labelUnit==='h'?n+'h':n;
+      nums+=`<text x="${nx.toFixed(1)}" y="${(ny+5).toFixed(1)}" text-anchor="middle" font-size="12" font-weight="700" fill="rgba(60,40,18,.75)" font-family="system-ui">${label}</text>`;
+    });
+    // Hand sweeps full duration (0 = top at start, sweeps clockwise as time runs)
+    const elapsed = totalSecs - sec;
+    const secA = (elapsed/totalSecs)*Math.PI*2-Math.PI/2;
+    const shx=cx+Math.cos(secA)*(r-18), shy=cy+Math.sin(secA)*(r-18);
+    const stx=cx-Math.cos(secA)*18, sty=cy-Math.sin(secA)*18;
+    // Progress arc
+    const arcAngle=(1-ring.fraction)*Math.PI*2;
+    const arcR=r-46;
+    const arcX=cx+Math.cos(-Math.PI/2+arcAngle)*arcR;
+    const arcY=cy+Math.sin(-Math.PI/2+arcAngle)*arcR;
+    const largeArc=arcAngle>Math.PI?1:0;
+    const arcColor=ring.urgent?'#e57373':ring.warning?'#ffb74d':'#f5a623';
+    return `<div class="timerCard clockCard analogClockCard${doneClass}" data-timer-id="${t.id}" style="background:linear-gradient(145deg,#fffefb,#f5ead2);border-color:rgba(151,111,47,.2);padding:12px">
+      <div class="cardTitleLine" style="color:#fff"><strong>${escapeHtml(t.name)}</strong><button class="tinyChip timerEditChip" onclick="toggleTimerEdit(this)" style="">Edit</button></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+        <svg width="240" height="240" viewBox="0 0 240 240" style="display:block">
+          <!-- Outer bezel -->
+          <circle cx="${cx}" cy="${cy}" r="${r+8}" fill="rgba(151,111,47,.12)" stroke="rgba(151,111,47,.3)" stroke-width="3"/>
+          <!-- Face -->
+          <circle cx="${cx}" cy="${cy}" r="${r}" fill="#fffdf5" stroke="rgba(151,111,47,.2)" stroke-width="1"/>
+          <!-- Progress arc -->
+          <path d="M ${cx} ${cy-arcR} A ${arcR} ${arcR} 0 ${largeArc} 1 ${arcX.toFixed(1)} ${arcY.toFixed(1)}" fill="none" stroke="${arcColor}" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+          <!-- Ticks -->
+          ${ticks}
+          <!-- Numbers -->
+          ${nums}
+          <!-- Center inner circle -->
+          <circle cx="${cx}" cy="${cy}" r="28" fill="#f5ead2" stroke="rgba(151,111,47,.2)" stroke-width="1"/>
+          <!-- Digital time in center -->
+          <text x="${cx}" y="${cy-4}" text-anchor="middle" font-size="12" font-weight="900" fill="#39291b" font-family="monospace" letter-spacing="1">${formatSeconds(ring.remaining)}</text>
+          <text x="${cx}" y="${cy+12}" text-anchor="middle" font-size="9" fill="${arcColor}" font-family="system-ui" font-weight="700">${statusLabel||'Running'}</text>
+          <!-- Second hand -->
+          <line x1="${stx.toFixed(1)}" y1="${sty.toFixed(1)}" x2="${shx.toFixed(1)}" y2="${shy.toFixed(1)}" stroke="${arcColor}" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Center dot -->
+          <circle cx="${cx}" cy="${cy}" r="4" fill="${arcColor}"/>
         </svg>
-        <div class="clockRingMeta">${formatSeconds(ring.total)} total &nbsp;·&nbsp; ${pct}% left</div>
+        <div style="font-size:12px;color:#9b7e56;text-align:center">${formatSeconds(ring.total)} total &nbsp;·&nbsp; ${pct}% left</div>
       </div>
       <div class="timerActions timerMainActions">
-        <button class="btn ${t.running?'warn':'good'}" onclick="toggleClockTimer('${t.id}')">${t.running?'Pause':'Resume'}</button>
+        <button class="timerCircleBtn del" onclick="deleteTimerDirect('${t.id}')" title="Delete">✕</button>
+        <button class="timerCircleBtn ${t.running?'pause':'play'}" onclick="toggleClockTimer('${t.id}')">${t.running?'⏸':'▶'}</button>
       </div>
       <div class="timerActions timerEditActions" style="display:none">
         <button class="btn" onclick="resetClockTimer('${t.id}')">Reset</button>
@@ -3397,16 +3778,22 @@ function renderTimerCard(t){
   }
   const val=timerSecondsNow(t);
   const done=t.mode==='countdown' && val<=0;
-  const totalSec = t.total || 0;
-  const elapsedSec = t.mode==='countdown' ? Math.max(0, totalSec - val) : val;
-  const totalMin = totalSec > 0 ? (totalSec/60).toFixed(totalSec%60===0?0:1) : null;
-  const elapsedMin = (elapsedSec/60).toFixed(elapsedSec%60===0?0:1);
-  const progressLabel = t.mode==='countdown' && totalSec > 0
-    ? `${elapsedMin} of ${totalMin} min`
-    : t.mode==='stopwatch'
-    ? `${elapsedMin} min elapsed`
-    : '';
-  return `<div class="timerCard ${t.running?'timerRunning':''}" data-timer-id="${t.id}"><div class="cardTitleLine"><strong>${escapeHtml(t.name)}</strong><button class="tinyChip timerEditChip" onclick="toggleTimerEdit(this)" title="Edit timer options">Edit</button></div><div class="timerBig">${formatSeconds(val)}</div><div class="miniMeta timerProgressMeta">${t.source==='recipe-step'?`Recipe step ${(Number(t.sourceStepIndex)||0)+1} • `:''}${done?'Done — reset or delete.':t.running?`Running • ${progressLabel}`:progressLabel?`Paused • ${progressLabel}`:'Paused'}</div><div class="timerActions timerMainActions"><button class="btn ${t.running?'warn':'good'}" onclick="toggleTimer('${t.id}')">${t.running?'Pause':'Start'}</button></div><div class="timerActions timerEditActions" style="display:none"><button class="btn clockConvertBtn" onclick="convertTimerToClock('${t.id}',this)">Clock</button><button class="btn timerSavePlus" onclick="saveTimerPresetFromCard('${t.id}',this)"><span class="timerSavePlusIcon">＋</span>Save</button><button class="btn" onclick="resetTimer('${t.id}',this)">Reset</button><button class="btn danger" onclick="deleteTimer('${t.id}',this)">Delete</button></div></div>`;
+  const statusLabel=done?'done':t.running?'':' paused';
+  return `<div class="timerCard ${t.running?'timerRunning':''}" data-timer-id="${t.id}">
+    <div class="cardTitleLine">
+      <strong>${escapeHtml(t.name)}</strong>${statusLabel?`<span style="font-size:11px;font-weight:700;color:#9b7e56;margin-left:6px">${statusLabel}</span>`:''}
+    </div>
+    <div class="timerBig">${formatSeconds(val)}</div>
+    <div class="timerActions timerMainActions">
+      <button class="timerCircleBtn del" onclick="deleteTimerDirect('${t.id}')" title="Delete">✕</button>
+      <button class="timerCircleBtn ${t.running?'pause':'play'}" onclick="toggleTimer('${t.id}')">${t.running?'⏸':'▶'}</button>
+    </div>
+    <div class="timerActions timerEditActions" style="display:none">
+      <button class="btn clockConvertBtn" onclick="convertTimerToClock('${t.id}',this)">Clock</button>
+      <button class="btn timerSavePlus" onclick="saveTimerPresetFromCard('${t.id}',this)"><span class="timerSavePlusIcon">＋</span>Save</button>
+      <button class="btn" onclick="resetTimer('${t.id}',this)">Reset</button>
+    </div>
+  </div>`;
 }
 function renderTimers(){
   const el=document.getElementById('timerGrid'); if(!el) return;
@@ -3444,7 +3831,7 @@ function renderTimers(){
         const timeText = card.querySelector('.clockRingTime');
         const labelText = card.querySelector('.clockRingLabel');
         const metaEl = card.querySelector('.clockRingMeta');
-        const toggleBtn = card.querySelector('.timerActions .btn:first-child');
+        const toggleBtn = card.querySelector('.timerCircleBtn.play, .timerCircleBtn.pause');
         const pct = Math.round(ring.fraction*100);
         if(fill){ fill.setAttribute('stroke-dasharray', ring.circ.toFixed(2)); fill.setAttribute('stroke-dashoffset', ring.offset.toFixed(2)); fill.className.baseVal = 'clockRingFill' + (ring.urgent?' urgent':ring.warning?' warning':''); }
         if(timeText) timeText.textContent = formatSeconds(ring.remaining);
@@ -3453,24 +3840,27 @@ function renderTimers(){
         if(ring.done){ card.classList.add('clockRingDone'); } else { card.classList.remove('clockRingDone'); }
         // Update the Pause/Resume button text and colour in-place
         if(toggleBtn && !toggleBtn.dataset.confirming){
-          toggleBtn.textContent = t.running ? 'Pause' : (ring.done ? 'Done' : 'Resume');
-          toggleBtn.className = 'btn ' + (t.running ? 'warn' : (ring.done ? '' : 'good'));
+          toggleBtn.textContent = t.running ? '⏸' : (ring.done ? '✓' : '▶');
+          toggleBtn.className = `timerCircleBtn ${t.running?'pause':'play'}`;
         }
       } else {
         const val = timerSecondsNow(t);
         const big = card.querySelector('.timerBig'); if(big) big.textContent=formatSeconds(val);
-        const meta = card.querySelector('.timerProgressMeta');
-        if(meta){
-          const totalSec = t.total || 0;
-          const done = t.mode==='countdown' && val<=0;
-          const elapsedSec = t.mode==='countdown' ? Math.max(0, totalSec - val) : val;
-          const totalMin = totalSec > 0 ? (totalSec/60).toFixed(totalSec%60===0?0:1) : null;
-          const elapsedMin = (elapsedSec/60).toFixed(elapsedSec%60===0?0:1);
-          const progressLabel = t.mode==='countdown' && totalSec > 0
-            ? `${elapsedMin} of ${totalMin} min`
-            : t.mode==='stopwatch' ? `${elapsedMin} min elapsed` : '';
-          const prefix = t.source==='recipe-step' ? `Recipe step ${(Number(t.sourceStepIndex)||0)+1} • ` : '';
-          meta.textContent = prefix + (done ? 'Done — reset or delete.' : t.running ? `Running • ${progressLabel}` : progressLabel ? `Paused • ${progressLabel}` : 'Paused');
+        // Update circular play/pause button
+        const playBtn = card.querySelector('.timerCircleBtn.play, .timerCircleBtn.pause');
+        if(playBtn){
+          playBtn.textContent = t.running ? '⏸' : '▶';
+          playBtn.className = `timerCircleBtn ${t.running?'pause':'play'}`;
+        }
+        // Update status label
+        const titleLine = card.querySelector('.cardTitleLine');
+        if(titleLine){
+          let statusSpan = titleLine.querySelector('span');
+          const statusLabel = (t.mode==='countdown'&&timerSecondsNow(t)<=0)?'done':t.running?'':' paused';
+          if(statusLabel){
+            if(!statusSpan){ statusSpan=document.createElement('span'); statusSpan.style.cssText='font-size:11px;font-weight:700;color:#9b7e56'; titleLine.appendChild(statusSpan); }
+            statusSpan.textContent=statusLabel;
+          } else if(statusSpan){ statusSpan.textContent=''; }
         }
       }
     });
@@ -3480,21 +3870,34 @@ function renderTimers(){
 function convertTimerToClock(id,button){
   if(!armInlineAction(button,'Confirm Clock','Clock')) return;
   const t=timers.find(x=>x.id===id); if(!t) return;
-  t.previousMode=t.mode; t.previousTotal=t.total||0; t.previousRemaining=t.remaining||0; t.previousElapsed=t.elapsed||0;
-  // Preserve total/remaining for the countdown ring
+  const wasRunning=t.running;
   const curRemaining = timerSecondsNow(t);
+  // Snapshot current state before converting
+  t.previousMode=t.mode; t.previousTotal=t.total||0; t.previousRemaining=curRemaining; t.previousElapsed=t.elapsed||0;
   t.mode='clock';
   t.total = t.previousTotal || curRemaining;
   t.remaining = curRemaining;
-  t.running=true; t.lastStart=Date.now(); t.done=false; t.elapsed=0;
-  persistTimers(); renderTimers(); toast('Converted to countdown ring.');
+  // Preserve running state — don't restart if paused
+  t.running=wasRunning;
+  t.lastStart=wasRunning?Date.now():null;
+  t.done=false; t.elapsed=0;
+  persistTimers(); renderTimers(); toast('Converted to clock view.');
 }
 function convertClockToTimer(id,button){
   if(!armInlineAction(button,'Confirm Timer','Timer')) return;
   const t=timers.find(x=>x.id===id); if(!t) return;
-  const mode=t.previousMode && t.previousMode!=='clock' ? t.previousMode : 'stopwatch';
-  t.mode=mode; t.total=t.previousTotal||0; t.remaining=mode==='countdown'?(t.previousRemaining||t.previousTotal||0):0; t.elapsed=mode==='stopwatch'?(t.previousElapsed||0):0; t.running=false; t.lastStart=null; t.done=false;
-  persistTimers(); renderTimers(); toast('Converted back to timer card.');
+  const wasRunning=t.running;
+  const curRemaining=timerSecondsNow(t);
+  const mode=t.previousMode && t.previousMode!=='clock' ? t.previousMode : 'countdown';
+  t.mode=mode;
+  t.total=t.previousTotal||curRemaining;
+  t.remaining=curRemaining;
+  t.elapsed=mode==='stopwatch'?(t.previousElapsed||0):0;
+  // Preserve running state
+  t.running=wasRunning;
+  t.lastStart=wasRunning?Date.now():null;
+  t.done=false;
+  persistTimers(); renderTimers(); toast('Converted to timer view.');
 }
 function toggleTimerEdit(chip){
   const card = chip.closest('.timerCard');
@@ -4173,6 +4576,15 @@ render();
 switchPage('pantry');
 renderPickup();
 updateBottomNav('pantry');
+// Init view toggle label based on device
+(function(){
+  const icon=document.getElementById('viewToggleIcon');
+  const label=document.getElementById('viewToggleLabel');
+  if(window.innerWidth<=620){
+    if(icon) icon.textContent='🖥️';
+    if(label) label.textContent='Desktop View';
+  }
+})();
 
 let _mobileEditId = null;
 
