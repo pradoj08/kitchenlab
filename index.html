@@ -183,7 +183,7 @@ option{background:#101722;color:#fff}
 .navTabs{display:flex;align-items:center;gap:0;margin-bottom:0;padding:8px 10px;background:linear-gradient(135deg,#f5ead2,#ede0c4);border-bottom:1px solid rgba(151,111,47,.15);flex-wrap:nowrap;width:100%;box-sizing:border-box}.navTabs .recipeBackBtn{margin-left:auto;font-weight:900;font-size:12px;padding:6px 12px}
 .navTab{border:none;background:transparent;color:#9b7e56;border-radius:10px;padding:8px 18px;font-weight:800;font-size:13px;cursor:pointer;transition:.15s;position:relative}
 .navTab.active{background:#fffdf9;color:#39291b;box-shadow:0 2px 8px rgba(102,72,31,.12)}
-.labGrid{display:grid;grid-template-columns:minmax(320px,.9fr) minmax(420px,1.1fr);gap:14px;align-items:start}
+.labGrid{display:grid;grid-template-columns:3fr 2fr;gap:14px;align-items:start}
 .labGrid.three{grid-template-columns:repeat(3,1fr)}
 .labPanel{display:none}.labPanel.active{display:block}
 .formStack{display:grid;gap:10px}.formStack label{font-size:.76rem;text-transform:uppercase;color:var(--muted);font-weight:900;letter-spacing:.08em}
@@ -226,7 +226,7 @@ option{background:#101722;color:#fff}
 .itTableWrap{border:1px solid rgba(151,111,47,.2);border-radius:14px;overflow:hidden;margin-top:10px}
 .itTableHeader{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#f5ead2;border-bottom:1px solid rgba(151,111,47,.18)}
 .itTableTitle{font-weight:950;font-size:14px;color:#39291b}
-.itTable{width:100%;border-collapse:collapse;font-size:13px}
+.itTable{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}
 .itTable thead tr{background:#fdf5e6}
 .itTable th{padding:9px 12px;text-align:left;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#7a5a2a;border-bottom:2px solid rgba(151,111,47,.2);white-space:nowrap}
 .itTable tbody tr{border-bottom:1px solid rgba(151,111,47,.1);transition:.12s background}
@@ -234,10 +234,10 @@ option{background:#101722;color:#fff}
 .itTable tbody tr:hover{background:#fdf7ec}
 .itRow.itChanged{background:#fff6f4!important}
 .itRow.itChanged:hover{background:#fff0ec!important}
-.itTable td{padding:8px 12px;vertical-align:middle}
-.itName{font-weight:800;color:#39291b;min-width:130px}
-.itOriginal{color:#806f5d;font-variant-numeric:tabular-nums;white-space:nowrap}
-.itTest{min-width:170px}
+.itTable td{padding:8px 12px;vertical-align:middle;overflow:hidden}
+.itName{font-weight:800;color:#39291b;width:22%;word-break:break-word}
+.itOriginal{color:#806f5d;font-variant-numeric:tabular-nums;width:25%;word-break:break-word;white-space:normal}
+.itTest{width:35%}
 .itStatus{white-space:nowrap}
 .itNote{min-width:160px}
 .itBaseline{font-size:11px;color:#9b7e56;font-weight:700;text-transform:uppercase;letter-spacing:.06em}.testNameRequired{border-color:#ca8a04!important;background:#fefce8!important;box-shadow:0 0 0 3px rgba(202,138,4,.18)!important}.testNameRequired.filled{border-color:rgba(151,111,47,.28)!important;background:#fffdf9!important;box-shadow:none!important}.itExtra{background:#f7fff7!important}.itAddRow td{padding:8px 12px}.itAddBtn{width:100%;border:1px dashed rgba(151,111,47,.35);border-radius:10px;background:transparent;color:#9b7e56;font-weight:800;font-size:12px;padding:8px;cursor:pointer;transition:.14s}.itAddBtn:hover{background:#fdf5e6;color:#76521e;border-color:#b1843f}
@@ -252,7 +252,7 @@ option{background:#101722;color:#fff}
 .recipeCard.selected,.compareCard.selected{border-color:rgba(245,158,11,.7);background:rgba(245,158,11,.13)}
 .cardTitleLine{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:8px}.cardTitleLine strong{font-size:1rem}.miniMeta{font-size:.82rem;color:var(--muted);line-height:1.35}.scoreBar{height:9px;background:rgba(255,255,255,.12);border-radius:999px;overflow:hidden;margin:10px 0}.scoreFill{height:100%;background:linear-gradient(90deg,#ef4444,#facc15,#22c55e);border-radius:999px}.chipRow{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.tinyChip{font-size:.72rem;border:1px solid var(--line);border-radius:999px;padding:4px 8px;color:#fff;background:rgba(255,255,255,.06)}
 .compareTable{width:100%;border-collapse:separate;border-spacing:0;margin-top:12px}.compareTable th,.compareTable td{border-bottom:1px solid var(--line);padding:10px;vertical-align:top}.compareTable th{position:static;background:rgba(255,255,255,.07)}
-.timerBig{font-size:2.2rem;font-weight:1000;letter-spacing:.04em;margin:8px 0}.timerActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}.timerRunning{border-color:rgba(34,197,94,.65);box-shadow:0 0 0 1px rgba(34,197,94,.18)}.timerEditChip{cursor:pointer;background:#fff4d8;border-color:#c69a4b;color:#76521e;transition:.15s}.timerEditChip:hover{background:#fde9b0;border-color:#a8732f}.timerEditChip.active{background:#3c2812;border-color:#3c2812;color:#ffe8b0}
+.timerBig{font-size:2.2rem;font-weight:1000;letter-spacing:.04em;margin:8px 0}.timerActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}.timerRunning{background:linear-gradient(135deg,#f0faf0,#e6f5e6)!important;border-left:3px solid #4a9a4a!important}.timerRunning .timerBig{color:#2e6b2b!important}.timerRunning .cardTitleLine strong{color:#1e4d1e!important}.timerEditChip{cursor:pointer;background:#fff4d8;border-color:#c69a4b;color:#76521e;transition:.15s}.timerEditChip:hover{background:#fde9b0;border-color:#a8732f}.timerEditChip.active{background:#3c2812;border-color:#3c2812;color:#ffe8b0}
 .stopwatchSimple{padding:16px;display:grid;gap:14px}.stopwatchTopControls{display:grid;grid-template-columns:minmax(210px,1.2fr) 130px minmax(240px,.9fr) auto auto auto auto auto;gap:10px;align-items:center;padding:12px;border:1px solid rgba(151,111,47,.18);border-radius:18px;background:linear-gradient(145deg,#fffefb,#f7f0e6);box-shadow:0 10px 22px rgba(102,72,31,.07)}.timerDurationInline{display:grid;grid-template-columns:repeat(3,minmax(64px,1fr));gap:8px}.stopwatchHint{padding:0 4px}.olderTimersPanel{margin:0}.stopwatchHistoryList{display:grid;gap:8px}.stopwatchHistoryItem{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 12px;border:1px solid rgba(151,111,47,.16);border-radius:14px;background:#fffdf9}.cleanTimerGrid{grid-template-columns:1fr;max-width:480px}.cleanTimerGrid .timerCard{min-height:0}.cleanTimerGrid .cardTitleLine strong{overflow-wrap:anywhere}@media(max-width:1100px){.stopwatchTopControls{grid-template-columns:1fr 150px}.timerDurationInline{grid-column:1/-1}.stopwatchTopControls .btn{width:100%}}@media(max-width:720px){.stopwatchTopControls{grid-template-columns:1fr}.timerDurationInline{grid-template-columns:repeat(3,1fr)}}
 .sideNote{border:1px dashed rgba(255,255,255,.2);border-radius:16px;padding:12px;color:var(--muted);background:rgba(0,0,0,.16)}
 .inlineActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.wide{grid-column:1/-1}
@@ -1819,6 +1819,30 @@ html.force-mobile .navTab{padding:6px 12px!important;font-size:12px!important}
 html.force-mobile .navTabs .btn.primary#addRecipeBtn{padding:6px 10px!important;font-size:12px!important}
 .addRecipeMobile{display:none}
 .ingNameSuggItem:hover{background:#fde9b0!important}
+
+/* Recipe category groups */
+.recipeCatGroup{margin-bottom:16px}
+.recipeCatHeader{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:12px;cursor:pointer;background:linear-gradient(135deg,#f5ead2,#ede0c4);border:1px solid rgba(151,111,47,.18);user-select:none;transition:.12s background}
+.recipeCatHeader:hover{background:linear-gradient(135deg,#f0e0b5,#e5d0a8)}
+.recipeCatChevron{font-size:10px;color:#9b7e56;transition:.15s transform;flex-shrink:0}
+.recipeCatChevron.open{transform:rotate(90deg)}
+.recipeCatName{font-weight:900;font-size:14px;color:#39291b;flex:1}
+.recipeCatCount{font-size:11px;font-weight:800;color:#9b7e56;background:rgba(151,111,47,.12);border-radius:8px;padding:2px 8px}
+.recipeCatCards{display:none;gap:8px;padding-top:8px}
+.recipeCatCards.open{display:grid}
+.recipeTabShort{display:none}
+@media(max-width:620px){.recipeTabFull{display:none}.recipeTabShort{display:inline}}
+html.force-mobile .recipeTabFull{display:none}
+html.force-mobile .recipeTabShort{display:inline}
+
+@media(max-width:620px){.sideNote{display:none!important}}
+html.force-mobile .sideNote{display:none!important}
+.rowOutOfStock td{background:rgba(220,50,50,.06)!important}
+.rowOutOfStock:hover td{background:rgba(220,50,50,.1)!important}
+.emptyPhoto{font-size:20px!important;padding:4px 8px!important;line-height:1;border:none!important;background:transparent!important;opacity:.4}
+.emptyPhoto:hover{opacity:.8!important}
+.rowActions .iconBtn{background:none!important;border:none!important;box-shadow:none!important;padding:0!important;font-size:18px;color:#9b7e56;cursor:pointer;line-height:1;opacity:.6}
+.rowActions .iconBtn:hover{opacity:1;color:#39291b}
 </style>
 </head>
 <body>
@@ -1865,7 +1889,7 @@ html.force-mobile .navTabs .btn.primary#addRecipeBtn{padding:6px 10px!important;
       </div>
       <section class="panel">
         <div class="panelHead"><div><div class="panelTitle">Pantry</div><div class="muted" id="resultCount"></div></div><div class="actions"><button class="metricsTinyToggle panelMetricsToggle" id="metricsToggle" onclick="toggleMetrics()" aria-label="Hide pantry metrics" title="Hide pantry metrics">Summary −</button><button class="btn resolveBtn" id="resolveBtn" onclick="openResolvePopup()">Resolve Missing Values</button><button class="btn primary" onclick="openEditor()">+ Add</button></div></div>
-        <div class="tableWrap"><table class="inventoryTable"><thead><tr><th onclick="setSort('name')">Item</th><th onclick="setSort('status')">Stock</th><th onclick="setSort('category')">Category</th><th onclick="setSort('storage')">Storage</th><th onclick="setSort('storeLocation')">Store Location</th><th onclick="setSort('price')">Price</th><th>Picture</th><th>Pickup</th><th></th></tr></thead><tbody id="tbody"></tbody></table></div>
+        <div class="tableWrap"><table class="inventoryTable"><thead><tr><th onclick="setSort('name')">Item</th><th onclick="setSort('status')">Stock</th><th onclick="setSort('category')">Category</th><th onclick="setSort('storage')">Storage</th><th onclick="setSort('storeLocation')">Location</th><th onclick="setSort('price')">Price</th><th>Picture</th><th>Pickup</th><th>⚙</th></tr></thead><tbody id="tbody"></tbody></table></div>
       </section>
     </main>
   </section>
@@ -1873,9 +1897,9 @@ html.force-mobile .navTabs .btn.primary#addRecipeBtn{padding:6px 10px!important;
   <section class="pageView" id="page-recipes">
     <section class="panel fullPanel">
       <div class="navTabs" aria-label="Recipe tools" style="display:flex;flex-wrap:nowrap;align-items:center;overflow:hidden">
-        <button class="navTab active" id="labtab-library" onclick="switchLab('library')" style="white-space:nowrap;flex-shrink:0">Recipe Library</button>
-        <button class="navTab" id="labtab-test" onclick="switchLab('test')" style="white-space:nowrap;flex-shrink:0">Recipe Testing</button>
-        <button class="btn" onclick="openNotionImport()" style="flex-shrink:0;white-space:nowrap;margin-left:auto" title="Import from Notion">⬆ Import</button><button class="btn primary" id="addRecipeBtn" onclick="focusRecipeForm()" style="flex-shrink:0;white-space:nowrap;margin-left:6px"><span class="addRecipeFull">+ Add Recipe</span><span class="addRecipeMobile">+ Add</span></button>
+        <button class="navTab active" id="labtab-library" onclick="switchLab('library')" style="white-space:nowrap;flex-shrink:0"><span class="recipeTabFull">Recipe Library</span><span class="recipeTabShort">Recipe</span></button>
+        <button class="navTab" id="labtab-test" onclick="switchLab('test')" style="white-space:nowrap;flex-shrink:0"><span class="recipeTabFull">Recipe Testing</span><span class="recipeTabShort">Testing</span></button>
+        <button class="btn" onclick="openNotionImport()" style="flex-shrink:0;white-space:nowrap;margin-left:auto" title="Import from Notion"><span class="recipeTabFull">⬆ Import</span><span class="recipeTabShort">Import</span></button><button class="btn primary" id="addRecipeBtn" onclick="focusRecipeForm()" style="flex-shrink:0;white-space:nowrap;margin-left:6px"><span class="addRecipeFull">+ Add Recipe</span><span class="addRecipeMobile">+ Add</span></button>
       </div>
 
       <div class="labPanel active" id="lab-library">
@@ -1985,7 +2009,7 @@ html.force-mobile .navTabs .btn.primary#addRecipeBtn{padding:6px 10px!important;
   <option value="essentials" data-short="Essentials" data-long="Just Essentials">Just Essentials</option>
 </select>
 <select id="grocerySort" class="field grocerySort" onchange="renderPickup()">
-  <option value="storeLocation" data-short="Location" data-long="Sort: Store Location">Sort: Store Location</option>
+  <option value="storeLocation" data-short="Location" data-long="Sort: Location">Sort: Location</option>
   <option value="name" data-short="Name" data-long="Sort: Item Name">Sort: Item Name</option>
   <option value="priceDesc" data-short="Price ↓" data-long="Sort: Price High to Low">Sort: Price High to Low</option>
   <option value="priceAsc" data-short="Price ↑" data-long="Sort: Price Low to High">Sort: Price Low to High</option>
@@ -2018,7 +2042,7 @@ html.force-mobile .navTabs .btn.primary#addRecipeBtn{padding:6px 10px!important;
       <input type="hidden" id="editId" />
       <div class="formGrid">
         <div class="formGroup full"><label>Item Name</label><input id="itemName" class="field" /></div>
-        <div class="formGroup"><label>Store Location</label><input id="storeLocation" class="field" placeholder="Aisle 6, Dairy, Produce..." /></div>
+        <div class="formGroup"><label>Location</label><input id="storeLocation" class="field" placeholder="Aisle 6, Dairy, Produce..." /></div>
         <div class="formGroup"><label>Storage</label><input id="storage" class="field" placeholder="Pantry, Fridge, Freezer..." /></div>
         <div class="formGroup"><label>Category</label><select id="category" class="field"><option>STAPLES</option><option>RECIPES</option><option>PERSONAL</option><option>LUXURY</option><option>UNCATEGORIZED</option></select></div>
         <div class="formGroup"><label>Price</label><input id="price" class="field" placeholder="$4.98 / Unknown" /></div>
@@ -2227,7 +2251,7 @@ function renderTable(){
   const rc=document.getElementById('resultCount'); if(rc) rc.textContent='';
   const tbody=document.getElementById('tbody'); if(!tbody) return;
   if(!list.length){ tbody.innerHTML=`<tr><td colspan="9" class="empty">No items match this filter.</td></tr>`; return; }
-  tbody.innerHTML=list.map(it=>`<tr ondblclick="openEditor('${it.id}')" onclick="handlePantryRowTap('${it.id}',event)"><td class="nameCell"><span class="itemEmojiCell">${it.photo?`<img src="${it.photo}" class="itemPhotoThumb" alt="${escapeHtml(it.name||'')}">`:`<span class="itemEmojiIcon">${getItemEmoji(it)}</span>`}</span>${subtleValue(it.name,'Unnamed item')}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','status')" title="Click to edit stock status">${stockBadge(it.status)}${isBlankishValue(it.status)?'<span class="blankFlag" title="Blank or needs update"></span>':''}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','category')" title="Click to edit category">${subtleBadge(it.category, it.category==='LUXURY'?'luxury':'')}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','storage')" title="Click to edit storage">${subtleValue(it.storage)}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','storeLocation')" title="Click to edit store location">${subtleValue(it.storeLocation)}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','price')" title="Click to edit price">${subtleValue(it.price)}</td><td class="photoCell">${it.photo?`<button class="btn photoViewBtn" onclick="event.stopPropagation();openPhotoPopup('${it.id}')">View</button>`:`<button class="btn photoViewBtn emptyPhoto" onclick="event.stopPropagation();toast('No photo stored for this item.')">No Photo</button>`}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','pickup')" title="Click to edit pickup status">${pickupNeeded(it)?badge('Pickup','pickup'):badge(isLuxury(it)?'Luxury Skip':'No','unknown')}</td><td><div class="rowActions"><button class="iconBtn" onclick="event.stopPropagation();openEditor('${it.id}')">✎</button></div></td></tr>`).join('');
+  tbody.innerHTML=list.map(it=>`<tr class="${it.status==='Out of Stock'?'rowOutOfStock':''}" ondblclick="openEditor('${it.id}')" onclick="handlePantryRowTap('${it.id}',event)"><td class="nameCell"><span class="itemEmojiCell">${it.photo?`<img src="${it.photo}" class="itemPhotoThumb" alt="${escapeHtml(it.name||'')}">`:`<span class="itemEmojiIcon">${getItemEmoji(it)}</span>`}</span>${subtleValue(it.name,'Unnamed item')}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','status')" title="Click to edit stock status">${stockBadge(it.status)}${isBlankishValue(it.status)?'<span class="blankFlag" title="Blank or needs update"></span>':''}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','category')" title="Click to edit category">${subtleBadge(it.category, it.category==='LUXURY'?'luxury':'')}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','storage')" title="Click to edit storage">${subtleValue(it.storage)}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','storeLocation')" title="Click to edit location">${subtleValue(it.storeLocation)}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','price')" title="Click to edit price">${subtleValue(it.price)}</td><td class="photoCell">${it.photo?`<button class="btn photoViewBtn" onclick="event.stopPropagation();openPhotoPopup('${it.id}')">View</button>`:`<button class="btn photoViewBtn emptyPhoto" onclick="event.stopPropagation();openEditor('${it.id}')" title="Add photo">🖼</button>`}</td><td class="editable-cell" onclick="event.stopPropagation();openInlineEdit(event,'${it.id}','pickup')" title="Click to edit pickup status">${pickupNeeded(it)?badge('Pickup','pickup'):badge(isLuxury(it)?'Luxury Skip':'No','unknown')}</td><td><div class="rowActions"><button class="iconBtn" onclick="event.stopPropagation();openEditor('${it.id}')" title="Edit item">⋯</button></div></td></tr>`).join('');
 }
 
 function groceryCategoryForItem(it){
@@ -2739,7 +2763,7 @@ function openInlineEdit(event, id, field){
   const it = items.find(x=>x.id===id);
   if(!it) return;
 
-  const LABELS = {status:'Stock Status', storage:'Storage', storeLocation:'Store Location', price:'Price'};
+  const LABELS = {status:'Stock Status', storage:'Storage', storeLocation:'Location', price:'Price'};
   const currentVal = String(it[field]||'');
 
   const popover = document.createElement('div');
@@ -3048,18 +3072,44 @@ function switchLab(tab){
   });
   renderKitchenLab();
 }
+const _recipeCatOpen = {};
+function toggleRecipeCat(cat){
+  _recipeCatOpen[cat] = _recipeCatOpen[cat]===false ? true : false;
+  renderRecipeCards();
+}
 function renderRecipeCards(){
   const el=document.getElementById('recipeCards'); if(!el) return;
   if(!recipes.length){ el.innerHTML='<div class="empty">No recipes yet. Add your first recipe on the right.</div>'; return; }
-  el.innerHTML=recipes.map(r=>{
+
+  // Group by category
+  const groups={};
+  recipes.forEach(r=>{
+    const cat=r.category||'Uncategorized';
+    if(!groups[cat]) groups[cat]=[];
+    groups[cat].push(r);
+  });
+
+  const makeCard=r=>{
     const m=pantryMatchForIngredients(r.ingredients||[]);
     const missing=m.missing.slice(0,5).map(x=>escapeHtml(x.line)).join(', ');
-    return `<div class="recipeCard recipeLibraryCard ${activeCooking.recipeIds.includes(r.id)?'cookingSelected':''}" role="button" tabindex="0" onclick="editRecipe('${r.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();editRecipe('${r.id}')}"><div class="cardTitleLine"><strong>${escapeHtml(r.name)}</strong><span class="tinyChip">${m.score}% pantry</span></div><div class="miniMeta">${escapeHtml(r.category||'Recipe')}</div><div class="scoreBar"><div class="scoreFill" style="width:${m.score}%"></div></div><div class="miniMeta">${m.missing.length?`Needs: ${missing}${m.missing.length>5?'…':''}`:'All listed ingredients ready.'}</div><div class="chipRow"><span class="tinyChip">${normalizeRecipeIngredients(r.ingredients).length} ingredients</span><span class="tinyChip">${testEntries.filter(t=>t.recipeId===r.id).length} tests</span></div><div class="inlineActions" onkeydown="event.stopPropagation()"><button class="btn" onclick="event.stopPropagation();editRecipe('${r.id}')">View Recipe</button><button class="btn" onclick="event.stopPropagation();openRecipePreparation('${r.id}')">Preparation</button><button class="btn" onclick="event.stopPropagation();selectRecipeForTest('${r.id}')">Test</button></div></div>`;
+    return `<div class="recipeCard recipeLibraryCard ${activeCooking.recipeIds.includes(r.id)?'cookingSelected':''}" role="button" tabindex="0" onclick="editRecipe('${r.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();editRecipe('${r.id}')}"><div class="cardTitleLine"><strong>${escapeHtml(r.name)}</strong><span class="tinyChip">${m.score}% pantry</span></div><div class="scoreBar"><div class="scoreFill" style="width:${m.score}%"></div></div><div class="miniMeta">${m.missing.length?`Needs: ${missing}${m.missing.length>5?'…':''}`:'All ingredients ready.'}</div><div class="chipRow"><span class="tinyChip">${normalizeRecipeIngredients(r.ingredients).length} ingredients</span><span class="tinyChip">${testEntries.filter(t=>t.recipeId===r.id).length} tests</span></div><div class="inlineActions" onkeydown="event.stopPropagation()"><button class="btn" onclick="event.stopPropagation();editRecipe('${r.id}')">View Recipe</button><button class="btn" onclick="event.stopPropagation();openRecipePreparation('${r.id}')">Preparation</button><button class="btn" onclick="event.stopPropagation();selectRecipeForTest('${r.id}')">Test</button></div></div>`;
+  };
+
+  el.innerHTML=Object.entries(groups).map(([cat,catRecipes])=>{
+    const isOpen=_recipeCatOpen[cat]!==false; // open by default
+    return `<div class="recipeCatGroup">
+      <div class="recipeCatHeader" onclick="toggleRecipeCat('${escapeHtml(cat)}')">
+        <span class="recipeCatChevron ${isOpen?'open':''}">▶</span>
+        <span class="recipeCatName">${escapeHtml(cat)}</span>
+        <span class="recipeCatCount">${catRecipes.length}</span>
+      </div>
+      <div class="recipeCatCards ${isOpen?'open':''}">${catRecipes.map(makeCard).join('')}</div>
+    </div>`;
   }).join('');
 }
 function renderRecipeFocus(){ document.getElementById('recipeLibraryGrid')?.classList.toggle('focusMode',recipeFocusMode); document.querySelector('.navTabs')?.classList.toggle('focusMode-active',recipeFocusMode); const add=document.getElementById('addRecipeBtn'); if(add) add.style.display=recipeFocusMode?'none':''; }
 function openRecipeFocus(){ recipeFocusMode=true; renderRecipeFocus(); document.getElementById('recipeName')?.focus(); }
-function closeRecipeFocus(){ recipeFocusMode=false; clearRecipeForm(); closeRecipeTestArchive(); renderRecipeFocus(); }
+function closeRecipeFocus(){ recipeFocusMode=false; clearRecipeForm(); closeRecipeTestArchive(); switchLab('library'); }
 function focusRecipeForm(){ switchPage('recipes'); switchLab('library'); clearRecipeForm(); openRecipeFocus(); }
 function recipeCategories(){ return ['Side Dishes','Breakfast','Dinner','Deserts','Cookies']; }
 function renderRecipeCategories(selected=''){ const el=document.getElementById('recipeCategory'); if(!el) return; el.innerHTML=recipeCategories().map(c=>`<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('')+'<option value="__add__">+ Add new category</option>'; el.value=recipeCategories().includes(selected)?selected:recipeCategories()[0]||''; }
@@ -3083,7 +3133,7 @@ function renderIngredientSuggestions(){ const q=normalize(document.getElementByI
 function addRecipeIngredient(id){ const item=items.find(i=>i.id===id); if(!item||recipeDraftIngredients.some(entry=>entry.pantryId===id)) return; recipeDraftIngredients.push({pantryId:item.id,name:item.name,amount:'',gathered:false}); document.getElementById('recipeIngredientSearch').value=''; document.getElementById('ingredientSuggestions').classList.remove('show'); renderRecipeIngredientRows(); }
 function updateRecipeIngredient(index,key,value,shouldRender=true){ recipeDraftIngredients[index][key]=key==='gathered'?!!value:value; if(shouldRender) renderRecipeIngredientRows(); }
 function removeRecipeIngredient(index){ recipeDraftIngredients.splice(index,1); renderRecipeIngredientRows(); }
-function renderRecipeIngredientRows(){ const el=document.getElementById('recipeIngredientRows'); if(!el) return; const isMobile=isMobileContext(); el.innerHTML=recipeDraftIngredients.length?recipeDraftIngredients.map((entry,index)=>{ const pantry=ingredientPantryItem(entry)||{}, status=pantry.status||'Not in pantry', statusClass=ingredientStatusClass(entry); if(isMobile){ return `<div class="recipeIngredientRow" onclick="openIngredientEditSheet(${index})" style="cursor:pointer;${entry.gathered?'opacity:.5;text-decoration:line-through':''}"><div><div class="recipeIngredientName"><span class="ingredientStatus ${statusClass}"></span>${escapeHtml(entry.name)}</div>${entry.amount?'<div class="recipeIngredientMeta">'+(recipeScale!==1&&scaledAmount(entry.amount)?escapeHtml(scaledAmount(entry.amount))+' <span style="opacity:.5;font-size:10px">(scaled)</span>':escapeHtml(entry.amount))+'</div>':''}</div><label class="gatheredLabel" onclick="event.stopPropagation()"><input type="checkbox" ${entry.gathered?'checked':''} onchange="updateRecipeIngredient(${index},'gathered',this.checked)" /></label></div>`; } return `<div class="recipeIngredientRow" style="${entry.gathered?'opacity:.5':''}" data-ing-index="${index}"><div style="position:relative"><div class="recipeIngredientName"><span class="ingredientStatus ${statusClass}"></span><input class="field ingNameInput" value="${escapeHtml(entry.name)}" placeholder="Ingredient name..." oninput="updateIngredientName(${index},this.value)" onblur="hideIngNameSuggestions(${index})" autocomplete="off"  /></div><div class="ingNameSuggestions" id="ing-sugg-${index}" style="display:none;position:absolute;top:100%;left:0;right:0;background:#fffdf9;border:1.5px solid rgba(151,111,47,.25);border-radius:10px;box-shadow:0 8px 24px rgba(102,72,31,.15);z-index:50;max-height:180px;overflow-y:auto"></div>${recipeScale!==1&&scaledAmount(entry.amount)?`<div class="recipeIngredientMeta" style="font-weight:900;color:#b1843f">→ ${escapeHtml(scaledAmount(entry.amount))}</div>`:''}</div><input class="field" value="${escapeHtml(entry.amount)}" placeholder="Amount" oninput="updateRecipeIngredient(${index},'amount',this.value,false)" /><label class="gatheredLabel"><input type="checkbox" ${entry.gathered?'checked':''} onchange="updateRecipeIngredient(${index},'gathered',this.checked)" /></label><button class="iconBtn" onclick="removeRecipeIngredient(${index})">✕</button></div>`; }).join(''):'<div class="sideNote">Type above to add ingredients from your pantry.</div>'; }
+function renderRecipeIngredientRows(){ const el=document.getElementById('recipeIngredientRows'); if(!el) return; const isMobile=isMobileContext(); el.innerHTML=recipeDraftIngredients.length?recipeDraftIngredients.map((entry,index)=>{ const pantry=ingredientPantryItem(entry)||{}, status=pantry.status||'Not in pantry', statusClass=ingredientStatusClass(entry); if(isMobile){ return `<div class="recipeIngredientRow" onclick="openIngredientEditSheet(${index})" style="cursor:pointer;${entry.gathered?'opacity:.5;text-decoration:line-through':''}"><div><div class="recipeIngredientName"><span class="ingredientStatus ${statusClass}"></span>${escapeHtml(entry.name)}<span style="font-weight:800;color:#b1843f;margin-left:8px;font-size:12px">${entry.amount?(recipeScale!==1&&scaledAmount(entry.amount)?escapeHtml(scaledAmount(entry.amount)):escapeHtml(entry.amount)):''}</span></div></div><label class="gatheredLabel" onclick="event.stopPropagation()"><input type="checkbox" ${entry.gathered?'checked':''} onchange="updateRecipeIngredient(${index},'gathered',this.checked)" /></label></div>`; } return `<div class="recipeIngredientRow" style="${entry.gathered?'opacity:.5':''}" data-ing-index="${index}"><div style="position:relative"><div class="recipeIngredientName"><span class="ingredientStatus ${statusClass}"></span><input class="field ingNameInput" value="${escapeHtml(entry.name)}" placeholder="Ingredient name..." oninput="updateIngredientName(${index},this.value)" onblur="hideIngNameSuggestions(${index})" autocomplete="off"  /></div><div class="ingNameSuggestions" id="ing-sugg-${index}" style="display:none;position:absolute;top:100%;left:0;right:0;background:#fffdf9;border:1.5px solid rgba(151,111,47,.25);border-radius:10px;box-shadow:0 8px 24px rgba(102,72,31,.15);z-index:50;max-height:180px;overflow-y:auto"></div>${recipeScale!==1&&scaledAmount(entry.amount)?`<div class="recipeIngredientMeta" style="font-weight:900;color:#b1843f">→ ${escapeHtml(scaledAmount(entry.amount))}</div>`:''}</div><input class="field" value="${escapeHtml(entry.amount)}" placeholder="Amount" oninput="updateRecipeIngredient(${index},'amount',this.value,false)" /><label class="gatheredLabel"><input type="checkbox" ${entry.gathered?'checked':''} onchange="updateRecipeIngredient(${index},'gathered',this.checked)" /></label><button class="iconBtn" onclick="removeRecipeIngredient(${index})">✕</button></div>`; }).join(''):'<div class="sideNote">Type above to add ingredients from your pantry.</div>'; }
 function renderRecipePreparationPreview(){
   const el=document.getElementById('recipePreparationPreview'); if(!el) return;
   const ctx=currentRecipeTimerContext();
@@ -3840,7 +3890,7 @@ function renderTimerCard(t){
     <div class="timerActions timerMainActions">
       <button class="timerCircleBtn del" onclick="deleteTimerDirect('${t.id}')" title="Delete">✕</button>
       <button class="timerCircleBtn clockFaceToggle" onclick="toggleTimerClockFace('${t.id}',this)" title="Clock view" style="font-size:16px;background:rgba(151,111,47,.1);color:#7a5a2a">🕐</button>
-      <button class="timerCircleBtn ${t.running?'pause':'play'}" onclick="toggleTimer('${t.id}')">${t.running?'⏸':'▶'}</button>
+      <button class="timerCircleBtn ${t.running?'pause':'play'}" onclick="toggleTimer('${t.id}')">${done?'↺':t.running?'⏸':'▶'}</button>
     </div>
     <div class="timerClockFace" id="tcf-${t.id}" style="display:none;grid-column:1/-1;margin-top:8px"></div>
     <div class="timerActions timerEditActions" style="display:none">
@@ -3981,7 +4031,31 @@ function toggleTimerEdit(chip){
   const editPanel = card.querySelector('.timerEditActions');
   if(editPanel) editPanel.style.display = isOpen ? 'none' : 'flex';
 }
-function toggleTimer(id){ const t=timers.find(x=>x.id===id); if(!t || t.mode==='clock') return; if(t.running){ const val=timerSecondsNow(t); if(t.mode==='countdown') t.remaining=val; else t.elapsed=val; t.running=false; t.lastStart=null; } else { t.running=true; t.lastStart=Date.now(); } persistTimers(); renderTimers(); }
+function toggleTimer(id){
+  const t=timers.find(x=>x.id===id); if(!t || t.mode==='clock') return;
+  // If countdown is done, restart it
+  if(t.mode==='countdown' && timerSecondsNow(t)<=0){
+    t.remaining=t.total||0; t.elapsed=0; t.done=false;
+    t.running=true; t.lastStart=Date.now();
+    persistTimers(); renderTimers(); restoreClockFaces(); return;
+  }
+  if(t.running){ const val=timerSecondsNow(t); if(t.mode==='countdown') t.remaining=val; else t.elapsed=val; t.running=false; t.lastStart=null; }
+  else { t.running=true; t.lastStart=Date.now(); }
+  persistTimers(); renderTimers(); restoreClockFaces();
+}
+function restoreClockFaces(){
+  Object.keys(_timerClockFaceOpen).forEach(id=>{
+    if(!_timerClockFaceOpen[id]) return;
+    const card = document.querySelector(`.timerCard[data-timer-id="${id}"]`);
+    if(!card) return;
+    const faceEl = card.querySelector('.timerClockFace');
+    const bigEl = card.querySelector('.timerBig');
+    const btnEl = card.querySelector('.clockFaceToggle');
+    if(faceEl){ faceEl.style.display='block'; renderTimerClockFace(id); }
+    if(bigEl) bigEl.style.display='none';
+    if(btnEl){ btnEl.style.background='linear-gradient(135deg,#e8c97a,#b1843f)'; btnEl.style.color='#fff'; }
+  });
+}
 function toggleClockTimer(id){
   const t=timers.find(x=>x.id===id); if(!t || t.mode!=='clock') return;
   // If done, restart from full duration
@@ -4943,10 +5017,143 @@ function renderTimerClockFace(id){
 
 function openNotionImport(){
   document.getElementById('notionImportText').value='';
+  document.getElementById('importStep1').style.display='block';
+  document.getElementById('importStep2').style.display='none';
   document.getElementById('notionImportBackdrop').style.display='flex';
 }
 function closeNotionImport(){
   document.getElementById('notionImportBackdrop').style.display='none';
+}
+function backToImportStep1(){
+  document.getElementById('importStep1').style.display='block';
+  document.getElementById('importStep2').style.display='none';
+}
+function previewImport(){
+  const raw = document.getElementById('notionImportText').value.trim();
+  if(!raw){ toast('Please paste some text first.'); return; }
+
+  // Parse using existing logic
+  let text = raw
+    .replace(/\*\s*\[\s*x?\s*\]/g, '\n•ITEM• ')
+    .replace(/\[\s*x?\s*\]/g, '\n•ITEM• ')
+    .replace(/\r\n/g, '\n');
+
+  const lines = text.split('\n');
+  let recipeName='', section='';
+  const ingredients=[], steps=[], notesArr=[];
+
+  for(let i=0;i<lines.length;i++){
+    const line=lines[i].trim(); if(!line) continue;
+    const clean=line.toLowerCase().replace(/[^a-z\s]/g,'').trim();
+    if(clean==='ingredients'||clean==='ingredient'){section='ingredients';continue;}
+    if(['preparation','instructions','directions','steps','method'].includes(clean)){section='preparation';continue;}
+    if(clean==='notes'||clean==='note'){section='notes';continue;}
+
+    if(!section&&!recipeName&&!line.startsWith('•ITEM•')){
+      const ss=line.match(/^(.+?)\s+(Ingredients|Preparation|Notes|Instructions)\s*$/i);
+      if(ss){recipeName=ss[1].trim();section=ss[2].toLowerCase();continue;}
+      recipeName=line.replace(/^#+\s*/,'').trim();continue;
+    }
+    if(line.startsWith('•ITEM•')){
+      const t=line.slice(6).trim(); if(!t) continue;
+      if(section==='ingredients') ingredients.push(t);
+      else if(section==='preparation') steps.push(t);
+      else if(section==='notes') notesArr.push(t);
+      continue;
+    }
+    // Mid-line section detection
+    const mid=line.match(/^(.*?)\s+(Ingredients|Preparation|Notes|Instructions)\s+(.+)$/i);
+    if(mid&&section){
+      const [,before,ns,after]=mid;
+      if(before){if(section==='ingredients')ingredients.push(before.trim());else if(section==='preparation')steps.push(before.trim());else notesArr.push(before.trim());}
+      section=ns.toLowerCase().replace('instructions','preparation');
+      if(after.trim()){if(section==='ingredients')ingredients.push(after.trim());else if(section==='preparation')steps.push(after.trim());else notesArr.push(after.trim());}
+      continue;
+    }
+    if(section&&line){
+      if(section==='ingredients')ingredients.push(line);
+      else if(section==='preparation')steps.push(line);
+      else if(section==='notes')notesArr.push(line);
+    }
+  }
+
+  // Populate preview fields
+  document.getElementById('importPreviewName').value = recipeName||'';
+  document.getElementById('importPreviewIngredients').value = ingredients.filter(Boolean).filter(i=>i.trim().length>1&&!/^[-–—]+$/.test(i.trim())).join('\n');
+  document.getElementById('importPreviewSteps').value = steps.filter(Boolean).filter(s=>s.trim().length>1&&!/^[-–—]+$/.test(s.trim())).join('\n');
+  document.getElementById('importPreviewNotes').value = notesArr.filter(n=>n&&n.toLowerCase()!=='notes').join('\n');
+  document.getElementById('importIngCount').textContent = `(${ingredients.length} found)`;
+  document.getElementById('importStepCount').textContent = `(${steps.length} found)`;
+
+  // Show step 2
+  document.getElementById('importStep1').style.display='none';
+  document.getElementById('importStep2').style.display='block';
+}
+function confirmImport(){
+  const recipeName = document.getElementById('importPreviewName').value.trim();
+  const ingredients = document.getElementById('importPreviewIngredients').value.trim().split('\n').filter(Boolean);
+  const steps = document.getElementById('importPreviewSteps').value.trim().split('\n').filter(Boolean).filter(s=>s.trim().length>1&&!/^[-–—]+$/.test(s.trim()));
+  const notes = document.getElementById('importPreviewNotes').value.trim();
+
+  if(!recipeName){ toast('Please enter a recipe name.'); return; }
+
+  switchPage('recipes'); switchLab('library'); clearRecipeForm(); openRecipeFocus();
+
+  const nameEl=document.getElementById('recipeName'); if(nameEl) nameEl.value=recipeName;
+
+  recipeDraftIngredients = ingredients.filter(i=>i.trim().length>1&&!/^[-–—]+$/.test(i.trim())).map(raw=>{
+    // Extract parenthetical metric amounts like (78g) as fallback
+    const parenAmount = raw.match(/\((\d+\.?\d*\s*g(?:rams?)?|\d+\.?\d*\s*(?:ml|oz|lbs?))\)/i)?.[1]||null;
+    // Strip parenthetical metric equivalents like (78g) or (1.5g) first
+    let cleaned = raw.replace(/\s*\([^)]*\)/g, '').trim();
+    // Normalize ranges: "4-5" or "4–5" -> "4" (take first number)
+    cleaned = cleaned.replace(/^([\d½¼¾⅓⅔⅛⅜⅝⅞\/\.]+)\s*[-–]\s*([\d½¼¾⅓⅔⅛⅜⅝⅞\/\.]+)/,'$1');
+    // Smarter amount extraction: grab leading number/fraction + optional unit
+    const am=cleaned.match(/^([\d\/\.\-–½¼¾⅓⅔⅛⅜⅝⅞\s]+(?:cups?|tbsps?|tsps?|tbls?|tablespoons?|teaspoons?|ozs?|ounces?|lbs?|pounds?|grams?|kg|ml|liters?|litres?|cloves?|slices?|pieces?|pinch(?:es)?|handfuls?|bunches?|heads?|cans?|jars?|pkgs?|packages?|sticks?|sprigs?|stalks?|fillets?|inches?|quarts?|pints?|gallons?|drops?)?(?:\s*\+\s*[\d\/\.\-–½¼¾⅓⅔⅛⅜⅝⅞\s]+(?:cups?|tbsps?|tsps?|tablespoons?|teaspoons?)?)?)\s+/i);
+    let amount='', name=cleaned;
+    if(am&&am[1].trim().match(/[\d½¼¾⅓⅔⅛⅜⅝⅞]/)){
+      amount=am[1].trim();
+      name=cleaned.slice(am[0].length).trim();
+    }
+    // If no unit match, try grabbing just a leading number/fraction
+    if(!amount){
+      const numOnly=cleaned.match(/^([\d\/\.\-–½¼¾⅓⅔⅛⅜⅝⅞]+)\s+(.+)/);
+      if(numOnly){amount=numOnly[1];name=numOnly[2].trim();}
+    }
+    // If still no amount, use parenthetical gram amount as fallback; if both, combine
+    if(!amount && parenAmount) amount = parenAmount;
+    else if(amount && parenAmount) amount = `${amount} (${parenAmount})`;
+    name = name.replace(/,\s*(cubed|chopped|diced|minced|sliced|roughly|finely|freshly|grated|melted|softened|room temperature|cold|divided|packed|plus.*)$/i,'').trim();
+    const nl=name.toLowerCase();
+    // Score each pantry item: prefer longer/more specific matches
+    let bestMatch=null, bestScore=0;
+    items.forEach(it=>{
+      const il=it.name.toLowerCase();
+      let score=0;
+      if(nl===il) score=100; // exact match
+      else if(nl.includes(il)) score=il.length*2; // ingredient contains pantry name
+      else if(il.includes(nl)) score=nl.length*1.5; // pantry name contains ingredient
+      else {
+        // word overlap — require all significant words of pantry name to appear in ingredient
+        const pWords=il.split(/\s+/).filter(w=>w.length>3);
+        const iWords=nl.split(/\s+/);
+        const matches=pWords.filter(w=>iWords.some(iw=>iw.includes(w)||w.includes(iw)));
+        if(matches.length===pWords.length&&pWords.length>0) score=matches.length*3;
+      }
+      if(score>bestScore){bestScore=score;bestMatch=it;}
+    });
+    const pm=bestScore>=6?bestMatch:null;
+    return pm?{pantryId:pm.id,name:pm.name,amount,gathered:false}:{pantryId:null,name,amount,gathered:false};
+  });
+
+  recipeDraftSteps = steps;
+
+  const notesEl=document.getElementById('recipeNotes'); if(notesEl) notesEl.value=notes;
+
+  renderRecipeIngredientRows();
+  renderRecipePreparationPreview();
+  closeNotionImport();
+  toast(`Imported: ${ingredients.length} ingredients, ${steps.length} steps. Review and save.`);
 }
 function parseAndImportNotion(){
   const raw = document.getElementById('notionImportText').value.trim();
@@ -5101,6 +5308,7 @@ function hideIngNameSuggestions(index){
     const box = document.getElementById('ing-sugg-'+index); if(box) box.style.display='none';
   },150);
 }
+
 </script>
 <div class="modalBackdrop" id="testArchiveBackdrop" onclick="if(event.target.id==='testArchiveBackdrop')closeTestArchive()">
   <div class="modal" style="max-width:740px;width:95vw;max-height:88vh;display:flex;flex-direction:column">
@@ -5170,7 +5378,7 @@ function hideIngNameSuggestions(index){
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
         <div>
-          <label style="font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:#9b7e56;display:block;margin-bottom:4px">Store Location</label>
+          <label style="font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:#9b7e56;display:block;margin-bottom:4px">Location</label>
           <input id="meLocation" class="field" style="font-size:13px;padding:9px 10px" placeholder="e.g. Aisle 3" onblur="mobileEditSave()" />
         </div>
         <div>
@@ -5229,32 +5437,51 @@ function hideIngNameSuggestions(index){
   </div>
 </div>
 <div id="notionImportBackdrop" class="modalBackdrop" style="display:none">
-  <div class="modal" style="max-width:560px;width:95vw">
-    <div class="modalHead">
-      <div><div class="panelTitle" style="font-size:16px">Import Recipe from Notion</div>
-      <div class="muted">Paste your Notion recipe text below. The app will extract the name, ingredients, preparation steps and notes.</div></div>
-      <button class="iconBtn" onclick="closeNotionImport()">✕</button>
+  <div class="modal" style="max-width:640px;width:95vw;max-height:90vh;overflow-y:auto">
+    <!-- Step 1: Paste -->
+    <div id="importStep1">
+      <div class="modalHead">
+        <div><div class="panelTitle" style="font-size:16px">⬆ Import Recipe</div>
+        <div class="muted">Paste recipe text from Notion, a website, or anywhere. The app will extract what it can.</div></div>
+        <button class="iconBtn" onclick="closeNotionImport()">✕</button>
+      </div>
+      <div style="padding:16px;display:grid;gap:12px">
+        <textarea id="notionImportText" class="field" rows="10" placeholder="Paste your recipe here in any format..." style="font-family:monospace;font-size:13px;resize:vertical"></textarea>
+        <div style="display:flex;gap:8px;justify-content:flex-end">
+          <button class="btn" onclick="closeNotionImport()">Cancel</button>
+          <button class="btn primary" onclick="previewImport()">Parse & Preview →</button>
+        </div>
+      </div>
     </div>
-    <div style="padding:16px;display:grid;gap:12px">
-      <textarea id="notionImportText" class="field" rows="12" placeholder="Paste your Notion recipe here...
-
-Texas Toast
-Ingredients
-
-* [ ] 2 thick cut white bread
-* [ ] 2 garlic cloves finely chopped
-
-Preparation
-
-* [ ] Melt butter on medium heat
-* [ ] Add garlic and stir
-
-Notes
-
-* [] Any notes here" style="font-family:monospace;font-size:13px;resize:vertical"></textarea>
-      <div style="display:flex;gap:8px;justify-content:flex-end">
-        <button class="btn" onclick="closeNotionImport()">Cancel</button>
-        <button class="btn primary" onclick="parseAndImportNotion()">Import Recipe</button>
+    <!-- Step 2: Preview & Edit -->
+    <div id="importStep2" style="display:none">
+      <div class="modalHead">
+        <div><div class="panelTitle" style="font-size:16px">Review & Edit</div>
+        <div class="muted">Correct anything before importing. You can edit all fields.</div></div>
+        <button class="iconBtn" onclick="backToImportStep1()">← Back</button>
+      </div>
+      <div style="padding:16px;display:grid;gap:14px">
+        <div>
+          <label style="font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:#9b7e56;display:block;margin-bottom:6px">Recipe Name</label>
+          <input id="importPreviewName" class="field" placeholder="Recipe name..." />
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:#9b7e56;display:block;margin-bottom:6px">Ingredients <span id="importIngCount" style="font-weight:700;color:#b1843f"></span></label>
+          <textarea id="importPreviewIngredients" class="field" rows="6" placeholder="One ingredient per line..." style="font-family:monospace;font-size:13px;resize:vertical"></textarea>
+          <div class="muted" style="font-size:11px;margin-top:4px">One per line. Format: amount + name (e.g. "2 cups flour")</div>
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:#9b7e56;display:block;margin-bottom:6px">Preparation Steps <span id="importStepCount" style="font-weight:700;color:#b1843f"></span></label>
+          <textarea id="importPreviewSteps" class="field" rows="6" placeholder="One step per line..." style="font-family:monospace;font-size:13px;resize:vertical"></textarea>
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:#9b7e56;display:block;margin-bottom:6px">Notes</label>
+          <textarea id="importPreviewNotes" class="field" rows="3" placeholder="Any notes..." style="font-family:monospace;font-size:13px;resize:vertical"></textarea>
+        </div>
+        <div style="display:flex;gap:8px;justify-content:flex-end">
+          <button class="btn" onclick="backToImportStep1()">← Back</button>
+          <button class="btn primary" onclick="confirmImport()">✓ Import Recipe</button>
+        </div>
       </div>
     </div>
   </div>
