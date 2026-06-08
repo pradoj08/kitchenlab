@@ -1843,6 +1843,27 @@ html.force-mobile .sideNote{display:none!important}
 .emptyPhoto:hover{opacity:.8!important}
 .rowActions .iconBtn{background:none!important;border:none!important;box-shadow:none!important;padding:0!important;font-size:18px;color:#9b7e56;cursor:pointer;line-height:1;opacity:.6}
 .rowActions .iconBtn:hover{opacity:1;color:#39291b}
+
+/* Pantry filter bar */
+.pantryFilterBar{display:flex;align-items:center;gap:10px;padding:10px 14px;flex-wrap:wrap;background:#fffdf9;border-bottom:1px solid rgba(151,111,47,.12)}
+.pantrySearchWrap{display:flex;align-items:center;gap:8px;background:#f5ead2;border:1.5px solid rgba(151,111,47,.2);border-radius:20px;padding:7px 14px;min-width:160px;max-width:220px}
+.pantrySearchIcon{font-size:13px;opacity:.6;flex-shrink:0}
+.pantrySearchInput{background:none;border:none;outline:none;font-size:13px;font-weight:700;color:#39291b;width:100%;font-family:inherit}
+.pantrySearchInput::placeholder{color:#9b7e56;font-weight:600}
+.pantryStatusPills{display:flex;gap:6px;flex-wrap:nowrap;align-items:center;overflow-x:auto}
+.statusPill{padding:6px 14px;border-radius:20px;border:1.5px solid rgba(151,111,47,.2);background:#fffdf9;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap;color:#7a5a2a;transition:.12s}
+.statusPill:hover{border-color:#b1843f;background:#fef5e4}
+.statusPill.active{background:#39291b;border-color:#39291b;color:#fffdf9}
+.statusPill.inStock.active{background:#2e6b2b;border-color:#2e6b2b;color:#fff}
+.statusPill.outOfStock.active{background:#c0392b;border-color:#c0392b;color:#fff}
+.statusPill.pickup.active{background:#b1843f;border-color:#b1843f;color:#fff}
+.statusPill.lowStock.active{background:#e67e22;border-color:#e67e22;color:#fff}
+.pantryFilterRight{display:flex;gap:8px;align-items:center;margin-left:auto}
+.pantrySort{font-size:12px;padding:7px 10px;border-radius:14px;min-width:0}
+.pantryFiltersBtn{padding:7px 12px;border-radius:14px;border:1.5px solid rgba(151,111,47,.2);background:#fffdf9;font-size:12px;font-weight:800;cursor:pointer;color:#7a5a2a;white-space:nowrap;transition:.12s}
+.pantryFiltersBtn:hover,.pantryFiltersBtn.active{border-color:#b1843f;background:#fef5e4}
+.pantryAdvancedFilters{display:flex;gap:8px;flex-wrap:wrap;padding:8px 14px;background:#f5ead2;border-bottom:1px solid rgba(151,111,47,.1)}
+.pantryAdvancedFilters .field{font-size:12px;padding:6px 10px;border-radius:12px}
 </style>
 </head>
 <body>
@@ -1865,17 +1886,37 @@ html.force-mobile .sideNote{display:none!important}
 
   <section class="pageView" id="page-pantry">
     <section class="grid pantryMetricsGrid" id="metrics"></section>
-    <section class="toolbar">
-      <input id="search" class="field" placeholder="Search ingredient, aisle, storage, category..." oninput="render()" />
+    <section class="toolbar pantryFilterBar">
+      <div class="pantrySearchWrap">
+        <span class="pantrySearchIcon">🔍</span>
+        <input id="search" class="pantrySearchInput" placeholder="Search items..." oninput="render()" />
+      </div>
+      <div class="pantryStatusPills">
+        <button class="statusPill active" id="spAll" onclick="setPantryStatusFilter('all')">All</button>
+        <button class="statusPill inStock" id="spInStock" onclick="setPantryStatusFilter('In Stock')">● In Stock</button>
+        <button class="statusPill outOfStock" id="spOutOfStock" onclick="setPantryStatusFilter('Out of Stock')">● Out of Stock</button>
+        <button class="statusPill pickup" id="spPickup" onclick="setPantryStatusFilter('pickup')">🛒 Pickup Needed</button>
+        <button class="statusPill lowStock" id="spLowStock" onclick="setPantryStatusFilter('Running Low')">🔔 Low Stock</button>
+      </div>
+      <div class="pantryFilterRight">
+        <select id="sortBy" class="field pantrySort" onchange="render()">
+          <option value="name">Sort: Item A–Z</option>
+          <option value="category">Sort: Category</option>
+          <option value="storage">Sort: Storage</option>
+          <option value="status">Sort: Stock Status</option>
+          <option value="price">Sort: Price</option>
+          <option value="updated">Sort: Last Updated</option>
+        </select>
+        <button class="pantryFiltersBtn" id="pantryFiltersBtn" onclick="togglePantryFilters()">⊞ Filters</button>
+      </div>
+    </section>
+    <section class="pantryAdvancedFilters" id="pantryAdvancedFilters" style="display:none">
       <select id="categoryFilter" class="field" onchange="render()"></select>
       <select id="storageFilter" class="field" onchange="render()"></select>
-      <select id="statusFilter" class="field" onchange="render()"></select>
       <select id="pickupFilter" class="field" onchange="render()">
         <option value="all">All Pickup Logic</option><option value="pickup">Pickup Needed</option><option value="noPickup">No Pickup Needed</option>
       </select>
-      <select id="sortBy" class="field" onchange="render()">
-        <option value="name">Sort: Item Name</option><option value="category">Sort: Category</option><option value="storage">Sort: Storage</option><option value="status">Sort: Stock Status</option><option value="price">Sort: Price</option><option value="updated">Sort: Last Updated</option>
-      </select>
+      <select id="statusFilter" class="field" style="display:none" onchange="render()"></select>
     </section>
 
     <main class="pageGrid">
@@ -2182,8 +2223,8 @@ function filteredItems(){
   const q=normalize(document.getElementById('search')?.value||'').toLowerCase();
   const cat=document.getElementById('categoryFilter')?.value||'all';
   const stor=document.getElementById('storageFilter')?.value||'all';
-  const stat=document.getElementById('statusFilter')?.value||'all';
-  const pick=document.getElementById('pickupFilter')?.value||'all';
+  const stat=_pantryStatusFilter==='pickup'||_pantryStatusFilter==='all'?'all':_pantryStatusFilter;
+  const pick=_pantryStatusFilter==='pickup'?'pickup':(document.getElementById('pickupFilter')?.value||'all');
   sortField=document.getElementById('sortBy')?.value || sortField;
   return items.filter(it=>{
     const hay=[it.name,it.storeLocation,it.storage,it.category,it.status,it.price,it.notes].join(' ').toLowerCase();
@@ -2202,6 +2243,7 @@ function filteredItems(){
     return String(av).localeCompare(String(bv), undefined, {numeric:true,sensitivity:'base'})*sortDir;
   });
 }
+let _pantryStatusFilter = 'all';
 function renderFilters(){
   const cats=['all',...Array.from(new Set(items.map(i=>i.category||'UNCATEGORIZED'))).sort()];
   const stors=['all',...Array.from(new Set(items.map(i=>i.storage||'Unassigned'))).sort()];
@@ -5309,6 +5351,28 @@ function hideIngNameSuggestions(index){
   },150);
 }
 
+
+function setPantryStatusFilter(val){
+  _pantryStatusFilter = val;
+  ['spAll','spInStock','spOutOfStock','spPickup','spLowStock'].forEach(id=>{
+    document.getElementById(id)?.classList.remove('active');
+  });
+  const map={'all':'spAll','In Stock':'spInStock','Out of Stock':'spOutOfStock','pickup':'spPickup','Running Low':'spLowStock'};
+  document.getElementById(map[val])?.classList.add('active');
+  // Sync with statusFilter select
+  const sf = document.getElementById('statusFilter');
+  if(sf && val!=='pickup') sf.value = val==='all'?'all':val;
+  const pf = document.getElementById('pickupFilter');
+  if(pf) pf.value = val==='pickup'?'pickup':'all';
+  render();
+}
+function togglePantryFilters(){
+  const el = document.getElementById('pantryAdvancedFilters');
+  const btn = document.getElementById('pantryFiltersBtn');
+  const show = el.style.display==='none';
+  el.style.display = show?'flex':'none';
+  btn?.classList.toggle('active', show);
+}
 </script>
 <div class="modalBackdrop" id="testArchiveBackdrop" onclick="if(event.target.id==='testArchiveBackdrop')closeTestArchive()">
   <div class="modal" style="max-width:740px;width:95vw;max-height:88vh;display:flex;flex-direction:column">
