@@ -59,12 +59,11 @@ h1{margin:0;font-size:clamp(26px,3vw,42px);letter-spacing:-.04em}
 .btn.warn{background:#3b2f08;border-color:#a16207;color:#fef08a}
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0}
 .card{background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.02));border:1px solid var(--line);border-radius:var(--radius);padding:15px;box-shadow:0 10px 25px rgba(0,0,0,.12)}
-.metric{min-height:96px;display:flex;flex-direction:column;justify-content:space-between}
+.metric{min-height:82px;display:flex;flex-direction:column;justify-content:center;gap:8px}
 .metricLink{cursor:pointer;transition:.16s transform,.16s border-color,.16s box-shadow}.metricActive{border-color:rgba(151,111,47,.5)!important;background:linear-gradient(135deg,#fef5e0,#fae8c0)!important;box-shadow:0 4px 14px rgba(151,111,47,.15)!important}
 .metricLink:hover{transform:translateY(-3px);border-color:rgba(56,189,248,.58);box-shadow:0 14px 32px rgba(0,0,0,.24),0 0 0 3px rgba(56,189,248,.1)}
 .metric .label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;font-weight:800}
 .metric .value{font-size:32px;font-weight:950;letter-spacing:-.04em}
-.metric .hint{font-size:12px;color:var(--muted)}
 .toolbar{display:grid;grid-template-columns:1.35fr repeat(5,minmax(140px,.55fr));gap:10px;margin:16px 0;align-items:center}
 .field{background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:14px;padding:12px 13px;outline:none;width:100%}
 .field:focus{border-color:#f59e0b;box-shadow:0 0 0 3px rgba(245,158,11,.12)}
@@ -275,7 +274,7 @@ h1{color:#2f2114;font-family:Georgia,"Times New Roman",serif;font-weight:700;let
 .navIcon{background:none;border-color:transparent;box-shadow:none}
 .navHint{color:#806f59}
 .card{background:linear-gradient(150deg,#fffefb,#f7f0e6);border-color:rgba(151,111,47,.18);box-shadow:0 12px 26px rgba(102,72,31,.08)}
-.metric .label{color:#8b765d}.metric .value{color:#302215}.metric .hint{color:#8b765d}
+.metric .label{color:#8b765d}.metric .value{color:#302215}
 .metricLink:hover{border-color:rgba(177,132,63,.62);box-shadow:0 14px 30px rgba(102,72,31,.13),0 0 0 3px rgba(177,132,63,.11)}
 .field,select,input,textarea{color:#312418;background:#fffdf9;border-color:rgba(128,94,45,.23)}
 .field:focus{border-color:#b1843f;box-shadow:0 0 0 3px rgba(177,132,63,.15)}
@@ -1445,9 +1444,39 @@ html.force-mobile .recipeBox{max-width:100%!important;overflow:hidden!important;
 html.force-mobile #recipeFormCard{max-width:100%!important;overflow:hidden!important;box-sizing:border-box!important;width:100%!important}
 html.force-mobile .recipeLibraryGrid{overflow:hidden!important;max-width:100%!important}
 html.force-mobile .catGrid{grid-template-columns:1fr!important}
-html.force-mobile .catCard{padding:14px 12px!important}
+html.force-mobile .catCard{padding:16px 18px!important}
+html.force-mobile .catCardHead{padding-left:2px!important;padding-right:2px!important;gap:10px!important}
 html.force-mobile .catCardName{font-size:13px!important}
 html.force-mobile .recipeIngredientRow{max-width:100%!important;overflow:hidden!important}
+.recipeCategoryGroup,.recipeIngredientGroup,.recipeNotesGroup{display:grid;gap:10px}
+@media(max-width:620px){
+  #recipeFormCard .formStack{display:flex!important;flex-direction:column!important}
+  #recipeFormCard .formStack>*{order:10}
+  #recipeId{order:0}
+  .recipeNameLabel{order:1}
+  .recipeNameInput{order:2}
+  #recipeFormCard .recipeScaleBar:not(.mobileScaleInline){order:3}
+  .recipePrepLabel{order:4}
+  #recipePreparationPreview{order:5}
+  .editPrepStepsBtn{order:6}
+  .recipeCategoryGroup{order:7}
+  .recipeIngredientGroup{order:8}
+  .recipeNotesGroup{order:9}
+  #recipeFormCard .inlineActions{order:10}
+}
+html.force-mobile #recipeFormCard .formStack{display:flex!important;flex-direction:column!important}
+html.force-mobile #recipeFormCard .formStack>*{order:10}
+html.force-mobile #recipeId{order:0}
+html.force-mobile .recipeNameLabel{order:1}
+html.force-mobile .recipeNameInput{order:2}
+html.force-mobile #recipeFormCard .recipeScaleBar:not(.mobileScaleInline){order:3}
+html.force-mobile .recipePrepLabel{order:4}
+html.force-mobile #recipePreparationPreview{order:5}
+html.force-mobile .editPrepStepsBtn{order:6}
+html.force-mobile .recipeCategoryGroup{order:7}
+html.force-mobile .recipeIngredientGroup{order:8}
+html.force-mobile .recipeNotesGroup{order:9}
+html.force-mobile #recipeFormCard .inlineActions{order:10}
 
 @media(max-width:620px){
   .navTabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:0}
@@ -1824,7 +1853,7 @@ html.force-mobile .navTabs .btn.primary#addRecipeBtn{padding:6px 10px!important;
 /* Recipe category groups */
 .recipeCatGroup{margin-bottom:0}
 .catGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-@media(max-width:480px){.catGrid{grid-template-columns:1fr}}
+@media(max-width:480px){.catGrid{grid-template-columns:1fr}.catCard{padding:16px 18px}.catCardHead{padding-left:2px;padding-right:2px;gap:10px}}
 .catCard{background:#fff;border:1.5px solid rgba(151,111,47,.18);border-radius:18px;padding:18px 16px 14px;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .15s;box-shadow:0 2px 8px rgba(102,72,31,.06)}
 .catCard:hover{border-color:rgba(151,111,47,.42);box-shadow:0 6px 20px rgba(102,72,31,.12);transform:translateY(-2px)}
 .catCardHead{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
@@ -1929,6 +1958,159 @@ html.force-mobile .sideNote{display:none!important}
   .navCard.mobileOnly{flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important}
 }
 html.force-mobile .navCard .navIcon{display:flex!important}
+
+/* Mobile Test Kitchen readability */
+@media(max-width:620px){
+  #lab-test .labGrid{grid-template-columns:1fr!important;gap:12px!important}
+  #lab-test .recipeCard,#lab-test .testCard{padding:12px!important;border-radius:16px!important;min-width:0;overflow:hidden}
+  #lab-test .formStack{gap:12px!important}
+  #lab-test .formStack label{font-size:12px!important;letter-spacing:.09em}
+  #lab-test .field,#lab-test input,#lab-test textarea,#lab-test select{font-size:16px!important;line-height:1.35!important;width:100%!important;box-sizing:border-box!important}
+  #lab-test input.field,#lab-test select.field{min-height:48px!important}
+  #lab-test textarea.field{min-height:96px!important}
+  #lab-test .testRecipeChooser{gap:8px!important}
+  #testRecipeSearchHint{font-size:13px!important;line-height:1.4!important}
+  #testIngredientPanel{padding:10px!important;overflow:visible!important}
+  #testIngredientPanel .itTableWrap{overflow:visible!important;border-radius:16px!important}
+  #testIngredientPanel .itTableHeader{align-items:flex-start!important;gap:8px!important;padding:10px 12px!important}
+  #testIngredientPanel .itTableTitle{font-size:14px!important;line-height:1.25!important}
+  #testIngredientPanel .itTable,#testIngredientPanel .itTable tbody,#testIngredientPanel .itTable tr,#testIngredientPanel .itTable td{display:block!important;width:100%!important;box-sizing:border-box!important}
+  #testIngredientPanel .itTable thead{display:none!important}
+  #testIngredientPanel .itTable tbody{padding:10px!important;background:#fcf6ec!important}
+  #testIngredientPanel .itTable tbody tr.itRow{display:grid!important;gap:9px!important;margin:0 0 10px!important;padding:12px!important;border:1px solid rgba(151,111,47,.18)!important;border-radius:15px!important;background:#fffdf9!important}
+  #testIngredientPanel .itTable tbody tr.itChanged{background:#fff4ef!important;border-color:rgba(162,79,71,.42)!important}
+  #testIngredientPanel .itTable td{padding:0!important;overflow:visible!important;white-space:normal!important}
+  #testIngredientPanel .itName{font-size:16px!important;font-weight:950!important;line-height:1.25!important;color:#2d1f0e!important}
+  #testIngredientPanel .itOriginal,#testIngredientPanel .itStatus,#testIngredientPanel .itNote{font-size:13px!important;line-height:1.35!important;color:#806f5d!important}
+  #testIngredientPanel .itOriginal::before,#testIngredientPanel .itTest::before,#testIngredientPanel .itNote::before{display:block;margin-bottom:4px;font-size:10px;font-weight:950;text-transform:uppercase;letter-spacing:.08em;color:#9b7e56}
+  #testIngredientPanel .itOriginal::before{content:"Original"}
+  #testIngredientPanel .itTest::before{content:"Test amount"}
+  #testIngredientPanel .itNote::before{content:"Note"}
+  #testIngredientPanel .testAmountSpinner{display:grid!important;grid-template-columns:minmax(0,1fr) 44px 44px!important;gap:7px!important;align-items:stretch!important}
+  #testIngredientPanel .testAmountInput{min-height:46px!important;font-size:16px!important;text-align:left!important;padding:10px 12px!important}
+  #testIngredientPanel .testSpinBtn{width:44px!important;height:46px!important;font-size:20px!important}
+  #testIngredientPanel .itNoteInput{min-height:46px!important;font-size:16px!important;padding:10px 12px!important}
+  #testIngredientPanel .itStatus{display:flex!important;justify-content:flex-start!important}
+  #testIngredientPanel .changeFlag,#testIngredientPanel .itBaseline{font-size:11px!important;padding:5px 9px!important;border-radius:999px}
+  #testIngredientPanel .itAddRow td{display:block!important}
+  #testIngredientPanel .itAddBtn{width:100%!important;min-height:46px!important}
+  #lab-test .testRatingGrid{grid-template-columns:1fr!important}
+  #lab-test .inlineActions{display:grid!important;grid-template-columns:1fr!important;gap:8px!important}
+  #lab-test .inlineActions .btn{width:100%!important;min-height:46px!important}
+  #lab-test .cardTitleLine{flex-wrap:wrap!important}
+  #lab-test .testCards{gap:10px!important}
+  #lab-test .testEntryIngredientChanges{font-size:13px!important;line-height:1.45!important}
+}
+html.force-mobile #lab-test .labGrid{grid-template-columns:1fr!important;gap:12px!important}
+html.force-mobile #lab-test .recipeCard,html.force-mobile #lab-test .testCard{padding:12px!important;border-radius:16px!important;min-width:0;overflow:hidden}
+html.force-mobile #lab-test .field,html.force-mobile #lab-test input,html.force-mobile #lab-test textarea,html.force-mobile #lab-test select{font-size:16px!important;width:100%!important;box-sizing:border-box!important}
+html.force-mobile #lab-test .testRatingGrid{grid-template-columns:1fr!important}
+html.force-mobile #testIngredientPanel .itTable,html.force-mobile #testIngredientPanel .itTable tbody,html.force-mobile #testIngredientPanel .itTable tr,html.force-mobile #testIngredientPanel .itTable td{display:block!important;width:100%!important;box-sizing:border-box!important}
+html.force-mobile #testIngredientPanel .itTable thead{display:none!important}
+html.force-mobile #testIngredientPanel .itTable tbody tr.itRow{display:grid!important;gap:9px!important;margin:0 0 10px!important;padding:12px!important;border:1px solid rgba(151,111,47,.18)!important;border-radius:15px!important;background:#fffdf9!important}
+html.force-mobile #testIngredientPanel .testAmountSpinner{display:grid!important;grid-template-columns:minmax(0,1fr) 44px 44px!important;gap:7px!important}
+html.force-mobile #testIngredientPanel .testAmountInput,html.force-mobile #testIngredientPanel .itNoteInput{min-height:46px!important;font-size:16px!important;text-align:left!important}
+
+/* Editorial mobile recipe library */
+.recipeScoreRing,.recipeMobileMeta,.recipeStockLabel{display:none}
+@media(max-width:620px){
+  #page-recipes{background:#fff!important;color:#080604!important}
+  #page-recipes .fullPanel{background:#fff!important;border:none!important;box-shadow:none!important;border-radius:0!important;padding:0!important;overflow:hidden}
+  #page-recipes .navTabs{display:grid!important;grid-template-columns:auto auto 1fr auto!important;grid-template-rows:auto auto auto!important;align-items:end!important;gap:12px 22px!important;padding:18px 20px 0!important;background:#fff!important;border-bottom:1px solid #e9e2d7!important;overflow:visible!important}
+  #page-recipes .navTabs::before{content:"THE KITCHEN";grid-column:1/4;grid-row:1;font-size:11px;font-weight:900;letter-spacing:.38em;color:#56704d}
+  #page-recipes .navTabs::after{content:"Recipes";grid-column:1/4;grid-row:2;font-family:Georgia,'Times New Roman',serif;font-size:46px;font-style:italic;font-weight:700;line-height:.9;color:#080604;letter-spacing:-.07em}
+  #page-recipes .navTab{padding:12px 0 13px!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:#8b806f!important;font-size:14px!important;font-weight:700!important}
+  #page-recipes .navTab.active{color:#080604!important;border-bottom:2px solid #080604!important}
+  #page-recipes #labtab-library{grid-column:1;grid-row:3}
+  #page-recipes #labtab-test{grid-column:2;grid-row:3}
+  #page-recipes .navTabs>button[onclick="openNotionImport()"]{grid-column:4;grid-row:3;margin-left:0!important;padding:12px 0 13px!important;border:none!important;background:transparent!important;box-shadow:none!important;color:#55683f!important;font-size:13px!important;font-weight:800!important}
+  #page-recipes #addRecipeBtn{grid-column:4;grid-row:1/3;align-self:center;margin:0!important;padding:12px 20px!important;border-radius:999px!important;background:#5d7349!important;border:none!important;color:#fff!important;box-shadow:none!important;font-size:14px!important;font-weight:900!important}
+  #page-recipes .addRecipeFull{display:none!important}
+  #page-recipes .addRecipeMobile{display:inline!important}
+  #page-recipes .labPanel{padding:0!important}
+  #page-recipes .recipeCards{display:block!important;padding:20px 20px 0!important;background:#fff!important}
+  #page-recipes .recipeLibraryGrid.focusMode #recipeCards{display:none!important}
+  #page-recipes .recipeLibraryGrid.focusMode #recipeFormCard{display:block!important}
+  #page-recipes .catDetailView{gap:0!important}
+  #page-recipes .catBackBtn{align-self:flex-start!important;border:none!important;background:transparent!important;box-shadow:none!important;color:#a39a8c!important;padding:0!important;margin:0 0 14px!important;font-size:13px!important;font-weight:800!important}
+  #page-recipes .catDetailTitle{font-family:Georgia,'Times New Roman',serif!important;font-size:32px!important;font-weight:800!important;line-height:1!important;letter-spacing:-.07em!important;color:#080604!important;margin:0 0 16px!important}
+  #page-recipes .recipeCatCount{font-family:Georgia,'Times New Roman',serif!important;font-size:18px!important;font-style:italic!important;font-weight:600!important;color:#a6a096!important;letter-spacing:-.03em!important}
+  #page-recipes .catDetailGrid{display:block!important}
+  #page-recipes .recipeLibraryCard{position:relative!important;border:none!important;border-bottom:1px solid #e9e2d7!important;border-radius:0!important;background:#fff!important;box-shadow:none!important;padding:25px 74px 21px 0!important;margin:0!important;color:#080604!important}
+  #page-recipes .recipeLibraryCard:hover{transform:none!important;box-shadow:none!important}
+  #page-recipes .recipeLibraryCard .cardTitleLine{display:block!important;margin:0!important;padding:0!important}
+  #page-recipes .recipeLibraryCard .cardTitleLine strong{display:block!important;font-family:Georgia,'Times New Roman',serif!important;font-size:27px!important;line-height:1.05!important;font-weight:800!important;letter-spacing:-.07em!important;color:#080604!important;max-width:100%!important}
+  #page-recipes .recipeLibraryCard .cardTitleLine .tinyChip{display:none!important}
+  #page-recipes .recipeStockLabel{display:block!important;margin-top:7px;font-size:11px!important;font-weight:950!important;letter-spacing:.13em!important;color:#b1843f!important}
+  #page-recipes .recipeStockLabel.good{color:#56784a!important}
+  #page-recipes .recipeStockLabel.bad{color:#a9564c!important}
+  #page-recipes .recipeLibraryCard .scoreBar{display:none!important}
+  #page-recipes .recipeLibraryCard .miniMeta{margin-top:18px!important;font-size:15px!important;line-height:1.55!important;color:#2d251d!important}
+  #page-recipes .recipeLibraryCard .miniMeta b{font-weight:950!important;color:#080604!important}
+  #page-recipes .recipeLibraryCard .chipRow{display:none!important}
+  #page-recipes .recipeLibraryCard .inlineActions{display:flex!important;align-items:center!important;gap:22px!important;flex-wrap:nowrap!important;margin-top:14px!important}
+  #page-recipes .recipeLibraryCard .inlineActions .btn{border:none!important;background:transparent!important;box-shadow:none!important;border-radius:0!important;padding:0 0 5px!important;color:#7a6755!important;font-size:13px!important;font-weight:800!important}
+  #page-recipes .recipeLibraryCard .inlineActions .btn:first-child{color:#080604!important;border-bottom:1.5px solid #080604!important}
+  #page-recipes .recipeMobileMeta{display:inline!important;margin-left:auto!important;white-space:nowrap!important;font-size:12px!important;font-weight:800!important;color:#b2aa9f!important}
+  #page-recipes .recipeScoreRing{--ring:#b68437;display:grid!important;place-items:center!important;position:absolute!important;right:0!important;top:50%!important;transform:translateY(-50%)!important;width:56px!important;height:56px!important;border-radius:999px!important;background:conic-gradient(var(--ring) calc(var(--score)*1%),#eeeae3 0)!important}
+  #page-recipes .recipeScoreRing::before{content:"";position:absolute;inset:7px;border-radius:999px;background:#fff}
+  #page-recipes .recipeScoreRing span{position:relative;font-family:Georgia,'Times New Roman',serif;font-size:15px;font-weight:800;color:var(--ring)}
+  #page-recipes .recipeScoreRing.good{--ring:#58754d}
+  #page-recipes .recipeScoreRing.bad{--ring:#ad5b50}
+  #page-recipes .catGrid{display:block!important;padding:20px!important}
+  #page-recipes .catCard{border:none!important;border-bottom:1px solid #e9e2d7!important;border-radius:0!important;background:#fff!important;box-shadow:none!important;padding:20px 0!important}
+  #page-recipes .catCardHead{padding:0!important}
+  #page-recipes .catCardName{font-family:Georgia,'Times New Roman',serif!important;font-size:28px!important;letter-spacing:-.07em!important;color:#080604!important}
+  #page-recipes .catCardCount{background:#f3eee7!important;color:#9c9183!important}
+}
+html.force-mobile #page-recipes{background:#fff!important;color:#080604!important}
+html.force-mobile #page-recipes .fullPanel{background:#fff!important;border:none!important;box-shadow:none!important;border-radius:0!important;padding:0!important;overflow:hidden}
+html.force-mobile #page-recipes .navTabs{display:grid!important;grid-template-columns:auto auto 1fr auto!important;grid-template-rows:auto auto auto!important;align-items:end!important;gap:12px 22px!important;padding:18px 20px 0!important;background:#fff!important;border-bottom:1px solid #e9e2d7!important;overflow:visible!important}
+html.force-mobile #page-recipes .navTabs::before{content:"THE KITCHEN";grid-column:1/4;grid-row:1;font-size:11px;font-weight:900;letter-spacing:.38em;color:#56704d}
+html.force-mobile #page-recipes .navTabs::after{content:"Recipes";grid-column:1/4;grid-row:2;font-family:Georgia,'Times New Roman',serif;font-size:46px;font-style:italic;font-weight:700;line-height:.9;color:#080604;letter-spacing:-.07em}
+html.force-mobile #page-recipes .navTab{padding:12px 0 13px!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:#8b806f!important;font-size:14px!important;font-weight:700!important}
+html.force-mobile #page-recipes .navTab.active{color:#080604!important;border-bottom:2px solid #080604!important}
+html.force-mobile #page-recipes #labtab-library{grid-column:1;grid-row:3}
+html.force-mobile #page-recipes #labtab-test{grid-column:2;grid-row:3}
+html.force-mobile #page-recipes .navTabs>button[onclick="openNotionImport()"]{grid-column:4;grid-row:3;margin-left:0!important;padding:12px 0 13px!important;border:none!important;background:transparent!important;box-shadow:none!important;color:#55683f!important;font-size:13px!important;font-weight:800!important}
+html.force-mobile #page-recipes #addRecipeBtn{grid-column:4;grid-row:1/3;align-self:center;margin:0!important;padding:12px 20px!important;border-radius:999px!important;background:#5d7349!important;border:none!important;color:#fff!important;box-shadow:none!important;font-size:14px!important;font-weight:900!important}
+html.force-mobile #page-recipes .addRecipeFull{display:none!important}
+html.force-mobile #page-recipes .addRecipeMobile{display:inline!important}
+html.force-mobile #page-recipes .labPanel{padding:0!important}
+html.force-mobile #page-recipes .recipeCards{display:block!important;padding:20px 20px 0!important;background:#fff!important}
+html.force-mobile #page-recipes .recipeLibraryGrid.focusMode #recipeCards{display:none!important}
+html.force-mobile #page-recipes .recipeLibraryGrid.focusMode #recipeFormCard{display:block!important}
+html.force-mobile #page-recipes .catDetailView{gap:0!important}
+html.force-mobile #page-recipes .catBackBtn{align-self:flex-start!important;border:none!important;background:transparent!important;box-shadow:none!important;color:#a39a8c!important;padding:0!important;margin:0 0 14px!important;font-size:13px!important;font-weight:800!important}
+html.force-mobile #page-recipes .catDetailTitle{font-family:Georgia,'Times New Roman',serif!important;font-size:32px!important;font-weight:800!important;line-height:1!important;letter-spacing:-.07em!important;color:#080604!important;margin:0 0 16px!important}
+html.force-mobile #page-recipes .recipeCatCount{font-family:Georgia,'Times New Roman',serif!important;font-size:18px!important;font-style:italic!important;font-weight:600!important;color:#a6a096!important;letter-spacing:-.03em!important}
+html.force-mobile #page-recipes .catDetailGrid{display:block!important}
+html.force-mobile #page-recipes .recipeLibraryCard{position:relative!important;border:none!important;border-bottom:1px solid #e9e2d7!important;border-radius:0!important;background:#fff!important;box-shadow:none!important;padding:25px 74px 21px 0!important;margin:0!important;color:#080604!important}
+html.force-mobile #page-recipes .recipeLibraryCard:hover{transform:none!important;box-shadow:none!important}
+html.force-mobile #page-recipes .recipeLibraryCard .cardTitleLine{display:block!important;margin:0!important;padding:0!important}
+html.force-mobile #page-recipes .recipeLibraryCard .cardTitleLine strong{display:block!important;font-family:Georgia,'Times New Roman',serif!important;font-size:27px!important;line-height:1.05!important;font-weight:800!important;letter-spacing:-.07em!important;color:#080604!important;max-width:100%!important}
+html.force-mobile #page-recipes .recipeLibraryCard .cardTitleLine .tinyChip{display:none!important}
+html.force-mobile #page-recipes .recipeStockLabel{display:block!important;margin-top:7px;font-size:11px!important;font-weight:950!important;letter-spacing:.13em!important;color:#b1843f!important}
+html.force-mobile #page-recipes .recipeStockLabel.good{color:#56784a!important}
+html.force-mobile #page-recipes .recipeStockLabel.bad{color:#a9564c!important}
+html.force-mobile #page-recipes .recipeLibraryCard .scoreBar{display:none!important}
+html.force-mobile #page-recipes .recipeLibraryCard .miniMeta{margin-top:18px!important;font-size:15px!important;line-height:1.55!important;color:#2d251d!important}
+html.force-mobile #page-recipes .recipeLibraryCard .miniMeta b{font-weight:950!important;color:#080604!important}
+html.force-mobile #page-recipes .recipeLibraryCard .chipRow{display:none!important}
+html.force-mobile #page-recipes .recipeLibraryCard .inlineActions{display:flex!important;align-items:center!important;gap:22px!important;flex-wrap:nowrap!important;margin-top:14px!important}
+html.force-mobile #page-recipes .recipeLibraryCard .inlineActions .btn{border:none!important;background:transparent!important;box-shadow:none!important;border-radius:0!important;padding:0 0 5px!important;color:#7a6755!important;font-size:13px!important;font-weight:800!important}
+html.force-mobile #page-recipes .recipeLibraryCard .inlineActions .btn:first-child{color:#080604!important;border-bottom:1.5px solid #080604!important}
+html.force-mobile #page-recipes .recipeMobileMeta{display:inline!important;margin-left:auto!important;white-space:nowrap!important;font-size:12px!important;font-weight:800!important;color:#b2aa9f!important}
+html.force-mobile #page-recipes .recipeScoreRing{--ring:#b68437;display:grid!important;place-items:center!important;position:absolute!important;right:0!important;top:50%!important;transform:translateY(-50%)!important;width:56px!important;height:56px!important;border-radius:999px!important;background:conic-gradient(var(--ring) calc(var(--score)*1%),#eeeae3 0)!important}
+html.force-mobile #page-recipes .recipeScoreRing::before{content:"";position:absolute;inset:7px;border-radius:999px;background:#fff}
+html.force-mobile #page-recipes .recipeScoreRing span{position:relative;font-family:Georgia,'Times New Roman',serif;font-size:15px;font-weight:800;color:var(--ring)}
+html.force-mobile #page-recipes .recipeScoreRing.good{--ring:#58754d}
+html.force-mobile #page-recipes .recipeScoreRing.bad{--ring:#ad5b50}
+html.force-mobile #page-recipes .catGrid{display:block!important;padding:20px!important}
+html.force-mobile #page-recipes .catCard{border:none!important;border-bottom:1px solid #e9e2d7!important;border-radius:0!important;background:#fff!important;box-shadow:none!important;padding:20px 0!important}
+html.force-mobile #page-recipes .catCardHead{padding:0!important}
+html.force-mobile #page-recipes .catCardName{font-family:Georgia,'Times New Roman',serif!important;font-size:28px!important;letter-spacing:-.07em!important;color:#080604!important}
+html.force-mobile #page-recipes .catCardCount{background:#f3eee7!important;color:#9c9183!important}
 </style>
 </head>
 <body>
@@ -2020,17 +2202,17 @@ html.force-mobile .navCard .navIcon{display:flex!important}
         <div class="labGrid recipeLibraryGrid" id="recipeLibraryGrid">
           <div class="recipeCards" id="recipeCards"></div>
           <div class="recipeCard" id="recipeFormCard">
-            <div class="cardTitleLine"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><button class="btn recipeBackBtn" onclick="closeRecipeFocus()">← Back to Recipes</button><div class="recipeScaleBar mobileScaleInline"><button class="btn scaleBtn" id="recipeHalfM" onclick="setRecipeScale(.5)">½</button><button class="btn scaleBtn" id="recipeDoubleM" onclick="setRecipeScale(2)">2×</button><button class="btn scaleBtn" id="recipeScaleLabelM" onclick="setRecipeScale(1)">1x</button></div></div></div>
+            <div class="cardTitleLine"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><button class="btn recipeBackBtn" onclick="showRecipeFolders()">← Back to Recipe Folders</button><div class="recipeScaleBar mobileScaleInline"><button class="btn scaleBtn" id="recipeHalfM" onclick="setRecipeScale(.5)">½</button><button class="btn scaleBtn" id="recipeDoubleM" onclick="setRecipeScale(2)">2×</button><button class="btn scaleBtn" id="recipeScaleLabelM" onclick="setRecipeScale(1)">1x</button></div></div></div>
             <div class="formStack">
               <input type="hidden" id="recipeId" />
-              <label>Recipe Name</label><input id="recipeName" class="field" placeholder="Example: Biscuits and Gravy" />
-              <label>Category</label><select id="recipeCategory" class="field" onchange="handleRecipeCategoryChange()"></select>
+              <label class="recipeNameLabel">Recipe Name</label><input id="recipeName" class="field recipeNameInput" placeholder="Example: Biscuits and Gravy" />
+              <div class="recipeCategoryGroup"><label>Category</label><select id="recipeCategory" class="field" onchange="handleRecipeCategoryChange()"></select></div>
               <div class="recipeScaleBar"><span style="font-size:12px;font-weight:800;color:#9b7e56;white-space:nowrap">Scale:</span><button class="btn scaleBtn" id="recipeHalf" onclick="setRecipeScale(.5)">½</button><button class="btn scaleBtn" id="recipeDouble" onclick="setRecipeScale(2)">2×</button><button class="btn scaleBtn" id="recipeScaleLabel" onclick="setRecipeScale(1)">1x</button></div>
-              <label>Add Pantry Ingredient</label><div class="ingredientPicker"><input id="recipeIngredientSearch" class="field" placeholder="Type an ingredient from your pantry..." oninput="renderIngredientSuggestions()" autocomplete="off" /><div class="ingredientSuggestions" id="ingredientSuggestions"></div></div>
-              <div class="recipeIngredientRows" id="recipeIngredientRows"></div>
-              <label>Preparation</label><div class="recipePreparationPreview" id="recipePreparationPreview"></div>
-              <button class="btn" onclick="openPreparationEditor()">Edit Preparation Steps</button>
-              <label>Notes</label><textarea id="recipeNotes" class="field" rows="4" placeholder="Baseline recipe, source, texture notes, serving ideas..."></textarea>
+              <div class="recipeIngredientGroup"><label>Add Pantry Ingredient</label><div class="ingredientPicker"><input id="recipeIngredientSearch" class="field" placeholder="Type an ingredient from your pantry..." oninput="renderIngredientSuggestions()" autocomplete="off" /><div class="ingredientSuggestions" id="ingredientSuggestions"></div></div>
+              <div class="recipeIngredientRows" id="recipeIngredientRows"></div></div>
+              <label class="recipePrepLabel">Preparation</label><div class="recipePreparationPreview" id="recipePreparationPreview"></div>
+              <button class="btn editPrepStepsBtn" onclick="openPreparationEditor()">Edit Preparation Steps</button>
+              <div class="recipeNotesGroup"><label>Notes</label><textarea id="recipeNotes" class="field" rows="4" placeholder="Baseline recipe, source, texture notes, serving ideas..."></textarea></div>
               <div class="inlineActions"><button class="btn primary" onclick="saveRecipe()">Save Recipe</button><button class="btn" onclick="clearRecipeForm()">Clear</button><button class="btn danger" onclick="deleteRecipeFromForm(this)">Delete</button></div>
             </div>
           </div>
@@ -2058,7 +2240,7 @@ html.force-mobile .navCard .navIcon{display:flex!important}
               <label>Changes Made</label><textarea id="testChanges" class="field" rows="4"></textarea>
               <label>Expected Result</label><textarea id="testExpected" class="field" rows="3"></textarea>
               <label>Actual Result / Review</label><textarea id="testActual" class="field" rows="4"></textarea>
-              <label>Rating / Recommendation</label><div style="display:grid;grid-template-columns:120px 1fr;gap:8px"><input id="testRating" class="field" type="number" min="0" max="10" step="0.1" placeholder="1-10"/><input id="testRecommendation" class="field" placeholder="Repeat, adjust, abandon, best version..." /></div>
+              <label>Rating / Recommendation</label><div class="testRatingGrid" style="display:grid;grid-template-columns:120px 1fr;gap:8px"><input id="testRating" class="field" type="number" min="0" max="10" step="0.1" placeholder="1-10"/><input id="testRecommendation" class="field" placeholder="Repeat, adjust, abandon, best version..." /></div>
               <div class="inlineActions"><button class="btn primary" onclick="saveTestEntry()">Save Test Entry</button><button class="btn" onclick="clearTestForm()">Clear</button></div>
             </div>
           </div>
@@ -2384,9 +2566,9 @@ function fillSelect(id, vals, allLabel){
 }
 function renderMetrics(){
   const low=items.filter(i=>i.status==='Running Low').length, out=items.filter(i=>i.status==='Out of Stock').length, pickup=items.filter(pickupNeeded).length;
-  const cards=[['Running Low',low,'Attention'],['Out of Stock',out,'Missing items'],['Pickup Needed',pickup,'Auto-generated']];
+  const cards=[['Running Low',low],['Out of Stock',out],['Pickup Needed',pickup]];
   const activeFilter = _pantryStatusFilter;
-  const _m=document.getElementById('metrics'); if(_m) _m.innerHTML=cards.map(c=>{ const action=c[0]==='Pickup Needed'?"showPickupNeeded()":c[0]==='Out of Stock'?"showPantryStatus('Out of Stock')":c[0]==='Running Low'?"showPantryStatus('Running Low')":''; const filterVal=c[0]==='Pickup Needed'?'pickup':c[0]==='Out of Stock'?'Out of Stock':c[0]==='Running Low'?'Running Low':''; const isActive=filterVal&&activeFilter===filterVal; return `<div class="card metric ${action?'metricLink':''} ${isActive?'metricActive':''}" ${action?`onclick="${action}" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${action}}"`:''}><div class="label">${c[0]}</div><div class="value">${c[1]}</div><div class="hint">${c[2]}</div></div>`; }).join('');
+  const _m=document.getElementById('metrics'); if(_m) _m.innerHTML=cards.map(c=>{ const action=c[0]==='Pickup Needed'?"showPickupNeeded()":c[0]==='Out of Stock'?"showPantryStatus('Out of Stock')":c[0]==='Running Low'?"showPantryStatus('Running Low')":''; const filterVal=c[0]==='Pickup Needed'?'pickup':c[0]==='Out of Stock'?'Out of Stock':c[0]==='Running Low'?'Running Low':''; const isActive=filterVal&&activeFilter===filterVal; return `<div class="card metric ${action?'metricLink':''} ${isActive?'metricActive':''}" ${action?`onclick="${action}" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${action}}"`:''}><div class="label">${c[0]}</div><div class="value">${c[1]}</div></div>`; }).join('');
 }
 function resetPantryFilters(){
   _pantryStatusFilter = 'all';
@@ -3023,6 +3205,8 @@ document.getElementById('modalBackdrop').addEventListener('click',e=>{ if(e.targ
 document.getElementById('resolveBackdrop').addEventListener('click',e=>{ if(e.target.id==='resolveBackdrop') closeResolvePopup(); });
 document.getElementById('preparationBackdrop').addEventListener('click',e=>{ if(e.target.id==='preparationBackdrop') closePreparationEditor(); });
 document.getElementById('photoBackdrop').addEventListener('click',e=>{ if(e.target.id==='photoBackdrop') closePhotoPopup(); });
+window.addEventListener('resize',applyRecipeFormMobileOrder);
+document.addEventListener('click',e=>{ if(e.target.closest?.('.recipeBackBtn')){ e.preventDefault(); showRecipeFolders(); } });
 RESOLVE_FIELD_IDS.forEach(id=>document.getElementById(id).addEventListener('input',updateEditorMissingHighlights));
 document.getElementById('category').addEventListener('change',updateEditorMissingHighlights);
 
@@ -3092,6 +3276,23 @@ function closeProfilePopup(){ document.getElementById('bottom-profile')?.classLi
 let _forceMobile = false;
 let _forceDesktop = false;
 function isMobileContext(){ return _forceMobile || (!_forceDesktop && window.innerWidth <= 620); }
+function applyRecipeFormMobileOrder(){
+  const stack=document.querySelector('#recipeFormCard .formStack');
+  if(!stack) return;
+  const nameInput=document.getElementById('recipeName');
+  const cat=document.querySelector('.recipeCategoryGroup');
+  const ing=document.querySelector('.recipeIngredientGroup');
+  const scale=stack.querySelector('.recipeScaleBar:not(.mobileScaleInline)');
+  const prepBtn=document.querySelector('.editPrepStepsBtn');
+  if(!nameInput||!cat||!ing||!prepBtn) return;
+  if(isMobileContext()){
+    prepBtn.after(cat);
+    cat.after(ing);
+  } else {
+    nameInput.after(cat);
+    if(scale) scale.after(ing);
+  }
+}
 function toggleViewMode(){
   const trulyMobile = window.innerWidth <= 620;
   const icon = document.getElementById('viewToggleIcon');
@@ -3125,7 +3326,7 @@ function toggleViewMode(){
       if(label) label.textContent = 'Mobile View';
     }
   }
-  renderRecipeIngredientRows(); applyMobileDropdownLabels(); renderPickup(); render();
+  applyRecipeFormMobileOrder(); renderRecipeIngredientRows(); applyMobileDropdownLabels(); renderPickup(); render();
 }
 function toggleMobileMore(e){
   e.stopPropagation();
@@ -3246,7 +3447,7 @@ function pantryMatchForIngredients(ingredients){
   const score = ingredients.length ? Math.round(rows.reduce((a,r)=>a+r.score,0)/ingredients.length*100) : 0;
   return {rows,score,missing:rows.filter(r=>!r.match || r.status==='Out of Stock' || r.status==='Running Low')};
 }
-function renderKitchenLab(){ renderRecipeCategories(document.getElementById('recipeCategory')?.value||''); renderRecipeIngredientRows(); renderRecipeScale(); renderRecipePreparationPreview(); renderRecipeCards(); renderRecipeSelects(); renderTestRecipeIngredients(); renderTestCards(); renderTimers(); renderRecipeFocus(); renderCookingTray(); updateHeaderCards(); }
+function renderKitchenLab(){ applyRecipeFormMobileOrder(); renderRecipeCategories(document.getElementById('recipeCategory')?.value||''); renderRecipeIngredientRows(); renderRecipeScale(); renderRecipePreparationPreview(); renderRecipeCards(); renderRecipeSelects(); renderTestRecipeIngredients(); renderTestCards(); renderTimers(); renderRecipeFocus(); renderCookingTray(); updateHeaderCards(); applyRecipeFormMobileOrder(); }
 function switchLab(tab){
   activeLab=tab;
   if(tab!=='library') recipeFocusMode=false;
@@ -3280,7 +3481,19 @@ function renderRecipeCards(){
   const makeCard=r=>{
     const m=pantryMatchForIngredients(r.ingredients||[]);
     const missing=m.missing.slice(0,5).map(x=>escapeHtml(x.line)).join(', ');
-    return `<div class="recipeCard recipeLibraryCard ${activeCooking.recipeIds.includes(r.id)?'cookingSelected':''}" role="button" tabindex="0" onclick="editRecipe('${r.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();editRecipe('${r.id}')}"><div class="cardTitleLine"><strong>${escapeHtml(r.name)}</strong><span class="tinyChip">${m.score}% pantry</span></div><div class="scoreBar"><div class="scoreFill" style="width:${m.score}%"></div></div><div class="miniMeta">${m.missing.length?`Needs: ${missing}${m.missing.length>5?'…':''}`:'All ingredients ready.'}</div><div class="chipRow"><span class="tinyChip">${normalizeRecipeIngredients(r.ingredients).length} ingredients</span><span class="tinyChip">${testEntries.filter(t=>t.recipeId===r.id).length} tests</span></div><div class="inlineActions" onkeydown="event.stopPropagation()"><button class="btn" onclick="event.stopPropagation();editRecipe('${r.id}')">View Recipe</button><button class="btn" onclick="event.stopPropagation();openRecipePreparation('${r.id}')">Preparation</button><button class="btn" onclick="event.stopPropagation();selectRecipeForTest('${r.id}')">Test</button></div></div>`;
+    const ingredientCount=normalizeRecipeIngredients(r.ingredients).length;
+    const testCount=testEntries.filter(t=>t.recipeId===r.id).length;
+    const stockLabel=m.score>=75?'WELL STOCKED':m.score>=50?'HALF STOCKED':'RUNNING LOW';
+    const scoreClass=m.score>=75?'good':m.score>=50?'warn':'bad';
+    return `<div class="recipeCard recipeLibraryCard ${scoreClass} ${activeCooking.recipeIds.includes(r.id)?'cookingSelected':''}" role="button" tabindex="0" onclick="editRecipe('${r.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();editRecipe('${r.id}')}">
+      <div class="recipeScoreRing ${scoreClass}" style="--score:${m.score}"><span>${m.score}</span></div>
+      <div class="cardTitleLine"><strong>${escapeHtml(r.name)}</strong><span class="tinyChip">${m.score}% pantry</span></div>
+      <div class="recipeStockLabel ${scoreClass}">${stockLabel}</div>
+      <div class="scoreBar"><div class="scoreFill" style="width:${m.score}%"></div></div>
+      <div class="miniMeta"><b>Needs</b> · ${m.missing.length?`${missing}${m.missing.length>5?'…':''}`:'All ingredients ready.'}</div>
+      <div class="chipRow"><span class="tinyChip">${ingredientCount} ingredients</span><span class="tinyChip">${testCount} tests</span></div>
+      <div class="inlineActions" onkeydown="event.stopPropagation()"><button class="btn" onclick="event.stopPropagation();editRecipe('${r.id}')">View recipe</button><button class="btn" onclick="event.stopPropagation();openRecipePreparation('${r.id}')">Preparation</button><button class="btn" onclick="event.stopPropagation();selectRecipeForTest('${r.id}')">Test</button><span class="recipeMobileMeta">${ingredientCount} ingredients · ${testCount} tests</span></div>
+    </div>`;
   };
 
   if(_activeCat){
@@ -3288,7 +3501,7 @@ function renderRecipeCards(){
     const catRecipes = groups[_activeCat] || [];
     el.innerHTML = `<div class="catDetailView">
       <button class="btn catBackBtn" onclick="closeCatDetail()">← All Categories</button>
-      <div class="catDetailTitle">${escapeHtml(_activeCat)}<span class="recipeCatCount" style="margin-left:10px">${catRecipes.length}</span></div>
+      <div class="catDetailTitle">${escapeHtml(_activeCat)}<span class="recipeCatCount" style="margin-left:10px">${catRecipes.length} recipes</span></div>
       <div class="catDetailGrid">${catRecipes.map(makeCard).join('')}</div>
     </div>`;
   } else {
@@ -3309,9 +3522,48 @@ function renderRecipeCards(){
     }).join('')}</div>`;
   }
 }
-function renderRecipeFocus(){ document.getElementById('recipeLibraryGrid')?.classList.toggle('focusMode',recipeFocusMode); document.querySelector('.navTabs')?.classList.toggle('focusMode-active',recipeFocusMode); const add=document.getElementById('addRecipeBtn'); if(add) add.style.display=recipeFocusMode?'none':''; }
-function openRecipeFocus(){ recipeFocusMode=true; renderRecipeFocus(); }
-function closeRecipeFocus(){ recipeFocusMode=false; clearRecipeForm(); closeRecipeTestArchive(); closeImportSourcePanel(); _activeCat=null; switchLab('library'); }
+function renderRecipeFocus(){
+  document.getElementById('recipeLibraryGrid')?.classList.toggle('focusMode',recipeFocusMode);
+  document.querySelector('.navTabs')?.classList.toggle('focusMode-active',recipeFocusMode);
+  const add=document.getElementById('addRecipeBtn');
+  if(add) add.style.display=recipeFocusMode?'none':'';
+  const cards=document.getElementById('recipeCards');
+  const form=document.getElementById('recipeFormCard');
+  if(recipeFocusMode){
+    if(cards) cards.style.display='';
+    if(form) form.style.display='';
+  }
+}
+function scrollRecipeFocusTop(){
+  if(!isMobileContext()) return;
+  requestAnimationFrame(()=>{
+    const page=document.getElementById('page-recipes');
+    const form=document.getElementById('recipeFormCard');
+    const target=form || page;
+    if(target?.scrollIntoView) target.scrollIntoView({block:'start',behavior:'auto'});
+    else window.scrollTo(0,0);
+  });
+}
+function openRecipeFocus(){ recipeFocusMode=true; renderRecipeFocus(); scrollRecipeFocusTop(); }
+function showRecipeFolders(){
+  recipeFocusMode=false;
+  _activeCat=null;
+  const grid=document.getElementById('recipeLibraryGrid');
+  if(grid) grid.classList.remove('focusMode','archiveOpen','importSourceOpen');
+  document.querySelector('.navTabs')?.classList.remove('focusMode-active');
+  const add=document.getElementById('addRecipeBtn');
+  if(add) add.style.display='';
+  const cards=document.getElementById('recipeCards');
+  const form=document.getElementById('recipeFormCard');
+  if(cards) cards.style.display='';
+  if(form) form.style.display='none';
+  renderRecipeCards();
+  try{ closeRecipeTestArchive(); }catch(e){}
+  try{ closeImportSourcePanel(); }catch(e){}
+  try{ clearRecipeForm(); }catch(e){}
+  renderRecipeCards();
+}
+function closeRecipeFocus(){ showRecipeFolders(); }
 function openImportSourcePanel(text){
   const el = document.getElementById('importSourceText');
   if(el) el.value = text || '';
@@ -3638,7 +3890,8 @@ function openRecipeTestArchive(){
   grid.classList.add('archiveOpen');
 }
 function closeRecipeTestArchive(){
-  document.getElementById('recipeArchivePane').style.display = 'none';
+  const pane=document.getElementById('recipeArchivePane');
+  if(pane) pane.style.display = 'none';
   document.getElementById('recipeLibraryGrid')?.classList.remove('archiveOpen');
 }
 function openTestArchive(){
@@ -5131,9 +5384,13 @@ function applyMobileDropdownLabels(){
   ['groceryScope','grocerySort'].forEach(id=>{
     const sel = document.getElementById(id); if(!sel) return;
     Array.from(sel.options).forEach(opt=>{
+      const mobileHiddenSort = id==='grocerySort' && ['priceDesc','priceAsc','status'].includes(opt.value);
+      opt.hidden = isMob && mobileHiddenSort;
+      opt.disabled = isMob && mobileHiddenSort;
       if(isMob && opt.dataset.short) opt.textContent = opt.dataset.short;
       else if(!isMob && opt.dataset.long) opt.textContent = opt.dataset.long;
     });
+    if(isMob && sel.selectedOptions[0]?.disabled) sel.value = 'storeLocation';
   });
 }
 
